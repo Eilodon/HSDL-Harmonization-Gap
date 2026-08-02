@@ -1,0 +1,99 @@
+{
+  "schema_version": "1.0.0",
+  "ledger_id": "model-relative-claims-v1",
+  "claim_class": "MODEL_RELATIVE",
+  "legal_validation": "NOT_ASSERTED",
+  "claims": [
+    {
+      "claim_id": "CLAIM-D33-POINT-A-CATALOG-SHARE",
+      "text": "Under the declared timing assumption, 6 of 46 positive Decision 33 catalog witnesses route through point a.",
+      "evidence": [
+        {"artifact": "model-relative-metric-analysis.json", "pointer": "/metrics/0/numerator", "expected": 6},
+        {"artifact": "model-relative-metric-analysis.json", "pointer": "/metrics/0/denominator", "expected": 46},
+        {"artifact": "model-relative-metric-analysis.json", "pointer": "/metrics/0/measure_id", "expected": "UNWEIGHTED_CATALOG_ROW_SHARE"}
+      ]
+    },
+    {
+      "claim_id": "CLAIM-D33-POINT-B-CATALOG-SHARE",
+      "text": "Under the declared timing assumption, 40 of 46 positive Decision 33 catalog witnesses route through point b.",
+      "evidence": [
+        {"artifact": "model-relative-metric-analysis.json", "pointer": "/metrics/1/numerator", "expected": 40},
+        {"artifact": "model-relative-metric-analysis.json", "pointer": "/metrics/1/denominator", "expected": 46},
+        {"artifact": "model-relative-metric-analysis.json", "pointer": "/metrics/1/measure_id", "expected": "UNWEIGHTED_CATALOG_ROW_SHARE"}
+      ]
+    },
+    {
+      "claim_id": "CLAIM-CANDIDATE-DETERMINACY",
+      "text": "The partial candidate IR produces 690 determinate outcomes and 5,750 indeterminate outcomes across 6,440 rule-context evaluations without assumptions.",
+      "evidence": [
+        {"artifact": "model-relative-metric-analysis.json", "pointer": "/metrics/2/numerator", "expected": 690},
+        {"artifact": "model-relative-metric-analysis.json", "pointer": "/metrics/2/denominator", "expected": 6440},
+        {"artifact": "model-relative-metric-analysis.json", "pointer": "/metrics/2/unknown_count", "expected": 5750}
+      ]
+    },
+    {
+      "claim_id": "CLAIM-CANDIDATE-APPLICABILITY-BOUNDS",
+      "text": "Candidate applicability is bounded between 322/6,440 and 6,072/6,440 when all indeterminate evaluations remain unresolved.",
+      "evidence": [
+        {"artifact": "model-relative-metric-analysis.json", "pointer": "/metrics/3/numerator", "expected": 322},
+        {"artifact": "model-relative-metric-analysis.json", "pointer": "/metrics/3/denominator", "expected": 6440},
+        {"artifact": "model-relative-metric-analysis.json", "pointer": "/metrics/3/unknown_count", "expected": 5750},
+        {"artifact": "model-relative-metric-analysis.json", "pointer": "/metrics/3/value", "expected": null}
+      ]
+    },
+    {
+      "claim_id": "CLAIM-ASSUMPTION-SENSITIVITY",
+      "text": "The Article 13 timing assumption changes 184 of 6,440 evaluation states, all within the two explicit catalog routes.",
+      "evidence": [
+        {"artifact": "model-relative-metric-analysis.json", "pointer": "/sensitivity/changed_evaluation_count", "expected": 184},
+        {"artifact": "model-relative-metric-analysis.json", "pointer": "/sensitivity/evaluation_count", "expected": 6440},
+        {"artifact": "model-relative-metric-analysis.json", "pointer": "/sensitivity/classification", "expected": "ASSUMPTION_SENSITIVE"}
+      ]
+    },
+    {
+      "claim_id": "CLAIM-OPERATIONAL-EXACT-PAIRS",
+      "text": "The declared candidate signatures establish zero exact operational EU–Vietnam duty pairs.",
+      "evidence": [
+        {"artifact": "operational-duty-signature-report.json", "pointer": "/exact_cross_jurisdiction_pair_count", "expected": 0},
+        {"artifact": "operational-duty-signature-report.json", "pointer": "/same_slot_cross_jurisdiction_pair_count", "expected": 0}
+      ]
+    },
+    {
+      "claim_id": "CLAIM-INDEPENDENT-ORACLE-EQUIVALENCE",
+      "text": "The independent JavaScript oracle reproduces the Python projection hash across 12,880 evaluations.",
+      "evidence": [
+        {"artifact": "independent-javascript-oracle-report.json", "pointer": "/projection_hash_match", "expected": true},
+        {"artifact": "independent-javascript-oracle-report.json", "pointer": "/projection_count", "expected": 12880},
+        {"artifact": "independent-javascript-oracle-report.json", "pointer": "/implementation_boundary/shared_python_evaluator_code", "expected": false}
+      ]
+    },
+    {
+      "claim_id": "CLAIM-SYMBOLIC-COVERAGE",
+      "text": "Symbolic regions currently cover 2 of 20 candidate rules and match the finite oracle on 644 comparisons.",
+      "evidence": [
+        {"artifact": "symbolic-catalog-region-report.json", "pointer": "/symbolically_compiled_rule_count", "expected": 2},
+        {"artifact": "symbolic-catalog-region-report.json", "pointer": "/candidate_rule_count", "expected": 20},
+        {"artifact": "symbolic-catalog-region-report.json", "pointer": "/comparison_count", "expected": 644},
+        {"artifact": "symbolic-catalog-region-report.json", "pointer": "/mismatch_count", "expected": 0}
+      ]
+    },
+    {
+      "claim_id": "CLAIM-PRIORITY-GRAPH-EMPTY",
+      "text": "The candidate profile declares no executable priority edges, so the engine infers none.",
+      "evidence": [
+        {"artifact": "candidate-priority-report.json", "pointer": "/edge_count", "expected": 0},
+        {"artifact": "candidate-priority-report.json", "pointer": "/limitations/current_candidate_priority_resolution", "expected": "NO_EDGES_DECLARED_NO_IMPLICIT_PRIORITY"}
+      ]
+    },
+    {
+      "claim_id": "CLAIM-P0-ENGINEERING-COMPLETE",
+      "text": "All declared P0 engineering gates pass while broader P1 completeness remains blocked.",
+      "evidence": [
+        {"artifact": "engineering-gate-status.json", "pointer": "/p0/complete", "expected": true},
+        {"artifact": "engineering-gate-status.json", "pointer": "/p0/passed", "expected": 7},
+        {"artifact": "engineering-gate-status.json", "pointer": "/status", "expected": "P0_COMPLETE_P1_CAPABILITIES_READY_COMPLETENESS_BLOCKED"}
+      ]
+    }
+  ],
+  "notice": "Claims describe declared finite artifacts only. A passing ledger proves evidence consistency, not legal validity or empirical prevalence."
+}
