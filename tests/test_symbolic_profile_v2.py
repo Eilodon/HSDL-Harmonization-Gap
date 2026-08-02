@@ -60,15 +60,46 @@ class SymbolicProfileV2Tests(unittest.TestCase):
             all(item["mismatch_count"] == 0 for item in self.report["expressions"])
         )
 
-    def test_every_nonconstant_expression_has_missing_fact_probes(self) -> None:
+    def test_every_nonconstant_expression_has_one_probe_per_field(self) -> None:
         for item in self.report["expressions"]:
             if item["field_count"] == 0:
                 self.assertEqual(item["missing_probe_count"], 0)
+                self.assertEqual(item["unknown_probe_count"], 0)
             else:
                 self.assertEqual(
                     item["missing_probe_count"], item["field_count"]
                 )
-                self.assertGreater(item["unknown_probe_count"], 0)
+                self.assertLessEqual(
+                    item["unknown_probe_count"], item["missing_probe_count"]
+                )
+        self.assertGreater(
+            sum(item["unknown_probe_count"] for item in self.report["expressions"]),
+            0,
+        )
+
+    def test_kleene_short_circuit_can_mask_a_missing_operand(self) -> None:
+        false_and_missing = {
+            "op": "and",
+            "args": [
+                {"op": "eq", "args": [{"field": "x"}, {"literal": True}]},
+                {"op": "eq", "args": [{"field": "y"}, {"literal": True}]},
+            ],
+        }
+        true_or_missing = {
+            "op": "or",
+            "args": [
+                {"op": "eq", "args": [{"field": "x"}, {"literal": True}]},
+                {"op": "eq", "args": [{"field": "y"}, {"literal": True}]},
+            ],
+        }
+        self.assertEqual(
+            symbolic_evaluate(false_and_missing, {"x": False}),
+            ("FALSE", ("y",)),
+        )
+        self.assertEqual(
+            symbolic_evaluate(true_or_missing, {"x": True}),
+            ("TRUE", ("y",)),
+        )
 
     def test_or_and_not_in_semantics_are_supported(self) -> None:
         condition = {
