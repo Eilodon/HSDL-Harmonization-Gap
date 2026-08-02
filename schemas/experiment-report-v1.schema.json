@@ -1,0 +1,78 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://eilodon.github.io/hsdl-harmonization-gap/schemas/experiment-report-v1.schema.json",
+  "title": "HSDL Gap model-relative experiment report v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version", "claim_class", "legal_validation", "profile", "corpus",
+    "assumptions", "metric_definition", "metric_result", "claim_boundary"
+  ],
+  "properties": {
+    "schema_version": {"const": "1.0.0"},
+    "claim_class": {"const": "MODEL_RELATIVE"},
+    "legal_validation": {"const": "NOT_ASSERTED"},
+    "profile": {"$ref": "#/$defs/hashedEntity"},
+    "corpus": {"$ref": "#/$defs/hashedEntity"},
+    "assumptions": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": {"type": "string", "minLength": 1}
+    },
+    "metric_definition": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "metric_id", "measure_id", "numerator_definition", "denominator_definition", "unknown_policy"
+      ],
+      "properties": {
+        "metric_id": {"type": "string", "minLength": 1},
+        "measure_id": {"type": "string", "minLength": 1},
+        "numerator_definition": {"type": "string", "minLength": 1},
+        "denominator_definition": {"type": "string", "minLength": 1},
+        "unknown_policy": {
+          "enum": [
+            "EXCLUDE_AND_REPORT", "COUNT_AS_FALSE", "COUNT_AS_SEPARATE_CATEGORY", "LOWER_UPPER_BOUND"
+          ]
+        }
+      }
+    },
+    "metric_result": {
+      "type": "object",
+      "required": [
+        "metric_id", "measure_id", "numerator", "denominator", "unknown_count", "value",
+        "lower_bound", "upper_bound"
+      ],
+      "properties": {
+        "metric_id": {"type": "string"},
+        "measure_id": {"type": "string"},
+        "numerator": {"type": "integer", "minimum": 0},
+        "denominator": {"type": "integer", "minimum": 0},
+        "unknown_count": {"type": "integer", "minimum": 0},
+        "value": {"type": ["number", "null"], "minimum": 0, "maximum": 1},
+        "lower_bound": {"type": ["number", "null"], "minimum": 0, "maximum": 1},
+        "upper_bound": {"type": ["number", "null"], "minimum": 0, "maximum": 1}
+      },
+      "additionalProperties": false
+    },
+    "claim_boundary": {"type": "string", "minLength": 1}
+  },
+  "$defs": {
+    "hashedEntity": {
+      "type": "object",
+      "additionalProperties": false,
+      "minProperties": 2,
+      "maxProperties": 2,
+      "properties": {
+        "profile_id": {"type": "string", "minLength": 1},
+        "profile_hash": {"type": "string", "pattern": "^sha256:[0-9a-f]{64}$"},
+        "corpus_id": {"type": "string", "minLength": 1},
+        "corpus_hash": {"type": "string", "pattern": "^sha256:[0-9a-f]{64}$"}
+      },
+      "oneOf": [
+        {"required": ["profile_id", "profile_hash"]},
+        {"required": ["corpus_id", "corpus_hash"]}
+      ]
+    }
+  }
+}

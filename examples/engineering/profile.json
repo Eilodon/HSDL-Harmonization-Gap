@@ -1,0 +1,5 @@
+{
+  "profile_id": "profile:engineering:example-v1",
+  "status": "AUTHOR_ASSUMPTION_EXECUTABLE",
+  "condition_file": "condition.json"
+}

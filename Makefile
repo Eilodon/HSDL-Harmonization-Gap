@@ -1,11 +1,17 @@
 PYTHON ?= python3
 
-.PHONY: test reproduce verify-sources clean
+.PHONY: test schema-check verify reproduce verify-sources clean
 
 test:
 	PYTHONPATH=src $(PYTHON) -m unittest discover -s tests -v
 
-reproduce: test
+schema-check:
+	PYTHONPATH=src $(PYTHON) -m hsdl_gap.engineering_cli schema-inventory --schema-dir schemas > /dev/null
+
+verify: test schema-check
+	PYTHONPATH=src $(PYTHON) -m compileall -q src tests
+
+reproduce: verify
 	mkdir -p generated
 	PYTHONPATH=src $(PYTHON) -m hsdl_gap --mode legacy --policies policies/legacy_v11.json > generated/legacy-v11-results.json
 	PYTHONPATH=src $(PYTHON) -m hsdl_gap --mode decision33 --catalog catalogs/vn_decision_33_2026.csv > generated/decision33-ingestion-report.json
@@ -20,6 +26,8 @@ reproduce: test
 	PYTHONPATH=src $(PYTHON) -m hsdl_gap --mode review-readiness --review-template reviews/independent_legal_review_template.json --provision-audit sources/reviews/legacy_v11_provision_audit.json > generated/independent-review-readiness.json
 	PYTHONPATH=src $(PYTHON) -m hsdl_gap --mode migration-plan --provision-audit sources/reviews/legacy_v11_provision_audit.json > generated/current-profile-migration-plan.json
 	PYTHONPATH=src $(PYTHON) -m hsdl_gap --mode gate-status --policies policies/legacy_v11.json --semantics alignments/legacy_duty_semantics.json --catalog catalogs/vn_decision_33_2026.csv --provision-audit sources/reviews/legacy_v11_provision_audit.json --review-template reviews/independent_legal_review_template.json > generated/research-gate-status.json
+	PYTHONPATH=src $(PYTHON) -m hsdl_gap.engineering_demo > generated/engineering-experiment-demo.json
+	PYTHONPATH=src $(PYTHON) -m hsdl_gap.engineering_cli schema-inventory --schema-dir schemas > generated/schema-inventory.json
 
 verify-sources:
 	mkdir -p generated

@@ -1,0 +1,19 @@
+{
+  "op": "and",
+  "args": [
+    {
+      "op": "eq",
+      "args": [
+        {"field": "system.direct_human_interaction"},
+        {"literal": true}
+      ]
+    },
+    {
+      "op": "on_or_after",
+      "args": [
+        {"field": "time.evaluation_date"},
+        {"literal": "2026-08-15"}
+      ]
+    }
+  ]
+}

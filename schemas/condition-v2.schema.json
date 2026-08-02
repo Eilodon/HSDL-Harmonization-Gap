@@ -1,0 +1,47 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://eilodon.github.io/hsdl-harmonization-gap/schemas/condition-v2.schema.json",
+  "title": "HSDL Gap condition AST v2",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["op", "args"],
+  "properties": {
+    "op": {
+      "enum": [
+        "all", "and", "or", "not", "eq", "ne", "in", "not_in",
+        "exists", "missing", "known", "lt", "lte", "gt", "gte",
+        "between", "contains", "contains_any", "contains_all", "overlaps",
+        "before", "on_or_before", "after", "on_or_after"
+      ]
+    },
+    "args": {
+      "type": "array",
+      "items": {
+        "oneOf": [
+          {"$ref": "#"},
+          {"$ref": "#/$defs/operand"}
+        ]
+      }
+    }
+  },
+  "$defs": {
+    "operand": {
+      "type": "object",
+      "additionalProperties": false,
+      "oneOf": [
+        {
+          "required": ["field"],
+          "properties": {
+            "field": {"type": "string", "minLength": 1}
+          }
+        },
+        {
+          "required": ["literal"],
+          "properties": {
+            "literal": true
+          }
+        }
+      ]
+    }
+  }
+}
