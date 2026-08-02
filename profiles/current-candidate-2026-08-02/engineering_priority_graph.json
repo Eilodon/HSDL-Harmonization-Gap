@@ -1,9 +1,75 @@
 {
-  "schema_version": "1.0.0",
+  "schema_version": "2.0.0",
   "profile_id": "current-candidate-2026-08-02",
-  "status": "EXPLICIT_EMPTY_PRIORITY_GRAPH",
+  "status": "SOURCE_DERIVED_DECLARED_PRIORITY_GRAPH_PENDING_REVIEW",
   "claim_class": "MODEL_RELATIVE",
   "legal_validation": "NOT_ASSERTED",
-  "edges": [],
-  "notice": "The candidate graph does not yet declare executable priority, exception, specialisation or conflict edges. An empty graph prevents the evaluator from silently inventing them."
+  "edges": [
+    {
+      "source_id": "VN_ART10_2_DEPLOYER_RECLASSIFICATION_COORDINATION:deployer_risk_integrity_responsibility",
+      "target_id": "VN_ART10_2_DEPLOYER_RECLASSIFICATION_COORDINATION:risk_reclassification_after_change",
+      "relation": "ACCUMULATE",
+      "reason_code": "ART10_2_BASE_RESPONSIBILITY_AND_CHANGE_RECLASSIFICATION_COEXIST",
+      "source_evidence": {"source_id": "VN_LAW_134_2025", "provision": "Điều 10 khoản 2"}
+    },
+    {
+      "source_id": "VN_ART13_2A_THIRD_PARTY_CERTIFICATION_ROUTE:point_a_conformity_certification",
+      "target_id": "VN_ART13_2A_THIRD_PARTY_CERTIFICATION_ROUTE:point_a_third_party_assessment",
+      "relation": "ACCUMULATE",
+      "reason_code": "POINT_A_PROVIDER_CERTIFICATION_AND_MANDATORY_THIRD_PARTY_ASSESSMENT",
+      "source_evidence": {"source_id": "VN_LAW_134_2025_AND_DECISION_33_2026", "provision": "Điều 13 khoản 2 điểm a"}
+    },
+    {
+      "source_id": "VN_ART13_2B_PROVIDER_OPTION_ROUTE:point_b_conformity_assessment_choice",
+      "target_id": "VN_ART13_2B_PROVIDER_OPTION_ROUTE:point_b_optional_third_party_assessment",
+      "relation": "ACCUMULATE",
+      "reason_code": "POINT_B_OPTIONAL_THIRD_PARTY_DUTY_COEXISTS_WHEN_ENGAGED",
+      "source_evidence": {"source_id": "VN_LAW_134_2025_AND_DECISION_33_2026", "provision": "Điều 13 khoản 2 điểm b"}
+    },
+    {
+      "source_id": "VN_ND142_ART19_1_DEPLOYER_USER_INITIAL_RESPONSE:serious_incident_record_and_initial_mitigation",
+      "target_id": "VN_ND142_ART19_2_PROVIDER_TECHNICAL_REMEDIATION:provider_serious_incident_technical_remediation",
+      "relation": "PRECEDES",
+      "reason_code": "INCIDENT_NOTIFICATION_PRECEDES_PROVIDER_TECHNICAL_REMEDIATION",
+      "source_evidence": {"source_id": "VN_DECREE_142_2026", "provision": "Điều 19 khoản 2 điểm a-b"}
+    },
+    {
+      "source_id": "VN_ND142_ART19_2_PROVIDER_TECHNICAL_REMEDIATION:provider_serious_incident_technical_remediation",
+      "target_id": "VN_ND142_ART19_3_PROVIDER_DEPLOYER_COORDINATION:serious_incident_information_and_response_coordination",
+      "relation": "PRECEDES",
+      "reason_code": "TECHNICAL_REMEDIATION_PRECEDES_OR_OVERLAPS_RESPONSE_COORDINATION",
+      "source_evidence": {"source_id": "VN_DECREE_142_2026", "provision": "Điều 19 khoản 2 điểm b-c"}
+    },
+    {
+      "source_id": "VN_ND142_ART19_3_PROVIDER_DEPLOYER_COORDINATION:serious_incident_information_and_response_coordination",
+      "target_id": "VN_ND142_ART19_4_PRELIMINARY_REPORTING:serious_incident_preliminary_report",
+      "relation": "PRECEDES",
+      "reason_code": "INCIDENT_RESPONSE_CHAIN_PRECEDES_PROVIDER_PRELIMINARY_REPORT",
+      "source_evidence": {"source_id": "VN_DECREE_142_2026", "provision": "Điều 19 khoản 2-3"}
+    },
+    {
+      "source_id": "VN_ND142_ART19_3_PROVIDER_DEPLOYER_COORDINATION:serious_incident_information_and_response_coordination",
+      "target_id": "VN_ND142_ART19_4_PRELIMINARY_REPORTING:serious_incident_preliminary_report_fallback",
+      "relation": "PRECEDES",
+      "reason_code": "INCIDENT_RESPONSE_CHAIN_PRECEDES_DEPLOYER_FALLBACK_REPORT",
+      "source_evidence": {"source_id": "VN_DECREE_142_2026", "provision": "Điều 19 khoản 2-3"}
+    },
+    {
+      "source_id": "VN_ND142_ART19_4_PRELIMINARY_REPORTING:serious_incident_preliminary_report",
+      "target_id": "VN_ND142_ART19_4_PRELIMINARY_REPORTING:serious_incident_preliminary_report_fallback",
+      "relation": "OVERRIDE",
+      "reason_code": "PROVIDER_REPORT_IS_PRIMARY_WHEN_PROVIDER_REACHABLE",
+      "condition": {"op": "eq", "args": [{"field": "operations.provider_contact_status"}, {"literal": "REACHABLE"}]},
+      "source_evidence": {"source_id": "VN_DECREE_142_2026", "provision": "Điều 19 khoản 3"}
+    },
+    {
+      "source_id": "VN_ND142_ART19_4_PRELIMINARY_REPORTING:serious_incident_preliminary_report_fallback",
+      "target_id": "VN_ND142_ART19_4_PRELIMINARY_REPORTING:serious_incident_preliminary_report",
+      "relation": "EXCEPTION",
+      "reason_code": "DEPLOYER_REPORT_SUBSTITUTES_WHEN_PROVIDER_UNREACHABLE",
+      "condition": {"op": "eq", "args": [{"field": "operations.provider_contact_status"}, {"literal": "UNREACHABLE"}]},
+      "source_evidence": {"source_id": "VN_DECREE_142_2026", "provision": "Điều 19 khoản 3"}
+    }
+  ],
+  "notice": "Edges encode source-derived coexistence, sequencing and conditional fallback within the same instrument. They do not establish cross-jurisdiction priority and remain pending independent legal review."
 }
