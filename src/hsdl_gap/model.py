@@ -37,6 +37,8 @@ class TypedDuty:
     actor_relation: ActorRelation = ActorRelation.SINGLE
     recipient: str | None = None
     timing: str | None = None
+    alignment_key: str | None = None
+    normative_slot: str | None = None
     conflict_class: str | None = None
 
 
