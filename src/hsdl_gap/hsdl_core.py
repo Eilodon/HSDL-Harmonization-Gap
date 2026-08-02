@@ -2,7 +2,6 @@ from __future__ import annotations
 
 import hashlib
 import json
-from dataclasses import asdict
 from pathlib import Path
 from typing import Any
 
@@ -14,6 +13,7 @@ from .model import ActorRelation, Bindingness, Policy, Rule, TypedDuty
 
 HEADER = "@hsdl-core 0.1"
 PROFILE_ID = "HSDL_CORE_REFERENCE_0_1"
+MAX_MISMATCH_EXAMPLES = 20
 
 
 class HSDLCoreError(ValueError):
@@ -238,13 +238,12 @@ def parse_policy_bundle(text: str) -> dict[str, Policy]:
                 raise HSDLCoreError(
                     f"line {line_number}: duplicate jurisdiction {jurisdiction!r}"
                 )
-            policy = Policy(
+            policies[jurisdiction] = Policy(
                 id=current_policy["id"],
                 jurisdiction=jurisdiction,
                 version=current_policy["version"],
                 rules=tuple(current_rules),
             )
-            policies[jurisdiction] = policy
             current_policy = None
             current_rules = []
             continue
@@ -289,6 +288,7 @@ def build_hsdl_differential_report(
     )
 
     mismatch_examples: list[dict[str, Any]] = []
+    mismatch_count = 0
     comparison_count = 0
     context_count = 0
     for context_index, context in enumerate(iter_legacy_contexts()):
@@ -298,22 +298,24 @@ def build_hsdl_differential_report(
                 comparison_count += 1
                 left = evaluate_policy(canonical[jurisdiction], context, group)
                 right = evaluate_policy(parsed[jurisdiction], context, group)
-                if left != right and len(mismatch_examples) < 20:
-                    mismatch_examples.append(
-                        {
-                            "context_index": context_index,
-                            "context": context.as_mapping(),
-                            "jurisdiction": jurisdiction,
-                            "group": group,
-                            "canonical": _evaluation_payload(left),
-                            "hsdl_core": _evaluation_payload(right),
-                        }
-                    )
+                if left != right:
+                    mismatch_count += 1
+                    if len(mismatch_examples) < MAX_MISMATCH_EXAMPLES:
+                        mismatch_examples.append(
+                            {
+                                "context_index": context_index,
+                                "context": context.as_mapping(),
+                                "jurisdiction": jurisdiction,
+                                "group": group,
+                                "canonical": _evaluation_payload(left),
+                                "hsdl_core": _evaluation_payload(right),
+                            }
+                        )
 
     return {
-        "schema_version": "1.0.0",
+        "schema_version": "1.1.0",
         "profile_id": PROFILE_ID,
-        "status": "EQUIVALENT" if not mismatch_examples else "MISMATCH",
+        "status": "EQUIVALENT" if mismatch_count == 0 else "MISMATCH",
         "upstream_engine_compatibility": "NOT_CLAIMED",
         "source_policy_path": str(policy_path),
         "duty_semantics_path": (
@@ -326,7 +328,9 @@ def build_hsdl_differential_report(
         "groups": groups,
         "context_count": context_count,
         "comparison_count": comparison_count,
-        "mismatch_count": len(mismatch_examples),
+        "mismatch_count": mismatch_count,
+        "mismatch_example_limit": MAX_MISMATCH_EXAMPLES,
+        "mismatch_example_count": len(mismatch_examples),
         "mismatch_examples": mismatch_examples,
         "attestation": {
             "canonical_format": "JSON policy bundle plus semantic overlay",
