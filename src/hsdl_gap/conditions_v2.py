@@ -197,7 +197,12 @@ def evaluate_condition_v2(
             op=op,
             value=TruthValue.from_bool(result),
             path=path,
-            detail={"field": field_name, "present": present, "actual": None if not present else value},
+            detail={
+                "field": field_name,
+                "present": present,
+                "actual": None if not present else value,
+            },
+            missing_facts=(field_name,) if op == "known" and not result else (),
         )
 
     if op in {
