@@ -1,0 +1,49 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://eilodon.github.io/hsdl-harmonization-gap/schemas/generated-publication-preview-v1.schema.json",
+  "title": "Generated model-relative technical publication preview v1",
+  "type": "object",
+  "required": [
+    "schema_version", "status", "claim_class", "legal_validation",
+    "publication_authorisation", "preview_id", "title", "section_count",
+    "claim_count", "evidence_reference_count", "claim_ledger_hash",
+    "artifact_hashes", "governance_status", "owner_approved", "spec_hash",
+    "markdown_sha256", "markdown_line_count", "markdown_output_path",
+    "boundaries", "promotion_blockers"
+  ],
+  "properties": {
+    "schema_version": {"const": "1.0.0"},
+    "status": {"const": "TECHNICAL_PUBLICATION_PREVIEW_GENERATED_NOT_AUTHORISED"},
+    "claim_class": {"const": "MODEL_RELATIVE"},
+    "legal_validation": {"const": "NOT_ASSERTED"},
+    "publication_authorisation": {"const": "NOT_PROVIDED"},
+    "preview_id": {"const": "model-relative-technical-preview-v1"},
+    "section_count": {"const": 5},
+    "claim_count": {"const": 13},
+    "evidence_reference_count": {"const": 42},
+    "claim_ledger_hash": {"type": "string", "pattern": "^sha256:[0-9a-f]{64}$"},
+    "artifact_hashes": {
+      "type": "object",
+      "minProperties": 9,
+      "additionalProperties": {"type": "string", "pattern": "^sha256:[0-9a-f]{64}$"}
+    },
+    "governance_status": {
+      "enum": [
+        "OWNER_GOVERNANCE_DECLARATION_PENDING",
+        "OWNER_GOVERNANCE_APPROVED_GENERATION_READY"
+      ]
+    },
+    "owner_approved": {"type": "boolean"},
+    "spec_hash": {"type": "string", "pattern": "^sha256:[0-9a-f]{64}$"},
+    "markdown_sha256": {"type": "string", "pattern": "^sha256:[0-9a-f]{64}$"},
+    "markdown_line_count": {"type": "integer", "minimum": 50},
+    "markdown_output_path": {"type": ["string", "null"]},
+    "boundaries": {"type": "array", "minItems": 5},
+    "promotion_blockers": {
+      "type": "array",
+      "minItems": 6,
+      "uniqueItems": true
+    }
+  },
+  "additionalProperties": false
+}
