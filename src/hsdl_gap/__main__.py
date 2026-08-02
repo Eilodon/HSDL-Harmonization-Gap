@@ -7,6 +7,7 @@ from .alignment import build_typed_alignment_audit
 from .asean import build_asean_ontology_audit
 from .current_context import build_current_context_report
 from .current_report import build_decision33_report
+from .gate_status import build_research_gate_status
 from .hsdl_core import build_hsdl_differential_report, emit_hsdl_core
 from .migration_plan import build_migration_plan
 from .provision_audit import build_provision_audit_report
@@ -34,6 +35,7 @@ def main() -> None:
             "provision-audit",
             "review-readiness",
             "migration-plan",
+            "gate-status",
             "emit-hsdl",
             "hsdl-differential",
             "acquire-sources",
@@ -95,6 +97,14 @@ def main() -> None:
         )
     elif args.mode == "migration-plan":
         report = build_migration_plan(args.provision_audit)
+    elif args.mode == "gate-status":
+        report = build_research_gate_status(
+            policy_path=args.policies,
+            duty_semantics_path=args.semantics,
+            catalog_path=args.catalog,
+            provision_audit_path=args.provision_audit,
+            review_template_path=args.review_template,
+        )
     elif args.mode == "hsdl-differential":
         report = build_hsdl_differential_report(args.policies, args.semantics)
     elif args.mode == "acquire-sources":
@@ -127,6 +137,8 @@ def main() -> None:
         raise SystemExit(7)
     if args.mode == "migration-plan" and report["status"] != "READY_FOR_REVIEWED_REENCODING":
         raise SystemExit(8)
+    if args.mode == "gate-status" and report["status"] != "EXECUTION_READY_PUBLICATION_BLOCKED":
+        raise SystemExit(9)
 
 
 if __name__ == "__main__":
