@@ -1,0 +1,46 @@
+name: claim-ledger
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  validate-claims:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - name: Reproduce engineering evidence
+        run: make reproduce
+      - name: Validate model-relative claim ledger
+        run: |
+          PYTHONPATH=src python -m hsdl_gap.claim_ledger \
+            --ledger claims/model_relative_claims.json \
+            --artifact-dir generated \
+            > generated/claim-ledger-report.json
+      - name: Show claim ledger summary
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          report = json.loads(Path("generated/claim-ledger-report.json").read_text())
+          print(json.dumps({
+              "status": report["status"],
+              "claim_count": report["claim_count"],
+              "supported_claim_count": report["supported_claim_count"],
+              "evidence_reference_count": report["evidence_reference_count"],
+              "evidence_mismatch_count": report["evidence_mismatch_count"],
+          }, indent=2))
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: claim-ledger-report
+          path: generated/claim-ledger-report.json
