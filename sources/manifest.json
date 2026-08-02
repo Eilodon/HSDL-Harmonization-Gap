@@ -1,0 +1,14 @@
+{
+  "schema_version": "0.1.0",
+  "freeze_id": "legacy-v11-unverified",
+  "status": "historical_reconstruction",
+  "notice": "This manifest is intentionally incomplete. Current-law sources and cryptographic hashes must be added in a later legal-freeze change set.",
+  "sources": [
+    {"id": "EU_AI_ACT_2024_1689", "jurisdiction": "EU", "review_status": "pending"},
+    {"id": "VN_LAW_134_2025", "jurisdiction": "VN", "review_status": "pending"},
+    {"id": "VN_DECREE_142_2026", "jurisdiction": "VN", "review_status": "pending"},
+    {"id": "VN_DECISION_33_2026", "jurisdiction": "VN", "review_status": "not_encoded"},
+    {"id": "ASEAN_GUIDE_2024", "jurisdiction": "ASEAN", "review_status": "pending"},
+    {"id": "ASEAN_GENAI_GUIDE_2025", "jurisdiction": "ASEAN", "review_status": "pending"}
+  ]
+}
