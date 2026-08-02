@@ -1,0 +1,56 @@
+{
+  "schema_version": "1.0.0",
+  "source_id": "VN_DECISION_33_2026",
+  "source_lock_id": "official-pdf-lock-2026-08-02",
+  "source_sha256": "f51e30980912a04ac347e34577779b42545285ad2df3c9f0cec5929b69a0e99b",
+  "review_status": "VISUALLY_VERIFIED_AGAINST_CHECKSUM_PINNED_PDF",
+  "review_scope": {
+    "main_instrument_pages": [1, 2, 3],
+    "annex_table_pages": [4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16],
+    "table_header_page": 4,
+    "signature_page": 3
+  },
+  "review_evidence": {
+    "workflow_run_id": 30734643762,
+    "workflow_head_sha": "7b562e635e9659c10e6822b359c7833b8cbb8385",
+    "workflow_artifact_id": 8829126956,
+    "workflow_artifact_digest": "sha256:cb51112c85535845db32daaacec1feb90f32ffa9511b71d313e2949d56ca3887",
+    "bundle_status": "CHECKSUM_VERIFIED_AND_RENDERED",
+    "rendered_page_count": 16,
+    "review_method": "assistant_visual_inspection_of_checksum_verified_derivative_pages"
+  },
+  "findings": {
+    "route_column_order": {
+      "left": "ARTICLE_13_2_B_PROVIDER_SELF_OR_THIRD_PARTY",
+      "right": "ARTICLE_13_2_A_THIRD_PARTY_CERTIFICATION",
+      "header_visually_confirmed": true
+    },
+    "route_a_ids": [
+      "VN_D33_ERA_04",
+      "VN_D33_ERA_05",
+      "VN_D33_ERA_06",
+      "VN_D33_ERA_07",
+      "VN_D33_HLT_02",
+      "VN_D33_PRC_01"
+    ],
+    "route_a_count": 6,
+    "route_b_count": 40,
+    "total_catalog_rows": 46,
+    "effective_from": "2026-08-15",
+    "transition_deadlines": {
+      "preexisting_healthcare_education_banking": "2027-09-01",
+      "preexisting_other_sectors": "2027-03-01",
+      "placed_in_operation_during_first_six_months": "2027-03-01"
+    },
+    "visible_execution_marks": {
+      "signature_and_seal_present": true,
+      "cryptographic_signature_validation_performed": false
+    }
+  },
+  "limitations": {
+    "independent_human_legal_reviewer": false,
+    "semantic_accuracy_of_every_catalog_description_reaudited": false,
+    "legal_signoff": false,
+    "notice": "This review closes the PDF-visual route-column gate only. It does not constitute independent legal advice, signature validation, or second-reviewer sign-off."
+  }
+}
