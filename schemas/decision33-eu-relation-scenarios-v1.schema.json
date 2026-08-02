@@ -1,0 +1,64 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/Eilodon/HSDL-Harmonization-Gap/schemas/decision33-eu-relation-scenarios-v1.schema.json",
+  "title": "Decision 33 EU relation scenarios v1",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "status",
+    "claim_class",
+    "legal_validation",
+    "context_count_per_scenario",
+    "scenario_count",
+    "scenarios",
+    "completeness"
+  ],
+  "properties": {
+    "schema_version": {"const": "1.0.0"},
+    "status": {"const": "DECISION33_EU_RELATION_SCENARIOS_EXECUTED"},
+    "claim_class": {"const": "MODEL_RELATIVE"},
+    "legal_validation": {"const": "NOT_ASSERTED"},
+    "context_count_per_scenario": {"const": 322},
+    "scenario_count": {"const": 2},
+    "scenarios": {
+      "type": "array",
+      "minItems": 2,
+      "maxItems": 2,
+      "items": {
+        "type": "object",
+        "required": [
+          "scenario_id",
+          "context_count",
+          "unmatched_policy",
+          "matched_product_route_policy",
+          "mapping_counts",
+          "eu_state_counts",
+          "relation_counts",
+          "result_hash",
+          "notice"
+        ],
+        "properties": {
+          "context_count": {"const": 322},
+          "result_hash": {"type": "string", "pattern": "^sha256:[0-9a-f]{64}$"}
+        }
+      }
+    },
+    "completeness": {
+      "type": "object",
+      "required": [
+        "all_322_contexts_receive_scenario_metadata",
+        "open_world_preserves_unknowns",
+        "closed_world_is_legal_classification",
+        "reviewed_eu_vn_crosswalk_available",
+        "notice"
+      ],
+      "properties": {
+        "all_322_contexts_receive_scenario_metadata": {"const": true},
+        "open_world_preserves_unknowns": {"const": true},
+        "closed_world_is_legal_classification": {"const": false},
+        "reviewed_eu_vn_crosswalk_available": {"const": false}
+      }
+    }
+  },
+  "additionalProperties": true
+}
