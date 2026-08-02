@@ -1,0 +1,137 @@
+{
+  "schema_version": "1.0.0",
+  "review_id": null,
+  "review_status": "UNASSIGNED_TEMPLATE",
+  "reviewer": {
+    "full_name": null,
+    "organisation": null,
+    "professional_role": null,
+    "jurisdictions_reviewed": [],
+    "conflicts_disclosed": null,
+    "independence_attestation": null
+  },
+  "reviewed_on": null,
+  "source_lock_id": "official-pdf-lock-2026-08-02",
+  "provision_audit_id": "legacy-v11-provision-audit-2026-08-02",
+  "required_questions": [
+    {
+      "id": "VN_ART10_2_ACTOR_RELATION",
+      "source_id": "VN_LAW_134_2025",
+      "provisions": ["Điều 10 khoản 2"],
+      "question": "Does Article 10(2) support modelling reclassification as a deployer responsibility with provider coordination, rather than a provider-only duty?",
+      "proposed_answer": "YES_DEPLOYER_RESPONSIBILITY_WITH_PROVIDER_COORDINATION",
+      "reviewer_decision": null,
+      "reasoning": null,
+      "required_change": null
+    },
+    {
+      "id": "VN_ART10_5_INSPECTION_ACTOR",
+      "source_id": "VN_LAW_134_2025",
+      "provisions": ["Điều 10 khoản 5 điểm a, điểm b và khoản 6"],
+      "question": "Which actor or authority should be represented for high-risk inspection and medium-risk monitoring, and should paragraph 5 be modelled as an entity duty or an enforcement consequence?",
+      "proposed_answer": "SEPARATE_TRIGGER_MECHANISM_AND_COMPETENT_AUTHORITY",
+      "reviewer_decision": null,
+      "reasoning": null,
+      "required_change": null
+    },
+    {
+      "id": "VN_ART13_ROUTE_SEMANTICS",
+      "source_id": "VN_LAW_134_2025",
+      "provisions": ["Điều 13 khoản 1-3", "Quyết định 33/2026/QĐ-TTg"],
+      "question": "Do point-a systems require third-party certification while point-b systems permit provider self-assessment or engagement of a conformity-assessment organisation, and how should provider versus assessor roles be typed?",
+      "proposed_answer": "DISTINCT_POINT_A_AND_POINT_B_TYPED_ROUTES",
+      "reviewer_decision": null,
+      "reasoning": null,
+      "required_change": null
+    },
+    {
+      "id": "VN_ART13_CERTIFICATION_REUSE",
+      "source_id": "VN_LAW_134_2025",
+      "provisions": ["Điều 13 khoản 1"],
+      "question": "Does the cited provision support automatic reuse of an existing sector certification as encoded in VN_G2_ART13_REUSE?",
+      "proposed_answer": "NO_SUPPORT_IDENTIFIED",
+      "reviewer_decision": null,
+      "reasoning": null,
+      "required_change": null
+    },
+    {
+      "id": "VN_ND142_ART19_DUTY_GRAPH",
+      "source_id": "VN_DECREE_142_2026",
+      "provisions": ["Điều 19 khoản 1-4"],
+      "question": "Does Article 19 require separate record, mitigation, notification, remediation, coordination and timed-report duties, and when exactly does the deployer reporting fallback apply?",
+      "proposed_answer": "SEPARATE_TYPED_DUTIES_WITH_CONDITIONAL_FALLBACK",
+      "reviewer_decision": null,
+      "reasoning": null,
+      "required_change": null
+    },
+    {
+      "id": "VN_ND142_GENERIC_EVENT_RULE",
+      "source_id": "VN_DECREE_142_2026",
+      "provisions": ["Điều 19"],
+      "question": "Is there support for the frozen generic G6 deployer control-risk rule, or should it be withdrawn as an unsupported abstraction and duplicate temporal projection?",
+      "proposed_answer": "WITHDRAW_GENERIC_RULE",
+      "reviewer_decision": null,
+      "reasoning": null,
+      "required_change": null
+    },
+    {
+      "id": "VN_ART4_2_COMPARISON_SCOPE",
+      "source_id": "VN_LAW_134_2025",
+      "provisions": ["Điều 4 khoản 2"],
+      "question": "Should the universal human-control principle be compared only as a general binding principle unless a narrower exact-duty crosswalk to EU Articles 14 and 26 is established?",
+      "proposed_answer": "ANALOGICAL_OR_STRUCTURAL_COMPARISON_ONLY",
+      "reviewer_decision": null,
+      "reasoning": null,
+      "required_change": null
+    },
+    {
+      "id": "EU_SCOPE_AND_PROCEDURE_REENCODING",
+      "source_id": "EU_AI_ACT_2024_1689",
+      "provisions": ["Articles 9, 12, 14, 26, 43 and 50"],
+      "question": "Are the proposed EU scope and procedure corrections sufficient, including removal of the Unacceptable-tier shortcut and separation of Article 43 conformity routes?",
+      "proposed_answer": "REENCODE_WITH_CURRENT_HIGH_RISK_AND_PROCEDURE_DIMENSIONS",
+      "reviewer_decision": null,
+      "reasoning": null,
+      "required_change": null
+    },
+    {
+      "id": "CROSSWALK_EXACTNESS",
+      "source_id": "MULTI_SOURCE",
+      "provisions": ["EU Articles 9, 12, 14, 26, 43, 50", "Vietnam Articles 4, 10, 11, 13 and Decree 142 Article 19"],
+      "question": "Which EU-Vietnam pairs regulate the same exact normative slot, which are only analogical, and which are cross-functional bundles that must not produce an actor-mismatch count?",
+      "proposed_answer": "REVIEW_EACH_TYPED_SLOT_INDEPENDENTLY",
+      "reviewer_decision": null,
+      "reasoning": null,
+      "required_change": null
+    },
+    {
+      "id": "ASEAN_OBJECT_TYPING",
+      "source_id": "ASEAN_GUIDE_2024_AND_GENAI_2025",
+      "provisions": ["Guiding Principles 1, 4 and 6", "Expanded Guide section 3.7"],
+      "question": "Should these objects be represented as voluntary principles and policy recommendations rather than universally triggered entity-level rules?",
+      "proposed_answer": "YES_SEPARATE_PRINCIPLE_AND_RECOMMENDATION_LAYERS",
+      "reviewer_decision": null,
+      "reasoning": null,
+      "required_change": null
+    },
+    {
+      "id": "DECISION33_ROUTE_TABLE",
+      "source_id": "VN_DECISION_33_2026",
+      "provisions": ["Phụ lục danh mục hệ thống trí tuệ nhân tạo có rủi ro cao"],
+      "question": "Does the signed PDF visually and legally support the recorded 40 point-b routes and six point-a routes, including the six listed catalog IDs?",
+      "proposed_answer": "YES_PENDING_INDEPENDENT_CONFIRMATION",
+      "reviewer_decision": null,
+      "reasoning": null,
+      "required_change": null
+    }
+  ],
+  "rule_disposition_review": [],
+  "overall_decision": null,
+  "overall_reasoning": null,
+  "signature": {
+    "method": null,
+    "signed_name": null,
+    "signed_on": null
+  },
+  "notice": "This template is intentionally invalid as a completed sign-off. A reviewer must provide identity, independence, dated decisions, reasons and an overall decision."
+}

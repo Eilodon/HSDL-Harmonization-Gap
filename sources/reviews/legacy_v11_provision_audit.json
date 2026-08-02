@@ -1,0 +1,328 @@
+{
+  "schema_version": "1.0.0",
+  "audit_id": "legacy-v11-provision-audit-2026-08-02",
+  "policy_profile": "legacy-v11",
+  "source_lock_id": "official-pdf-lock-2026-08-02",
+  "review_status": "AUTHOR_AND_ASSISTANT_SOURCE_AUDIT_PENDING_INDEPENDENT_LEGAL_REVIEW",
+  "evidence": {
+    "visual_bundle": {
+      "workflow_run_id": 30735358098,
+      "workflow_head_sha": "f7965d91fafa8cd87d0d30d58e1f116fed556eca",
+      "workflow_artifact_id": 8829376455,
+      "workflow_artifact_digest": "sha256:5d721ac3f68016d1e56a605528dec16a5d844f8364b68ca628c5c3649e35394c",
+      "status": "CHECKSUM_VERIFIED_AND_RENDERED",
+      "rendered_vietnamese_pages": 133
+    },
+    "eu_text": "CHECKSUM_PINNED_OFFICIAL_JOURNAL_PDF_TEXT_LAYER",
+    "asean_text": "CHECKSUM_PINNED_OFFICIAL_SECRETARIAT_PDF_TEXT_LAYER",
+    "independent_human_legal_reviewer": false
+  },
+  "allowed_dispositions": [
+    "CONFIRMED_MINOR_SCOPE_REENCODE",
+    "CONFIRMED_ACTOR_REENCODE",
+    "CONFIRMED_ACTION_REENCODE",
+    "CONFIRMED_TYPED_REENCODE",
+    "DUPLICATE_CROSS_GROUP_ENCODING",
+    "UNSUPPORTED_BY_CITED_PROVISION",
+    "POLICY_PRINCIPLE_NOT_ENTITY_RULE",
+    "POLICY_RECOMMENDATION_NOT_ENTITY_RULE"
+  ],
+  "rules": [
+    {
+      "rule_id": "EU_G1_ART9",
+      "source_id": "EU_AI_ACT_2024_1689",
+      "locator": {"provision": "Article 9(1)-(2)", "pdf_pages": [56, 57]},
+      "disposition": "CONFIRMED_ACTION_REENCODE",
+      "publication_blocker": true,
+      "findings": [
+        "The source requires a documented and maintained risk-management system as a continuous iterative lifecycle process for high-risk AI systems.",
+        "The legacy action monitor_risk is narrower and less typed than the provision.",
+        "The legacy condition includes Unacceptable, although the cited provision is framed for high-risk AI systems."
+      ],
+      "required_change": "Encode establish, implement, document, maintain and iteratively review risk management; replace the coarse High/Unacceptable predicate with current EU high-risk classification logic."
+    },
+    {
+      "rule_id": "EU_G2_ART43",
+      "source_id": "EU_AI_ACT_2024_1689",
+      "locator": {"provision": "Article 43(1)-(4)", "pdf_pages": [78, 79]},
+      "disposition": "CONFIRMED_TYPED_REENCODE",
+      "publication_blocker": true,
+      "findings": [
+        "Provider responsibility is supported, but the applicable procedure branches by Annex III category, harmonised standards, common specifications, Annex I product law and substantial modification.",
+        "A single High/Unacceptable predicate loses the internal-control versus notified-body routes."
+      ],
+      "required_change": "Add Annex category, applicable standards, product-law and substantial-modification dimensions; encode procedure type and notified-body participation separately."
+    },
+    {
+      "rule_id": "EU_G3_ART14_PROVIDER",
+      "source_id": "EU_AI_ACT_2024_1689",
+      "locator": {"provision": "Article 14(1)-(4)", "pdf_pages": [60, 61]},
+      "disposition": "CONFIRMED_MINOR_SCOPE_REENCODE",
+      "publication_blocker": true,
+      "findings": [
+        "Provider-side design and identification of human-oversight measures is supported.",
+        "The obligation applies to high-risk AI systems and is risk-, autonomy- and context-proportionate; the legacy predicate is too coarse and includes Unacceptable."
+      ],
+      "required_change": "Retain provider design duty but encode high-risk scope, proportionality and the distinct Article 14(3)(a)/(b) implementation pathways."
+    },
+    {
+      "rule_id": "EU_G3_ART26_DEPLOYER",
+      "source_id": "EU_AI_ACT_2024_1689",
+      "locator": {"provision": "Article 26(2)-(3)", "pdf_pages": [67, 68]},
+      "disposition": "CONFIRMED_MINOR_SCOPE_REENCODE",
+      "publication_blocker": true,
+      "findings": [
+        "Deployers must assign human oversight to natural persons with competence, training, authority and support.",
+        "The exact duty is more specific than implement_human_oversight and applies to high-risk AI systems."
+      ],
+      "required_change": "Encode assignment, competence, training, authority and support as typed consequences; use current high-risk scope."
+    },
+    {
+      "rule_id": "EU_G4_ART12_PROVIDER",
+      "source_id": "EU_AI_ACT_2024_1689",
+      "locator": {"provision": "Article 12(1)-(3)", "pdf_pages": [59]},
+      "disposition": "CONFIRMED_MINOR_SCOPE_REENCODE",
+      "publication_blocker": true,
+      "findings": [
+        "Automatic event-recording capability over the system lifetime is supported for high-risk AI systems.",
+        "The legacy condition includes Unacceptable and does not retain the traceability purposes or Annex III point 1(a) minimum fields."
+      ],
+      "required_change": "Retain provider-side logging capability while encoding high-risk scope, traceability purpose and category-specific minimum fields."
+    },
+    {
+      "rule_id": "EU_G4_ART26_DEPLOYER",
+      "source_id": "EU_AI_ACT_2024_1689",
+      "locator": {"provision": "Article 26(6)", "pdf_pages": [68]},
+      "disposition": "CONFIRMED_MINOR_SCOPE_REENCODE",
+      "publication_blocker": true,
+      "findings": [
+        "Deployers must keep automatically generated logs under their control for an appropriate period of at least six months unless other law provides otherwise.",
+        "The legacy encoding omits control, minimum retention and legal-exception conditions."
+      ],
+      "required_change": "Add log-control, retention-period and applicable-law exception fields."
+    },
+    {
+      "rule_id": "EU_G5_ART50",
+      "source_id": "EU_AI_ACT_2024_1689",
+      "locator": {"provision": "Article 50(1), (5)", "pdf_pages": [82, 83]},
+      "disposition": "CONFIRMED_MINOR_SCOPE_REENCODE",
+      "publication_blocker": true,
+      "findings": [
+        "Provider disclosure for systems intended to interact directly with natural persons is supported.",
+        "The legacy boolean omits the obviousness test, criminal-law exception, timing and accessibility requirements."
+      ],
+      "required_change": "Encode intended direct interaction, obviousness, authorised-law exception, first-interaction timing and accessibility."
+    },
+    {
+      "rule_id": "EU_G6_ART9",
+      "source_id": "EU_AI_ACT_2024_1689",
+      "locator": {"provision": "Article 9(1)-(2)", "pdf_pages": [56, 57]},
+      "disposition": "DUPLICATE_CROSS_GROUP_ENCODING",
+      "publication_blocker": true,
+      "findings": [
+        "The same Article 9 rule and monitor_risk consequence already appear in G1.",
+        "Reusing the identical norm as a second obligation group can double-count support and directional divergence."
+      ],
+      "required_change": "Remove the duplicate group or define a distinct temporality projection derived from a typed lifecycle property without counting it as an independent obligation."
+    },
+    {
+      "rule_id": "VN_G1_ART10_1",
+      "source_id": "VN_LAW_134_2025",
+      "locator": {"provision": "Điều 10 khoản 1", "pdf_pages": [5]},
+      "disposition": "CONFIRMED_MINOR_SCOPE_REENCODE",
+      "publication_blocker": true,
+      "findings": [
+        "The provider self-classification duty before putting the system into use is visually confirmed.",
+        "The legacy role and lifecycle predicate is directionally supported but must reference the final risk criteria and catalog."
+      ],
+      "required_change": "Retain the pre-use provider duty and replace the legacy risk-tier schema with the final Law, Decree and Decision 33 classification relation."
+    },
+    {
+      "rule_id": "VN_G1_ART10_2",
+      "source_id": "VN_LAW_134_2025",
+      "locator": {"provision": "Điều 10 khoản 2", "pdf_pages": [5]},
+      "disposition": "CONFIRMED_ACTOR_REENCODE",
+      "publication_blocker": true,
+      "findings": [
+        "The deployer inherits the provider classification result and bears safety and integrity responsibility during use.",
+        "When modification, integration or functional change creates new or higher risk, the deployer coordinates with the provider to reclassify.",
+        "The legacy encoding assigns the reclassification consequence only to Provider."
+      ],
+      "required_change": "Represent deployer responsibility and provider coordination as separate typed relations rather than a provider-only actor set."
+    },
+    {
+      "rule_id": "VN_G1_ART10_5A",
+      "source_id": "VN_LAW_134_2025",
+      "locator": {"provision": "Điều 10 khoản 5 điểm a và khoản 6", "pdf_pages": [5, 6]},
+      "disposition": "CONFIRMED_ACTOR_REENCODE",
+      "publication_blocker": true,
+      "findings": [
+        "High-risk systems are subject to periodic inspection or inspection upon signs of violation.",
+        "The paragraph is phrased as an enforcement treatment, while competent-authority action appears in paragraph 6; Regulator as a simple named obligor is an interpretation, not explicit wording."
+      ],
+      "required_change": "Encode inspection trigger and competent-authority enforcement separately; mark actor attribution for independent legal review."
+    },
+    {
+      "rule_id": "VN_G1_ART10_5B",
+      "source_id": "VN_LAW_134_2025",
+      "locator": {"provision": "Điều 10 khoản 5 điểm b", "pdf_pages": [5]},
+      "disposition": "CONFIRMED_ACTION_REENCODE",
+      "publication_blocker": true,
+      "findings": [
+        "Medium-risk systems are monitored through reporting, sampling inspection or independent assessment.",
+        "The legacy action inspect with periodic timing does not represent the provision's alternative mechanisms."
+      ],
+      "required_change": "Encode reporting, sampling and independent-assessment alternatives rather than reusing the high-risk inspection duty."
+    },
+    {
+      "rule_id": "VN_G2_ART13_HIGH",
+      "source_id": "VN_LAW_134_2025",
+      "locator": {"provision": "Điều 13 khoản 1-3", "pdf_pages": [7]},
+      "disposition": "CONFIRMED_TYPED_REENCODE",
+      "publication_blocker": true,
+      "findings": [
+        "Conformity assessment before use or after significant change is confirmed for high-risk systems.",
+        "Article 13(2)(a) requires certification by a registered or recognised conformity-assessment organisation for catalog systems, while 13(2)(b) permits provider self-assessment or hiring such an organisation for other high-risk systems.",
+        "A provider-only consequence flattens third-party assessment and the final Decision 33 route split."
+      ],
+      "required_change": "Encode point-a and point-b routes, assessor role, provider choice and substantial-change retrigger using Decision 33 row identity."
+    },
+    {
+      "rule_id": "VN_G2_ART13_REUSE",
+      "source_id": "VN_LAW_134_2025",
+      "locator": {"provision": "Điều 13 khoản 1", "pdf_pages": [7]},
+      "disposition": "UNSUPPORTED_BY_CITED_PROVISION",
+      "publication_blocker": true,
+      "findings": [
+        "The cited provision requires additional conformity assessment under standards and technical-regulation law when such standards apply.",
+        "It does not state that an existing sector certification is automatically reusable as encoded."
+      ],
+      "required_change": "Retract reuse_sector_certification unless a separate final-law provision is identified and encoded with its actual conditions."
+    },
+    {
+      "rule_id": "VN_G3_ART4_2",
+      "source_id": "VN_LAW_134_2025",
+      "locator": {"provision": "Điều 4 khoản 2", "pdf_pages": [2]},
+      "disposition": "CONFIRMED_TYPED_REENCODE",
+      "publication_blocker": false,
+      "findings": [
+        "The principle states that AI serves humans and does not replace human authority and responsibility, and requires human control and intervention capability over all decisions and behaviour of AI systems.",
+        "The source does not expressly name one obligor; UNSPECIFIED_OBLIGOR is appropriate.",
+        "The provision is a general statutory principle and should not be silently equated to the complete technical design-and-deployment duties in EU Articles 14 and 26."
+      ],
+      "required_change": "Retain as a general binding human-control principle, but compare it as an analogical/structural duty unless a narrower exact normative-slot crosswalk is independently validated."
+    },
+    {
+      "rule_id": "VN_G4_ART10_3",
+      "source_id": "VN_LAW_134_2025",
+      "locator": {"provision": "Điều 10 khoản 3", "pdf_pages": [5]},
+      "disposition": "CONFIRMED_MINOR_SCOPE_REENCODE",
+      "publication_blocker": false,
+      "findings": [
+        "Providers of medium- or high-risk systems must notify the classification result through the national AI one-stop portal before use.",
+        "This is a classification-notification duty, not a logging or incident-reporting duty comparable to EU Article 12."
+      ],
+      "required_change": "Retain the typed classification-notification duty and remove it from any exact logging/incident obligation pair."
+    },
+    {
+      "rule_id": "VN_G4_ND142_INCIDENT",
+      "source_id": "VN_DECREE_142_2026",
+      "locator": {"provision": "Điều 19 khoản 1-4", "pdf_pages": [16, 17, 18]},
+      "disposition": "CONFIRMED_TYPED_REENCODE",
+      "publication_blocker": true,
+      "findings": [
+        "Deployers and users must record the incident, take necessary measures and notify the provider; providers must apply technical measures; providers and deployers coordinate information and response.",
+        "The provider or deployer must make the preliminary report, with a specific deployer fallback when the provider cannot be contacted.",
+        "The legacy primary/fallback pair omits the distinct record, remediate, coordinate and timed-report duties and overgeneralises the fallback relation."
+      ],
+      "required_change": "Encode separate incident recognition, mitigation, notification, technical remediation, coordination, reporting-deadline and fallback duties."
+    },
+    {
+      "rule_id": "VN_G5_ART11_1",
+      "source_id": "VN_LAW_134_2025",
+      "locator": {"provision": "Điều 11 khoản 1", "pdf_pages": [6]},
+      "disposition": "CONFIRMED_MINOR_SCOPE_REENCODE",
+      "publication_blocker": true,
+      "findings": [
+        "Providers must design and operate directly interacting AI systems so users recognise that they are interacting with the system, unless otherwise provided by law.",
+        "The legacy boolean omits the direct-interaction intent, recognisability outcome and legal exception."
+      ],
+      "required_change": "Encode direct interaction, recognisability and statutory exception explicitly."
+    },
+    {
+      "rule_id": "VN_G6_ND142_EVENT",
+      "source_id": "VN_DECREE_142_2026",
+      "locator": {"provision": "No provision stated; nearest relevant source is Điều 19", "pdf_pages": [16, 17, 18]},
+      "disposition": "UNSUPPORTED_BY_CITED_PROVISION",
+      "publication_blocker": true,
+      "findings": [
+        "The policy bundle cites only event-triggered control rather than an article or paragraph.",
+        "Article 19 contains multiple serious-incident duties across deployers, users, providers and authorities; it does not create the single generic Deployer control_risk duty encoded here.",
+        "The serious-harm trigger also duplicates the G4 incident rule while counting it as a separate obligation group."
+      ],
+      "required_change": "Retract this rule. If temporality remains a research dimension, derive event-triggered timing from the typed Article 19 duties without counting a duplicate independent obligation."
+    },
+    {
+      "rule_id": "ASEAN_G1_ACCOUNTABILITY",
+      "source_id": "ASEAN_GUIDE_2024",
+      "locator": {"section": "Guiding Principle 6: Accountability and Integrity", "pdf_pages": [15]},
+      "disposition": "POLICY_PRINCIPLE_NOT_ENTITY_RULE",
+      "publication_blocker": true,
+      "findings": [
+        "The Guide states a voluntary principle of human accountability and control across AI design, development and deployment.",
+        "It is not a universally triggered rule assigning a concrete establish_accountability duty to a named legal actor."
+      ],
+      "required_change": "Model as a voluntary principle object or governance recommendation, not as a rule block equivalent to a statutory obligation."
+    },
+    {
+      "rule_id": "ASEAN_G3_HUMAN_CENTRICITY",
+      "source_id": "ASEAN_GUIDE_2024",
+      "locator": {"section": "Guiding Principle 4: Human-centricity", "pdf_pages": [14]},
+      "disposition": "POLICY_PRINCIPLE_NOT_ENTITY_RULE",
+      "publication_blocker": true,
+      "findings": [
+        "Human-centricity is a voluntary lifecycle principle and is not expressed as one universally applicable entity-level legal duty.",
+        "Treating it as a tautological rule is a modelling choice that must not be confused with statutory applicability."
+      ],
+      "required_change": "Move to the typed ASEAN principle ontology and compare principle coverage separately from binding duties."
+    },
+    {
+      "rule_id": "ASEAN_G4_GENAI_LABEL",
+      "source_id": "ASEAN_GENAI_GUIDE_2025",
+      "locator": {"section": "3.7 Content Provenance", "pdf_pages": [33, 34]},
+      "disposition": "POLICY_RECOMMENDATION_NOT_ENTITY_RULE",
+      "publication_blocker": true,
+      "findings": [
+        "The section discusses clear labelling, watermarking, cryptographic provenance and regional policy development as areas for ASEAN to explore.",
+        "It does not impose one voluntary label_generated_content rule on every system whose sector equals GenAI."
+      ],
+      "required_change": "Represent content provenance as policy-recommendation dimensions and implementation options; remove the artificial sector predicate."
+    },
+    {
+      "rule_id": "ASEAN_G5_TRANSPARENCY",
+      "source_id": "ASEAN_GUIDE_2024",
+      "locator": {"section": "Guiding Principle 1: Transparency and Explainability", "pdf_pages": [11, 12]},
+      "disposition": "POLICY_PRINCIPLE_NOT_ENTITY_RULE",
+      "publication_blocker": true,
+      "findings": [
+        "The Guide describes transparency, disclosure and explainability principles and deployer responsibilities in organisational guidance.",
+        "It is not a tautological statutory rule directly equivalent to EU Article 50 or Vietnam Article 11."
+      ],
+      "required_change": "Move to the ASEAN principle/governance layer and use a typed crosswalk rather than direct bindingness comparison."
+    }
+  ],
+  "summary": {
+    "rule_count": 23,
+    "publication_blocker_count": 21,
+    "unsupported_rule_ids": ["VN_G2_ART13_REUSE", "VN_G6_ND142_EVENT"],
+    "duplicate_rule_ids": ["EU_G6_ART9"],
+    "asean_non_entity_rule_ids": [
+      "ASEAN_G1_ACCOUNTABILITY",
+      "ASEAN_G3_HUMAN_CENTRICITY",
+      "ASEAN_G4_GENAI_LABEL",
+      "ASEAN_G5_TRANSPARENCY"
+    ],
+    "current_quantitative_reuse": "BLOCKED",
+    "notice": "This audit is a reproducible source-to-encoding review, not independent legal advice or second-reviewer sign-off."
+  }
+}

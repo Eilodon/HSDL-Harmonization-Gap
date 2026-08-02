@@ -1,0 +1,75 @@
+{
+  "schema_version": "1.0.0",
+  "lock_id": "official-pdf-lock-2026-08-02",
+  "freeze_date": "2026-08-02",
+  "acquired_at_utc": "2026-08-02T05:23:24+00:00",
+  "source_run": {
+    "workflow_run_id": 30734028941,
+    "workflow_head_sha": "183d1c07de3e6da7a30f90c6f0549bd0389d27e9",
+    "workflow_artifact_id": 8828902026,
+    "workflow_artifact_digest": "sha256:b1e57a2cc91939987ca392212f6de6fe1f47dc1fc4f131f0c8697236cb9eddfa"
+  },
+  "custody": "HASH_ONLY_NOT_VENDORED",
+  "hash_algorithm": "sha256",
+  "review_gates": {
+    "visual_pdf_review": "PENDING",
+    "provision_level_legal_review": "PENDING",
+    "second_reviewer_signoff": "PENDING"
+  },
+  "artifacts": [
+    {
+      "id": "ASEAN_GENAI_GUIDE_2025",
+      "official_pdf_url": "https://asean.org/wp-content/uploads/2025/01/Expanded-ASEAN-Guide-on-AI-Governance-and-Ethics-Generative-AI.pdf",
+      "byte_size": 2906548,
+      "sha256": "d2f9f1293e9af2f3ca4cc3954e39f94ed6fcd6b52f5e72b28d0d51fc9954ddbd",
+      "declared_page_count": 52,
+      "signature_profile": "official_secretariat_pdf"
+    },
+    {
+      "id": "ASEAN_GUIDE_2024",
+      "official_pdf_url": "https://asean.org/wp-content/uploads/2024/02/ASEAN-Guide-on-AI-Governance-and-Ethics_beautified_201223_v2.pdf",
+      "byte_size": 4233765,
+      "sha256": "6464a6d912a918a1b49c36b7dbd7f66b4756352e49164c5020f28b0b190bfe4e",
+      "declared_page_count": 87,
+      "signature_profile": "official_secretariat_pdf"
+    },
+    {
+      "id": "EU_AI_ACT_2024_1689",
+      "official_pdf_url": "https://eur-lex.europa.eu/eli/reg/2024/1689/oj/eng/pdf",
+      "alternate_official_pdf_urls": [
+        "https://eur-lex.europa.eu/legal-content/EN/TXT/PDF/?uri=OJ%3AL_202401689",
+        "https://eur-lex.europa.eu/legal-content/EN/TXT/PDF/?uri=CELEX%3A32024R1689",
+        "https://data.europa.eu/eli/reg/2024/1689/oj/eng/pdf"
+      ],
+      "byte_size": 2583319,
+      "sha256": "bba630444b3278e881066774002a1d7824308934f49ccfa203e65be43692f55e",
+      "declared_page_count": 144,
+      "signature_profile": "official_journal_pdf"
+    },
+    {
+      "id": "VN_DECISION_33_2026",
+      "official_pdf_url": "https://datafiles.chinhphu.vn/cpp/files/vbpq/2026/7/33-qdttg.signed.pdf",
+      "byte_size": 603597,
+      "sha256": "f51e30980912a04ac347e34577779b42545285ad2df3c9f0cec5929b69a0e99b",
+      "declared_page_count": 16,
+      "signature_profile": "government_portal_signed_pdf"
+    },
+    {
+      "id": "VN_DECREE_142_2026",
+      "official_pdf_url": "https://datafiles.chinhphu.vn/cpp/files/vbpq/2026/4/142-2026-ndcp.signed.pdf",
+      "byte_size": 3661910,
+      "sha256": "988fa7091b9f70615b8ae984e7e43b15293eb31398a113c86cc34f26666d5e40",
+      "declared_page_count": 97,
+      "signature_profile": "government_portal_signed_pdf"
+    },
+    {
+      "id": "VN_LAW_134_2025",
+      "official_pdf_url": "https://datafiles.chinhphu.vn/cpp/files/vbpq/2026/01/luat134.signed.pdf",
+      "byte_size": 1060110,
+      "sha256": "53be2f9993e5060cc0ce723fc506d6535c9358978dbbeff11324c8d6236cae69",
+      "declared_page_count": 20,
+      "signature_profile": "government_portal_signed_pdf"
+    }
+  ],
+  "notice": "This lock records the exact bytes acquired from official PDF endpoints. Alternate official URLs are transport-only fallbacks and are accepted only when they reproduce the pinned byte size and SHA-256. The lock is not a substitute for durable artifact custody, signature validation, visual inspection, or legal review."
+}

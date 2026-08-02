@@ -1,0 +1,156 @@
+{
+  "schema_version": "0.4.0",
+  "freeze_id": "current-2026-08-02",
+  "freeze_date": "2026-08-02",
+  "status": "EXECUTION_READY_PARTIAL_LEGAL_FREEZE_PUBLICATION_BLOCKED",
+  "policy": "No current-law quantitative or manuscript claim may be promoted until the provisional current graph has received independent legal and policy review, a shared current context relation with negative and boundary cases, current-profile differential validation, and all remaining custody and review gates.",
+  "artifact_lock": {
+    "path": "sources/official_pdf_lock_2026-08-02.json",
+    "lock_id": "official-pdf-lock-2026-08-02",
+    "custody": "HASH_ONLY_NOT_VENDORED",
+    "initial_acquisition": {
+      "workflow_run_id": 30734028941,
+      "workflow_head_sha": "183d1c07de3e6da7a30f90c6f0549bd0389d27e9",
+      "artifact_id": 8828902026,
+      "artifact_digest": "sha256:b1e57a2cc91939987ca392212f6de6fe1f47dc1fc4f131f0c8697236cb9eddfa",
+      "status": "COMPLETE_6_OF_6"
+    },
+    "latest_verified_build": {
+      "workflow_run_id": 30736474315,
+      "workflow_head_sha": "b0af61ca6252409df102556e8fcb1e5b9a5249bd",
+      "status": "CHECKSUM_VERIFICATION_AND_VISUAL_BUNDLE_SUCCESS"
+    }
+  },
+  "internal_review": {
+    "decision33_visual_overlay": {
+      "path": "sources/reviews/vn_decision_33_2026.visual.json",
+      "status": "COMPLETE_AGAINST_CHECKSUM_PINNED_PDF",
+      "point_a_routes": 6,
+      "point_b_routes": 40,
+      "independent_legal_signoff": false
+    },
+    "legacy_rule_provision_audit": {
+      "path": "sources/reviews/legacy_v11_provision_audit.json",
+      "status": "VALIDATED_23_OF_23_RULES",
+      "publication_blocker_rules": 21,
+      "unsupported_rule_ids": [
+        "VN_G2_ART13_REUSE",
+        "VN_G6_ND142_EVENT"
+      ],
+      "duplicate_rule_ids": [
+        "EU_G6_ART9"
+      ],
+      "independent_legal_signoff": false
+    },
+    "provisional_current_graph": {
+      "path": "policies/current_candidate_graph_2026-08-02.json",
+      "status": "VALIDATED_PROVISIONAL_GRAPH",
+      "quantitative_evaluation_allowed": false,
+      "directional_gap_metrics_allowed": false,
+      "actor_mismatch_metrics_allowed": false,
+      "independent_legal_signoff": false
+    },
+    "independent_review_packet": {
+      "brief": "reviews/INDEPENDENT_REVIEW_PACKET.md",
+      "template": "reviews/independent_legal_review_template.json",
+      "status": "READY_FOR_ASSIGNMENT_NOT_COMPLETED",
+      "required_questions": 11,
+      "required_rule_reviews": 23
+    }
+  },
+  "gates": {
+    "official_pdf_endpoint": "COMPLETE",
+    "sha256_identity": "COMPLETE_AND_REVERIFIED",
+    "checksum_verified_derivative_bundle": "COMPLETE",
+    "decision33_route_table_visual_review": "COMPLETE_INTERNAL_REVIEW",
+    "legacy_rule_provision_audit": "COMPLETE_INTERNAL_REVIEW",
+    "provisional_current_rule_graph": "VALIDATED_NO_QUANTITATIVE_USE",
+    "independent_legal_policy_review": "PENDING",
+    "shared_current_classification_relation": "PENDING",
+    "negative_and_boundary_contexts": "PENDING",
+    "current_profile_hsdl_differential": "PENDING",
+    "current_profile_typed_cover": "PENDING",
+    "durable_artifact_custody": "PENDING",
+    "cryptographic_signature_validation": "PENDING",
+    "current_law_quantitative_claims": "BLOCKED",
+    "manuscript_regeneration": "BLOCKED"
+  },
+  "sources": [
+    {
+      "id": "EU_AI_ACT_2024_1689",
+      "jurisdiction": "EU",
+      "instrument": "Regulation (EU) 2024/1689",
+      "official_pdf_url": "https://eur-lex.europa.eu/eli/reg/2024/1689/oj/eng/pdf",
+      "declared_page_count": 144,
+      "byte_size": 2583319,
+      "sha256": "bba630444b3278e881066774002a1d7824308934f49ccfa203e65be43692f55e",
+      "artifact_status": "OFFICIAL_PDF_CHECKSUM_PINNED_NOT_VENDORED",
+      "review_status": "PROVISION_AUDITED_PENDING_INDEPENDENT_REVIEW"
+    },
+    {
+      "id": "VN_LAW_134_2025",
+      "jurisdiction": "VN",
+      "instrument": "Luật 134/2025/QH15",
+      "official_pdf_url": "https://datafiles.chinhphu.vn/cpp/files/vbpq/2026/01/luat134.signed.pdf",
+      "effective_from": "2026-03-01",
+      "declared_page_count": 20,
+      "byte_size": 1060110,
+      "sha256": "53be2f9993e5060cc0ce723fc506d6535c9358978dbbeff11324c8d6236cae69",
+      "artifact_status": "OFFICIAL_SIGNED_PDF_CHECKSUM_PINNED_NOT_VENDORED",
+      "review_status": "VISUALLY_AND_PROVISION_AUDITED_PENDING_INDEPENDENT_REVIEW"
+    },
+    {
+      "id": "VN_DECREE_142_2026",
+      "jurisdiction": "VN",
+      "instrument": "Nghị định 142/2026/NĐ-CP",
+      "official_pdf_url": "https://datafiles.chinhphu.vn/cpp/files/vbpq/2026/4/142-2026-ndcp.signed.pdf",
+      "effective_from": "2026-05-01",
+      "declared_page_count": 97,
+      "byte_size": 3661910,
+      "sha256": "988fa7091b9f70615b8ae984e7e43b15293eb31398a113c86cc34f26666d5e40",
+      "artifact_status": "OFFICIAL_SIGNED_PDF_CHECKSUM_PINNED_NOT_VENDORED",
+      "review_status": "VISUALLY_AND_PROVISION_AUDITED_PENDING_INDEPENDENT_REVIEW"
+    },
+    {
+      "id": "VN_DECISION_33_2026",
+      "jurisdiction": "VN",
+      "instrument": "Quyết định 33/2026/QĐ-TTg",
+      "official_pdf_url": "https://datafiles.chinhphu.vn/cpp/files/vbpq/2026/7/33-qdttg.signed.pdf",
+      "effective_from": "2026-08-15",
+      "declared_page_count": 16,
+      "byte_size": 603597,
+      "sha256": "f51e30980912a04ac347e34577779b42545285ad2df3c9f0cec5929b69a0e99b",
+      "artifact_status": "OFFICIAL_SIGNED_PDF_CHECKSUM_PINNED_NOT_VENDORED",
+      "review_status": "ROUTE_TABLE_VISUALLY_VERIFIED_PENDING_INDEPENDENT_REVIEW"
+    },
+    {
+      "id": "ASEAN_GUIDE_2024",
+      "jurisdiction": "ASEAN",
+      "instrument": "ASEAN Guide on AI Governance and Ethics",
+      "official_pdf_url": "https://asean.org/wp-content/uploads/2024/02/ASEAN-Guide-on-AI-Governance-and-Ethics_beautified_201223_v2.pdf",
+      "declared_page_count": 87,
+      "byte_size": 4233765,
+      "sha256": "6464a6d912a918a1b49c36b7dbd7f66b4756352e49164c5020f28b0b190bfe4e",
+      "artifact_status": "OFFICIAL_PDF_CHECKSUM_PINNED_NOT_VENDORED",
+      "review_status": "ONTOLOGY_AND_PROVISION_AUDITED_PENDING_INDEPENDENT_POLICY_REVIEW"
+    },
+    {
+      "id": "ASEAN_GENAI_GUIDE_2025",
+      "jurisdiction": "ASEAN",
+      "instrument": "Expanded ASEAN Guide on AI Governance and Ethics – Generative AI",
+      "official_pdf_url": "https://asean.org/wp-content/uploads/2025/01/Expanded-ASEAN-Guide-on-AI-Governance-and-Ethics-Generative-AI.pdf",
+      "declared_page_count": 52,
+      "byte_size": 2906548,
+      "sha256": "d2f9f1293e9af2f3ca4cc3954e39f94ed6fcd6b52f5e72b28d0d51fc9954ddbd",
+      "artifact_status": "OFFICIAL_PDF_CHECKSUM_PINNED_NOT_VENDORED",
+      "review_status": "ONTOLOGY_AND_PROVISION_AUDITED_PENDING_INDEPENDENT_POLICY_REVIEW"
+    }
+  ],
+  "attestation": {
+    "technical_execution_ready": true,
+    "independent_review_completed": false,
+    "current_law_quantitative_results_exist": false,
+    "publication_ready": false,
+    "notice": "Internal source and structural audits authorise controlled provisional re-encoding only. They do not constitute independent legal review or publication clearance."
+  }
+}

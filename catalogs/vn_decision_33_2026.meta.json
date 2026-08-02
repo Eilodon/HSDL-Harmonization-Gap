@@ -1,0 +1,21 @@
+{
+  "schema_version": "0.2.0",
+  "catalog_id": "VN_DECISION_33_2026",
+  "instrument": "Quyết định 33/2026/QĐ-TTg",
+  "issued_on": "2026-06-30",
+  "effective_from": "2026-08-15",
+  "freeze_date": "2026-08-02",
+  "legal_status_at_freeze": "ISSUED_NOT_YET_EFFECTIVE",
+  "official_landing_page": "https://vanban.chinhphu.vn/?classid=1&docid=218658&orggroupid=3&pageid=27160",
+  "appendix_transcription_source": "https://thuvienphapluat.vn/van-ban/Cong-nghe-thong-tin/Quyet-dinh-33-2026-QD-TTg-Danh-muc-he-thong-tri-tue-nhan-tao-co-rui-ro-cao-712969.aspx",
+  "authority_note": "Official metadata is verified against the Government legal-document portal. Row text is provisionally transcribed from an HTML legal database pending acquisition and hashing of the signed official PDF.",
+  "signed_pdf_url": "https://datafiles.chinhphu.vn/cpp/files/vbpq/2026/7/33-qdttg.signed.pdf",
+  "assessment_route_note": "The two route columns were reconstructed from two independent structured HTML transcriptions. Forty rows map to point b of Article 13(2) and six rows map to point a. The mapping remains pending visual verification against the signed official PDF.",
+  "transition": {
+    "pre_effective_health_education_finance_deadline": "2027-09-01",
+    "pre_effective_other_sectors_deadline": "2027-03-01",
+    "systems_started_within_six_months_deadline": "2027-03-01",
+    "continued_operation_during_transition": true,
+    "serious_harm_authority_stop_exception": true
+  }
+}

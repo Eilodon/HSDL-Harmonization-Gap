@@ -1,0 +1,48 @@
+{
+  "schema_version": "0.1.0",
+  "status": "AUTHOR_INTERPRETED_PENDING_SECOND_LEGAL_REVIEW",
+  "comparisons": [
+    {
+      "left": "EU",
+      "right": "VN",
+      "groups": {
+        "G1": {
+          "relation": "cross_functional_bundle",
+          "shared_alignment_keys": ["risk_governance"],
+          "rationale": "EU continuous provider risk monitoring is bundled with Vietnamese provider classification, reclassification, and regulator inspection. These are related governance functions, not one actor-substitutable duty.",
+          "review_status": "REQUIRES_OBLIGATION_PAIRING_AUDIT"
+        },
+        "G2": {
+          "relation": "equivalent_with_extension",
+          "shared_alignment_keys": ["conformity_assessment"],
+          "rationale": "Both regimes impose conformity assessment, while the Vietnamese encoding additionally models certification reuse.",
+          "review_status": "PENDING_DECISION_33_CURRENT_RULE_PROFILE"
+        },
+        "G3": {
+          "relation": "analogous",
+          "shared_alignment_keys": ["human_oversight"],
+          "rationale": "EU design and deployment duties are compared with a general Vietnamese human-control principle. The protected interest overlaps, but the normative slots and actor specification differ.",
+          "review_status": "REQUIRES_ANALOGY_JUSTIFICATION"
+        },
+        "G4": {
+          "relation": "cross_functional_bundle",
+          "shared_alignment_keys": [],
+          "rationale": "EU logging and retention are bundled with Vietnamese classification notification and serious-incident reporting. They should not be treated as one duty merely because the frozen paper placed them in one group.",
+          "review_status": "REQUIRES_GROUP_REDESIGN"
+        },
+        "G5": {
+          "relation": "equivalent",
+          "shared_alignment_keys": ["interaction_transparency"],
+          "rationale": "Both encoded duties disclose AI interaction to affected humans and use the same exact normative slot.",
+          "review_status": "READY_FOR_PROVISION_AUDIT"
+        },
+        "G6": {
+          "relation": "analogous",
+          "shared_alignment_keys": ["risk_control"],
+          "rationale": "EU continuous provider risk monitoring and Vietnamese event-triggered deployer control address related risk-control goals but are temporally and functionally distinct duties.",
+          "review_status": "REQUIRES_ANALOGY_JUSTIFICATION"
+        }
+      }
+    }
+  ]
+}

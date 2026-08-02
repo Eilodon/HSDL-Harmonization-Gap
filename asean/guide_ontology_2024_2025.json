@@ -1,0 +1,74 @@
+{
+  "schema_version": "0.1.0",
+  "ontology_id": "ASEAN_AI_GUIDES_2024_2025",
+  "freeze_date": "2026-08-02",
+  "status": "OFFICIAL_TEXT_PARSED_PENDING_ARTIFACT_HASH_AND_SECOND_REVIEW",
+  "sources": [
+    {
+      "id": "ASEAN_GUIDE_2024",
+      "title": "ASEAN Guide on AI Governance and Ethics",
+      "official_url": "https://asean.org/wp-content/uploads/2024/02/ASEAN-Guide-on-AI-Governance-and-Ethics_beautified_201223_v2.pdf",
+      "locators": {
+        "guiding_principles": "pp. 10-15",
+        "governance_framework": "p. 17"
+      }
+    },
+    {
+      "id": "ASEAN_GENAI_GUIDE_2025",
+      "title": "Expanded ASEAN Guide on AI Governance and Ethics – Generative AI",
+      "official_url": "https://asean.org/wp-content/uploads/2025/01/Expanded-ASEAN-Guide-on-AI-Governance-and-Ethics-Generative-AI.pdf",
+      "locators": {
+        "risk_objects": "pp. 2 and 7",
+        "policy_dimensions": "pp. 2 and 8",
+        "continued_principles": "p. 9"
+      }
+    }
+  ],
+  "guiding_principles": [
+    {"id": "transparency_explainability", "name": "Transparency and Explainability"},
+    {"id": "fairness_equity", "name": "Fairness and Equity"},
+    {"id": "security_safety", "name": "Security and Safety"},
+    {"id": "human_centricity", "name": "Human-centricity"},
+    {"id": "privacy_data_governance", "name": "Privacy and Data Governance"},
+    {"id": "accountability_integrity", "name": "Accountability and Integrity"},
+    {"id": "robustness_reliability", "name": "Robustness and Reliability"}
+  ],
+  "governance_framework_areas": [
+    {"id": "internal_governance", "name": "Internal governance structures and measures"},
+    {"id": "human_involvement", "name": "Determining the level of human involvement in AI-augmented decision-making"},
+    {"id": "operations_management", "name": "Operations management"},
+    {"id": "stakeholder_interaction", "name": "Stakeholder interaction and communication"}
+  ],
+  "genai_risk_objects": {
+    "official_object_type": "named_risk_set",
+    "research_representation": "multi_label_flags",
+    "codomain": "power_set",
+    "mutually_exclusive": false,
+    "exhaustive_partition_claimed_by_source": false,
+    "items": [
+      {"id": "mistakes_anthropomorphism", "name": "Mistakes and anthropomorphism"},
+      {"id": "inaccurate_responses_disinformation", "name": "Factually inaccurate responses and disinformation"},
+      {"id": "deepfakes_impersonation_fraud_malicious", "name": "Deepfakes, impersonation, fraudulent and malicious activities"},
+      {"id": "ip_infringement", "name": "Infringement of intellectual property rights"},
+      {"id": "privacy_confidentiality", "name": "Privacy and confidentiality"},
+      {"id": "embedded_biases", "name": "Propagation of embedded biases"}
+    ],
+    "modeling_note": "The source names six risks but does not state that they are mutually exclusive partition cells. The research model therefore represents any system by a subset of risk flags rather than one single-valued category."
+  },
+  "genai_policy_dimensions": [
+    {"id": "accountability", "name": "Accountability"},
+    {"id": "data", "name": "Data"},
+    {"id": "trusted_development_deployment", "name": "Trusted Development and Deployment"},
+    {"id": "incident_reporting", "name": "Incident Reporting"},
+    {"id": "testing_assurance", "name": "Testing and Assurance"},
+    {"id": "security", "name": "Security"},
+    {"id": "content_provenance", "name": "Content Provenance"},
+    {"id": "safety_alignment_rd", "name": "Safety and Alignment Research & Development"},
+    {"id": "ai_public_good", "name": "AI for Public Good"}
+  ],
+  "legacy_taxonomy_audit": {
+    "legacy_labels": ["Societal", "Economic", "Environmental", "Security", "Human Rights", "Ethical"],
+    "status": "NOT_SUPPORTED_AS_THE_SIX_GENAI_RISKS_BY_THE_OFFICIAL_GUIDES",
+    "action": "Remove the single-valued ASEAN partition proposition and re-formulate comparison over typed principles, governance practices, policy dimensions, and multi-label risk flags."
+  }
+}

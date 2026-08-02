@@ -1,0 +1,35 @@
+{
+  "counts": {
+    "genai_policy_dimensions": 9,
+    "genai_risk_objects": 6,
+    "governance_framework_areas": 4,
+    "guiding_principles": 7
+  },
+  "freeze_date": "2026-08-02",
+  "legacy_taxonomy": {
+    "h7_2_gate": "RETRACT_OR_REFORMULATE_AS_TYPED_MULTI_LABEL_COMPARISON",
+    "labels": [
+      "Societal",
+      "Economic",
+      "Environmental",
+      "Security",
+      "Human Rights",
+      "Ethical"
+    ],
+    "status": "NOT_SUPPORTED_AS_THE_SIX_GENAI_RISKS_BY_THE_OFFICIAL_GUIDES"
+  },
+  "ontology_id": "ASEAN_AI_GUIDES_2024_2025",
+  "risk_model": {
+    "codomain": "power_set",
+    "mutually_exclusive": false,
+    "overlap_example": [
+      "embedded_biases",
+      "inaccurate_responses_disinformation",
+      "privacy_confidentiality"
+    ],
+    "representation": "multi_label_flags",
+    "source_claims_exhaustive_partition": false
+  },
+  "status": "OFFICIAL_TEXT_PARSED_PENDING_ARTIFACT_HASH_AND_SECOND_REVIEW",
+  "validation_errors": []
+}
