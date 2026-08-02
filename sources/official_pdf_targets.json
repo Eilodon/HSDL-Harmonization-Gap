@@ -14,6 +14,11 @@
       "jurisdiction": "EU",
       "instrument": "Regulation (EU) 2024/1689",
       "official_pdf_url": "https://eur-lex.europa.eu/eli/reg/2024/1689/oj/eng/pdf",
+      "alternate_official_pdf_urls": [
+        "https://eur-lex.europa.eu/legal-content/EN/TXT/PDF/?uri=OJ%3AL_202401689",
+        "https://eur-lex.europa.eu/legal-content/EN/TXT/PDF/?uri=CELEX%3A32024R1689",
+        "https://data.europa.eu/eli/reg/2024/1689/oj/eng/pdf"
+      ],
       "declared_page_count": 144,
       "signature_profile": "official_journal_pdf",
       "required_for_current_claims": true
