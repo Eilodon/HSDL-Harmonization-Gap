@@ -29,6 +29,10 @@ REQUIRED_CATALOG_DIMENSIONS = {
     "placed_in_operation_on",
 }
 
+ROUTE_A = "ARTICLE_13_2_A_THIRD_PARTY_CERTIFICATION"
+ROUTE_B = "ARTICLE_13_2_B_PROVIDER_SELF_OR_THIRD_PARTY"
+ROUTE_EVIDENCE = "TWO_HTML_TRANSCRIPTIONS_MATCH_PENDING_SIGNED_PDF_VISUAL"
+
 
 def build_decision33_report(catalog_path: str | Path) -> dict[str, object]:
     catalog = load_catalog(catalog_path)
@@ -36,8 +40,9 @@ def build_decision33_report(catalog_path: str | Path) -> dict[str, object]:
     missing = sorted(REQUIRED_CATALOG_DIMENSIONS - LEGACY_CONTEXT_DIMENSIONS)
     transport_count = catalog.sector_counts.get("transport", 0)
     unresolved_routes = sum(
-        item.assessment_route == "UNRESOLVED_FROM_HTML_TABLE" for item in catalog.items
+        item.assessment_route not in {ROUTE_A, ROUTE_B} for item in catalog.items
     )
+    route_evidence_statuses = sorted({item.assessment_route_evidence for item in catalog.items})
     return {
         "catalog_id": catalog.id,
         "freeze_date": catalog.freeze_date,
@@ -45,6 +50,8 @@ def build_decision33_report(catalog_path: str | Path) -> dict[str, object]:
         "item_count": len(catalog.items),
         "sector_counts": catalog.sector_counts,
         "transport_share": transport_count / len(catalog.items),
+        "assessment_route_counts": catalog.assessment_route_counts,
+        "assessment_route_evidence_statuses": route_evidence_statuses,
         "unresolved_assessment_routes": unresolved_routes,
         "validation_errors": validation_errors,
         "legacy_schema_compatibility": {
@@ -59,7 +66,7 @@ def build_decision33_report(catalog_path: str | Path) -> dict[str, object]:
         },
         "research_gates": {
             "H7_1_classification_compatibility": "REQUIRES_REPROOF",
-            "G2_conformity_assessment": "REQUIRES_REENCODING_AFTER_ROUTE_VERIFICATION",
+            "G2_conformity_assessment": "ROUTES_INGESTED_PENDING_SIGNED_PDF_VISUAL_AND_RULE_ENCODING",
             "draft_four_group_catalog_claims": "SUPERSEDED_BY_FINAL_SIX_SECTOR_CATALOG",
             "legacy_quantitative_tables": "HISTORICAL_ONLY_UNTIL_CURRENT_PROFILE_EXISTS",
         },
