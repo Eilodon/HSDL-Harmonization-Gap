@@ -11,6 +11,7 @@ from .provenance import (
     build_source_verification_report,
 )
 from .report import build_legacy_report
+from .review_bundle import build_visual_review_bundle
 
 
 def main() -> None:
@@ -24,6 +25,7 @@ def main() -> None:
             "asean-ontology",
             "acquire-sources",
             "verify-sources",
+            "build-review-bundle",
         ),
         default="legacy",
     )
@@ -37,6 +39,10 @@ def main() -> None:
     parser.add_argument(
         "--lock",
         default="sources/official_pdf_lock_2026-08-02.json",
+    )
+    parser.add_argument(
+        "--output-dir",
+        default="generated/source-review-bundle",
     )
     parser.add_argument(
         "--crosswalk",
@@ -55,6 +61,8 @@ def main() -> None:
         report = build_source_provenance_report(args.targets)
     elif args.mode == "verify-sources":
         report = build_source_verification_report(args.targets, args.lock)
+    elif args.mode == "build-review-bundle":
+        report = build_visual_review_bundle(args.lock, args.output_dir)
     elif args.mode == "typed-alignment":
         report = build_typed_alignment_audit(
             args.policies, args.crosswalk, duty_semantics_path=args.semantics
@@ -66,6 +74,11 @@ def main() -> None:
         raise SystemExit(2)
     if args.mode == "verify-sources" and report["status"] != "VERIFIED":
         raise SystemExit(3)
+    if (
+        args.mode == "build-review-bundle"
+        and report["status"] != "CHECKSUM_VERIFIED_AND_RENDERED"
+    ):
+        raise SystemExit(4)
 
 
 if __name__ == "__main__":
