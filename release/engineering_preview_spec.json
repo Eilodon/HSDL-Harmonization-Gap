@@ -1,0 +1,44 @@
+{
+  "schema_version": "1.0.0",
+  "release_id": "engineering-preview-0.2.0-dev",
+  "release_class": "ENGINEERING_PREVIEW",
+  "claim_class": "MODEL_RELATIVE",
+  "legal_validation": "NOT_ASSERTED",
+  "include": [
+    "pyproject.toml",
+    "Makefile",
+    "README_CANONICAL.md",
+    "policies/current_candidate_graph_2026-08-02.json",
+    "catalogs/vn_decision_33_2026.csv",
+    "catalogs/vn_decision_33_2026.meta.json",
+    "profiles/current-candidate-2026-08-02/*.json",
+    "metrics/*.json",
+    "claims/*.json",
+    "sources/official_pdf_lock_2026-08-02.json",
+    "sources/official_pdf_targets.json",
+    "sources/current_freeze_2026-08-02.json",
+    "schemas/*.schema.json",
+    "generated/*.json",
+    "generated/*.hsdl"
+  ],
+  "required_generated_artifacts": [
+    "generated/decision33-context-v2-corpus.json",
+    "generated/current-candidate-ir-report.json",
+    "generated/model-relative-metric-analysis.json",
+    "generated/current-candidate-hsdl-differential-report.json",
+    "generated/independent-javascript-oracle-report.json",
+    "generated/symbolic-catalog-region-report.json",
+    "generated/candidate-priority-report.json",
+    "generated/engineering-gate-status.json",
+    "generated/claim-ledger-report.json"
+  ],
+  "publication_blockers": [
+    "DURABLE_PDF_CUSTODY_NOT_ESTABLISHED",
+    "PDF_SIGNATURE_VALIDATION_NOT_ESTABLISHED",
+    "LICENSE_FILE_NOT_DECLARED",
+    "CITATION_METADATA_NOT_DECLARED",
+    "ALL_CANDIDATE_PREDICATES_NOT_EXECUTABLE",
+    "FULL_SYMBOLIC_COVERAGE_NOT_COMPLETE"
+  ],
+  "notice": "This package is an engineering preview. It preserves declared model-relative evidence and must not be presented as a reviewed current-law publication release."
+}
