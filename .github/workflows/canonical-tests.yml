@@ -29,24 +29,25 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: "3.11"
-      - name: Acquire and fingerprint official PDFs
-        id: acquire
+      - name: Verify official PDFs against pinned lock
+        id: verify
         continue-on-error: true
         run: |
           mkdir -p generated
           PYTHONPATH=src python -m hsdl_gap \
-            --mode acquire-sources \
+            --mode verify-sources \
             --targets sources/official_pdf_targets.json \
-            > generated/source-provenance-candidate.json
-      - name: Show acquisition report
+            --lock sources/official_pdf_lock_2026-08-02.json \
+            > generated/source-provenance-verification.json
+      - name: Show verification report
         if: always()
-        run: cat generated/source-provenance-candidate.json
+        run: cat generated/source-provenance-verification.json
       - uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: source-provenance-candidate
-          path: generated/source-provenance-candidate.json
+          name: source-provenance-verification
+          path: generated/source-provenance-verification.json
           retention-days: 14
-      - name: Enforce complete acquisition
-        if: steps.acquire.outcome != 'success'
+      - name: Enforce pinned checksums
+        if: steps.verify.outcome != 'success'
         run: exit 1
