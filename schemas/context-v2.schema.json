@@ -1,0 +1,63 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://eilodon.github.io/hsdl-harmonization-gap/schemas/context-v2.schema.json",
+  "title": "HSDL Gap typed context v2",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version", "context_id", "profile_id", "fixture_type", "facts", "provenance"
+  ],
+  "properties": {
+    "schema_version": {"const": "2.0.0"},
+    "context_id": {
+      "type": "string",
+      "pattern": "^context:[A-Za-z0-9][A-Za-z0-9._-]*:[A-Za-z0-9][A-Za-z0-9._-]*$"
+    },
+    "profile_id": {"type": "string", "minLength": 1},
+    "fixture_type": {
+      "enum": [
+        "POSITIVE_WITNESS", "SINGLE_FAULT_NEGATIVE", "BOUNDARY_BELOW",
+        "BOUNDARY_EXACT", "BOUNDARY_ABOVE", "UNKNOWN_FACT", "MIXED_FEATURE",
+        "MULTI_RULE_OVERLAP", "PRIORITY_CONFLICT", "TEMPORAL_TRANSITION", "ADVERSARIAL"
+      ]
+    },
+    "parent_context_id": {"type": ["string", "null"]},
+    "mutation_id": {"type": ["string", "null"]},
+    "facts": {
+      "type": "object",
+      "additionalProperties": true,
+      "properties": {
+        "time": {"type": "object"},
+        "system": {"type": "object"},
+        "actors": {"type": "object"},
+        "classification": {"type": "object"},
+        "operations": {"type": "object"}
+      }
+    },
+    "provenance": {
+      "type": "object",
+      "required": ["status"],
+      "properties": {
+        "status": {
+          "enum": [
+            "SOURCE_TRANSCRIBED", "SOURCE_DERIVED", "AUTHOR_ASSUMPTION",
+            "SYNTHETIC_FIXTURE", "MIGRATED_LEGACY", "EXTERNAL_REVIEWED", "UNKNOWN"
+          ]
+        }
+      },
+      "additionalProperties": true
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {"fixture_type": {"const": "POSITIVE_WITNESS"}},
+        "required": ["fixture_type"]
+      },
+      "then": {},
+      "else": {
+        "required": ["parent_context_id"]
+      }
+    }
+  ]
+}
