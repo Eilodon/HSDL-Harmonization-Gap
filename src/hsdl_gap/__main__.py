@@ -11,6 +11,7 @@ from .hsdl_core import build_hsdl_differential_report, emit_hsdl_core
 from .provision_audit import build_provision_audit_report
 from .report import build_legacy_report
 from .review_bundle import build_visual_review_bundle
+from .reviewer_signoff import build_review_readiness_report
 from .robust_provenance import (
     build_source_provenance_report,
     build_source_verification_report,
@@ -30,6 +31,7 @@ def main() -> None:
             "asean-ontology",
             "typed-cover",
             "provision-audit",
+            "review-readiness",
             "emit-hsdl",
             "hsdl-differential",
             "acquire-sources",
@@ -44,6 +46,10 @@ def main() -> None:
     parser.add_argument(
         "--provision-audit",
         default="sources/reviews/legacy_v11_provision_audit.json",
+    )
+    parser.add_argument(
+        "--review-template",
+        default="reviews/independent_legal_review_template.json",
     )
     parser.add_argument(
         "--targets",
@@ -80,6 +86,11 @@ def main() -> None:
         report = build_typed_cover_audit(args.policies, args.semantics)
     elif args.mode == "provision-audit":
         report = build_provision_audit_report(args.policies, args.provision_audit)
+    elif args.mode == "review-readiness":
+        report = build_review_readiness_report(
+            args.review_template,
+            args.provision_audit,
+        )
     elif args.mode == "hsdl-differential":
         report = build_hsdl_differential_report(args.policies, args.semantics)
     elif args.mode == "acquire-sources":
@@ -108,6 +119,8 @@ def main() -> None:
         raise SystemExit(5)
     if args.mode == "provision-audit" and report["status"] != "VALIDATED":
         raise SystemExit(6)
+    if args.mode == "review-readiness" and report["status"] != "READY_FOR_ASSIGNMENT":
+        raise SystemExit(7)
 
 
 if __name__ == "__main__":
