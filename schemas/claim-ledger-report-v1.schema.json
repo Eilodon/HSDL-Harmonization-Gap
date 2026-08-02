@@ -1,0 +1,60 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://eilodon.github.io/hsdl-harmonization-gap/schemas/claim-ledger-report-v1.schema.json",
+  "title": "Model-relative claim ledger report v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version", "status", "claim_class", "legal_validation", "ledger_id",
+    "ledger_hash", "artifact_directory", "claim_count", "supported_claim_count",
+    "unsupported_claim_count", "evidence_reference_count", "evidence_mismatch_count",
+    "artifact_hashes", "claims", "boundary"
+  ],
+  "properties": {
+    "schema_version": {"const": "1.0.0"},
+    "status": {"const": "CLAIM_LEDGER_VALIDATED"},
+    "claim_class": {"const": "MODEL_RELATIVE"},
+    "legal_validation": {"const": "NOT_ASSERTED"},
+    "ledger_id": {"const": "model-relative-claims-v1"},
+    "ledger_hash": {"type": "string", "pattern": "^sha256:[0-9a-f]{64}$"},
+    "artifact_directory": {"type": "string"},
+    "claim_count": {"const": 10},
+    "supported_claim_count": {"const": 10},
+    "unsupported_claim_count": {"const": 0},
+    "evidence_reference_count": {"const": 30},
+    "evidence_mismatch_count": {"const": 0},
+    "artifact_hashes": {
+      "type": "object",
+      "minProperties": 6,
+      "additionalProperties": {"type": "string", "pattern": "^sha256:[0-9a-f]{64}$"}
+    },
+    "claims": {
+      "type": "array",
+      "minItems": 10,
+      "maxItems": 10,
+      "items": {
+        "type": "object",
+        "required": ["claim_id", "text", "supported", "evidence"],
+        "properties": {
+          "claim_id": {"type": "string", "minLength": 1},
+          "text": {"type": "string", "minLength": 1},
+          "supported": {"const": true},
+          "evidence": {"type": "array", "minItems": 1}
+        }
+      }
+    },
+    "boundary": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "legal_validation", "empirical_prevalence", "publication_authorisation", "notice"
+      ],
+      "properties": {
+        "legal_validation": {"const": "NOT_ASSERTED"},
+        "empirical_prevalence": {"const": "NOT_SUPPORTED"},
+        "publication_authorisation": {"const": "NOT_PROVIDED"},
+        "notice": {"type": "string", "minLength": 1}
+      }
+    }
+  }
+}
