@@ -19,8 +19,9 @@ Accordingly:
 
 - `risk_tier=High` is not a faithful encoding of membership in the final catalog;
 - Proposition H7.1 must be re-proved against a richer shared attribute space;
-- Group 2 must not be recomputed until the two Article 13 conformity-assessment
-  columns are visually verified in the signed PDF;
+- the two Article 13 conformity-assessment columns have been reconstructed from two
+  matching structured HTML transcriptions (40 rows under point b, six under point a),
+  but remain pending visual verification against the signed official PDF;
 - the legacy numeric results remain historical regression targets, not current-law
   findings.
 
@@ -29,5 +30,6 @@ Accordingly:
 Official metadata is verified from the Government legal-document portal. The
 row inventory is provisionally transcribed from an HTML legal database. The signed
 PDF must still be acquired, hashed, visually checked, and independently reviewed.
-The dataset deliberately stores `UNRESOLVED_FROM_HTML_TABLE` rather than guessing
-which conformity-assessment column contains each printed `x`.
+The dataset records the reconstructed route and an explicit evidence-status field.
+The mapping is machine-usable but is not treated as legal sign-off until the signed
+PDF table is visually verified.
