@@ -20,6 +20,7 @@ reproduce: verify
 	PYTHONPATH=src $(PYTHON) -m hsdl_gap.decision33_context_v2 --catalog catalogs/vn_decision_33_2026.csv > generated/decision33-context-v2-corpus.json
 	PYTHONPATH=src $(PYTHON) -m hsdl_gap --mode current-candidate --current-candidate policies/current_candidate_graph_2026-08-02.json > generated/current-candidate-audit.json
 	PYTHONPATH=src $(PYTHON) -m hsdl_gap.candidate_ir > generated/current-candidate-ir-report.json
+	PYTHONPATH=src $(PYTHON) -m hsdl_gap.candidate_predicates > generated/source-derived-predicate-report.json
 	PYTHONPATH=src $(PYTHON) -m hsdl_gap.metric_analysis > generated/model-relative-metric-analysis.json
 	PYTHONPATH=src $(PYTHON) -m hsdl_gap.duty_signature > generated/operational-duty-signature-report.json
 	PYTHONPATH=src $(PYTHON) -m hsdl_gap.candidate_hsdl --emit > generated/current-candidate.hsdl
