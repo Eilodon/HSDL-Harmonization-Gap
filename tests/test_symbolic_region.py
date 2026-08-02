@@ -81,7 +81,8 @@ class SymbolicRegionTests(unittest.TestCase):
             self.assertIn("classification.vn.catalog_item_id", constraints)
             self.assertNotIn(None, constraints["classification.vn.catalog_item_id"])
             self.assertEqual(
-                constraints["time.before_use_or_after_significant_change"], [True]
+                constraints["operations.before_use_or_after_significant_change"],
+                [True],
             )
 
     def test_domain_and_report_are_hashed_and_model_relative(self) -> None:
