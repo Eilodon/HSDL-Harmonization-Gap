@@ -6,7 +6,10 @@ import json
 from .alignment import build_typed_alignment_audit
 from .asean import build_asean_ontology_audit
 from .current_report import build_decision33_report
-from .provenance import build_source_provenance_report
+from .provenance import (
+    build_source_provenance_report,
+    build_source_verification_report,
+)
 from .report import build_legacy_report
 
 
@@ -20,6 +23,7 @@ def main() -> None:
             "typed-alignment",
             "asean-ontology",
             "acquire-sources",
+            "verify-sources",
         ),
         default="legacy",
     )
@@ -29,6 +33,10 @@ def main() -> None:
     parser.add_argument(
         "--targets",
         default="sources/official_pdf_targets.json",
+    )
+    parser.add_argument(
+        "--lock",
+        default="sources/official_pdf_lock_2026-08-02.json",
     )
     parser.add_argument(
         "--crosswalk",
@@ -45,6 +53,8 @@ def main() -> None:
         report = build_asean_ontology_audit(args.asean_ontology)
     elif args.mode == "acquire-sources":
         report = build_source_provenance_report(args.targets)
+    elif args.mode == "verify-sources":
+        report = build_source_verification_report(args.targets, args.lock)
     elif args.mode == "typed-alignment":
         report = build_typed_alignment_audit(
             args.policies, args.crosswalk, duty_semantics_path=args.semantics
@@ -54,6 +64,8 @@ def main() -> None:
     print(json.dumps(report, indent=2, sort_keys=True, ensure_ascii=False))
     if args.mode == "acquire-sources" and report["status"] != "COMPLETE":
         raise SystemExit(2)
+    if args.mode == "verify-sources" and report["status"] != "VERIFIED":
+        raise SystemExit(3)
 
 
 if __name__ == "__main__":
