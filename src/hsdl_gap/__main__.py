@@ -110,6 +110,7 @@ def main() -> None:
             policy_path=args.policies,
             duty_semantics_path=args.semantics,
             catalog_path=args.catalog,
+            current_candidate_path=args.current_candidate,
             provision_audit_path=args.provision_audit,
             review_template_path=args.review_template,
         )
