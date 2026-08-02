@@ -1,0 +1,66 @@
+{
+  "schema_version": "0.2.0",
+  "freeze_id": "current-2026-08-02",
+  "freeze_date": "2026-08-02",
+  "status": "PARTIAL_SOURCE_FREEZE",
+  "policy": "No current-law quantitative claim may be promoted until every load-bearing source has an acquired immutable artifact, content hash, provision locator, and legal-review status.",
+  "sources": [
+    {
+      "id": "EU_AI_ACT_2024_1689",
+      "jurisdiction": "EU",
+      "instrument": "Regulation (EU) 2024/1689",
+      "official_url": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32024R1689",
+      "issued_on": "2024-06-13",
+      "official_journal_on": "2024-07-12",
+      "effective_from": "2024-08-01",
+      "artifact_status": "OFFICIAL_HTML_VERIFIED_PDF_NOT_HASHED",
+      "review_status": "PENDING_PROVISION_AUDIT"
+    },
+    {
+      "id": "VN_LAW_134_2025",
+      "jurisdiction": "VN",
+      "instrument": "Luật 134/2025/QH15",
+      "official_url": null,
+      "effective_from": "2026-03-01",
+      "artifact_status": "NOT_ACQUIRED",
+      "review_status": "PENDING"
+    },
+    {
+      "id": "VN_DECREE_142_2026",
+      "jurisdiction": "VN",
+      "instrument": "Nghị định 142/2026/NĐ-CP",
+      "official_url": "https://vanban.chinhphu.vn/?docid=218029&orggroupid=2&pageid=27160",
+      "issued_on": "2026-04-30",
+      "effective_from": "2026-05-01",
+      "signed_pdf_url": "https://datafiles.chinhphu.vn/cpp/files/vbpq/2026/4/142-2026-ndcp.signed.pdf",
+      "artifact_status": "OFFICIAL_PDF_LOCATED_NOT_HASHED",
+      "review_status": "PENDING_PROVISION_AUDIT"
+    },
+    {
+      "id": "VN_DECISION_33_2026",
+      "jurisdiction": "VN",
+      "instrument": "Quyết định 33/2026/QĐ-TTg",
+      "official_url": "https://vanban.chinhphu.vn/?classid=1&docid=218658&orggroupid=3&pageid=27160",
+      "issued_on": "2026-06-30",
+      "effective_from": "2026-08-15",
+      "artifact_status": "OFFICIAL_METADATA_VERIFIED_SIGNED_PDF_NOT_ACQUIRED",
+      "review_status": "PROVISIONAL_ROW_TRANSCRIPTION_COMPLETE_ASSESSMENT_COLUMNS_UNRESOLVED"
+    },
+    {
+      "id": "ASEAN_GUIDE_2024",
+      "jurisdiction": "ASEAN",
+      "instrument": "ASEAN Guide on AI Governance and Ethics",
+      "official_url": "https://asean.org/book/asean-guide-on-ai-governance-and-ethics/",
+      "artifact_status": "NOT_ACQUIRED",
+      "review_status": "PENDING"
+    },
+    {
+      "id": "ASEAN_GENAI_GUIDE_2025",
+      "jurisdiction": "ASEAN",
+      "instrument": "Expanded ASEAN Guide on AI Governance and Ethics – Generative AI",
+      "official_url": "https://asean.org/wp-content/uploads/2025/01/Expanded-ASEAN-Guide-on-AI-Governance-and-Ethics-Generative-AI.pdf",
+      "artifact_status": "OFFICIAL_URL_IDENTIFIED_NOT_HASHED",
+      "review_status": "PENDING_TAXONOMY_REBUILD"
+    }
+  ]
+}
