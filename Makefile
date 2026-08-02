@@ -15,6 +15,7 @@ reproduce: test
 	PYTHONPATH=src $(PYTHON) -m hsdl_gap --mode emit-hsdl --policies policies/legacy_v11.json --semantics alignments/legacy_duty_semantics.json > generated/legacy-v11.hsdl
 	PYTHONPATH=src $(PYTHON) -m hsdl_gap --mode hsdl-differential --policies policies/legacy_v11.json --semantics alignments/legacy_duty_semantics.json > generated/hsdl-differential-report.json
 	PYTHONPATH=src $(PYTHON) -m hsdl_gap --mode typed-cover --policies policies/legacy_v11.json --semantics alignments/legacy_duty_semantics.json > generated/typed-cover-audit.json
+	PYTHONPATH=src $(PYTHON) -m hsdl_gap --mode provision-audit --policies policies/legacy_v11.json --provision-audit sources/reviews/legacy_v11_provision_audit.json > generated/provision-audit-report.json
 
 verify-sources:
 	mkdir -p generated
