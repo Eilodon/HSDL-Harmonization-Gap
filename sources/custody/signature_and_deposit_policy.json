@@ -1,0 +1,54 @@
+{
+  "schema_version": "1.0.0",
+  "policy_id": "official-source-signature-and-custody-v1",
+  "claim_class": "SOURCE_IDENTITY_AND_CUSTODY",
+  "legal_validation": "NOT_ASSERTED",
+  "signature_profiles": {
+    "government_portal_signed_pdf": {
+      "embedded_signature_expectation": "REQUIRED",
+      "cryptographic_integrity_expectation": "REQUIRED",
+      "certificate_trust_expectation": "REPORT_SEPARATELY",
+      "notice": "The .signed.pdf government-portal transport is expected to contain at least one embedded PDF signature. A valid byte-range/CMS signature and a trusted certificate chain are separate findings."
+    },
+    "official_journal_pdf": {
+      "embedded_signature_expectation": "NOT_REQUIRED",
+      "cryptographic_integrity_expectation": "IF_PRESENT",
+      "certificate_trust_expectation": "REPORT_SEPARATELY",
+      "notice": "Official Journal publication identity is enforced by official transport plus pinned bytes; an embedded PDF signature is not required by this repository policy."
+    },
+    "official_secretariat_pdf": {
+      "embedded_signature_expectation": "NOT_REQUIRED",
+      "cryptographic_integrity_expectation": "IF_PRESENT",
+      "certificate_trust_expectation": "REPORT_SEPARATELY",
+      "notice": "Secretariat publication identity is enforced by official transport plus pinned bytes; an embedded PDF signature is not required by this repository policy."
+    }
+  },
+  "external_deposit": {
+    "status": "READY_FOR_OWNER_SELECTED_PROVIDER",
+    "acceptable_provider_classes": [
+      "ZENODO",
+      "OSF",
+      "INSTITUTIONAL_REPOSITORY",
+      "OTHER_DOI_OR_ARK_PROVIDER"
+    ],
+    "required_receipt_fields": [
+      "provider",
+      "deposit_id",
+      "persistent_identifier",
+      "persistent_url",
+      "submitted_at_utc",
+      "manifest_sha256",
+      "depositor",
+      "object_receipts"
+    ],
+    "minimum_object_requirements": {
+      "all_six_locked_pdf_objects": true,
+      "exact_sha256_match": true,
+      "exact_byte_size_match": true,
+      "source_lock_included": true,
+      "signature_report_included": true,
+      "metadata_manifest_included": true
+    },
+    "notice": "The repository can build and verify a deposit-ready package. It must not claim durable external custody until an owner-selected provider returns a verified persistent receipt."
+  }
+}
