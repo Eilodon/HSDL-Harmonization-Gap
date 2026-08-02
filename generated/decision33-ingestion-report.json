@@ -1,0 +1,46 @@
+{
+  "catalog_id": "VN_DECISION_33_2026",
+  "freeze_date": "2026-08-02",
+  "item_count": 46,
+  "legacy_schema_compatibility": {
+    "missing_dimensions": [
+      "automation_level",
+      "biometric_or_sensitive_attribute_use",
+      "catalog_item_id",
+      "decision_effect",
+      "human_approval_or_review",
+      "legacy_or_preexisting_certification_status",
+      "physical_actuation",
+      "placed_in_operation_on",
+      "scale_or_value_threshold",
+      "use_case"
+    ],
+    "reason": "The final catalog is use-case and sector specific and repeatedly conditions coverage on automation, human approval, decision effect, thresholds, physical actuation, or biometric use. The legacy eight-dimensional context cannot encode those predicates without information loss.",
+    "status": "NOT_EXACTLY_REPRESENTABLE"
+  },
+  "legal_status_at_freeze": "ISSUED_NOT_YET_EFFECTIVE",
+  "research_gates": {
+    "G2_conformity_assessment": "REQUIRES_REENCODING_AFTER_ROUTE_VERIFICATION",
+    "H7_1_classification_compatibility": "REQUIRES_REPROOF",
+    "draft_four_group_catalog_claims": "SUPERSEDED_BY_FINAL_SIX_SECTOR_CATALOG",
+    "legacy_quantitative_tables": "HISTORICAL_ONLY_UNTIL_CURRENT_PROFILE_EXISTS"
+  },
+  "sector_counts": {
+    "banking": 2,
+    "education": 3,
+    "ethnic_and_religious_affairs": 7,
+    "healthcare": 2,
+    "proceedings": 1,
+    "transport": 31
+  },
+  "transition": {
+    "continued_operation_during_transition": true,
+    "pre_effective_health_education_finance_deadline": "2027-09-01",
+    "pre_effective_other_sectors_deadline": "2027-03-01",
+    "serious_harm_authority_stop_exception": true,
+    "systems_started_within_six_months_deadline": "2027-03-01"
+  },
+  "transport_share": 0.6739130434782609,
+  "unresolved_assessment_routes": 46,
+  "validation_errors": []
+}
