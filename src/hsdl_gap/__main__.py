@@ -5,6 +5,7 @@ import json
 
 from .alignment import build_typed_alignment_audit
 from .asean import build_asean_ontology_audit
+from .current_context import build_current_context_report
 from .current_report import build_decision33_report
 from .hsdl_core import build_hsdl_differential_report, emit_hsdl_core
 from .provenance import (
@@ -23,6 +24,7 @@ def main() -> None:
         choices=(
             "legacy",
             "decision33",
+            "current-context",
             "typed-alignment",
             "asean-ontology",
             "typed-cover",
@@ -64,6 +66,8 @@ def main() -> None:
         return
     if args.mode == "decision33":
         report = build_decision33_report(args.catalog)
+    elif args.mode == "current-context":
+        report = build_current_context_report(args.catalog)
     elif args.mode == "asean-ontology":
         report = build_asean_ontology_audit(args.asean_ontology)
     elif args.mode == "typed-cover":
