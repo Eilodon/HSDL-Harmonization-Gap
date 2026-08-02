@@ -14,6 +14,7 @@ from .stable_id import content_sha256
 
 
 _MISSING = object()
+_SYNTHETIC_TRUTH_TABLE_ROOT = "context:classification-relation:synthetic-root"
 
 
 class ClassificationState(str, Enum):
@@ -267,6 +268,7 @@ def _synthetic_relation_cases() -> tuple[ContextV2, ...]:
                 "generator": "classification-relation-truth-table-v1",
                 "legal_validation": "NOT_ASSERTED",
             },
+            parent_context_id=_SYNTHETIC_TRUTH_TABLE_ROOT,
         )
         for name, classification in cases
     )
