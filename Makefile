@@ -17,6 +17,7 @@ reproduce: test
 	PYTHONPATH=src $(PYTHON) -m hsdl_gap --mode typed-cover --policies policies/legacy_v11.json --semantics alignments/legacy_duty_semantics.json > generated/typed-cover-audit.json
 	PYTHONPATH=src $(PYTHON) -m hsdl_gap --mode provision-audit --policies policies/legacy_v11.json --provision-audit sources/reviews/legacy_v11_provision_audit.json > generated/provision-audit-report.json
 	PYTHONPATH=src $(PYTHON) -m hsdl_gap --mode review-readiness --review-template reviews/independent_legal_review_template.json --provision-audit sources/reviews/legacy_v11_provision_audit.json > generated/independent-review-readiness.json
+	PYTHONPATH=src $(PYTHON) -m hsdl_gap --mode migration-plan --provision-audit sources/reviews/legacy_v11_provision_audit.json > generated/current-profile-migration-plan.json
 
 verify-sources:
 	mkdir -p generated
