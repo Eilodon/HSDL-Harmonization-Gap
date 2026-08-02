@@ -4,7 +4,7 @@ import unittest
 from pathlib import Path
 
 from hsdl_gap.catalog import load_catalog, validate_catalog
-from hsdl_gap.current_report import build_decision33_report
+from hsdl_gap.current_report import ROUTE_A, ROUTE_B, ROUTE_EVIDENCE, build_decision33_report
 
 ROOT = Path(__file__).resolve().parents[1]
 CATALOG = ROOT / "catalogs" / "vn_decision_33_2026.csv"
@@ -53,11 +53,19 @@ class Decision33CatalogTests(unittest.TestCase):
             "REQUIRES_REPROOF",
         )
 
-    def test_assessment_routes_cannot_be_guessed_from_flat_html(self) -> None:
-        self.assertEqual(self.report["unresolved_assessment_routes"], 46)
+    def test_assessment_routes_are_encoded_but_not_legally_signed_off(self) -> None:
+        self.assertEqual(
+            self.report["assessment_route_counts"],
+            {ROUTE_A: 6, ROUTE_B: 40},
+        )
+        self.assertEqual(self.report["unresolved_assessment_routes"], 0)
+        self.assertEqual(
+            self.report["assessment_route_evidence_statuses"],
+            [ROUTE_EVIDENCE],
+        )
         self.assertEqual(
             self.report["research_gates"]["G2_conformity_assessment"],
-            "REQUIRES_REENCODING_AFTER_ROUTE_VERIFICATION",
+            "ROUTES_INGESTED_PENDING_SIGNED_PDF_VISUAL_AND_RULE_ENCODING",
         )
 
 
