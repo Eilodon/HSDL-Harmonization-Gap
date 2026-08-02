@@ -35,6 +35,7 @@ reproduce: verify
 		--expected generated/python-oracle-projection-report.json \
 		> generated/independent-javascript-oracle-report.json
 	PYTHONPATH=src $(PYTHON) -m hsdl_gap.symbolic_region > generated/symbolic-catalog-region-report.json
+	PYTHONPATH=src $(PYTHON) -m hsdl_gap.symbolic_profile_v2 > generated/source-derived-symbolic-profile-v2-report.json
 	PYTHONPATH=src $(PYTHON) -m hsdl_gap.priority_v2 > generated/candidate-priority-report.json
 	PYTHONPATH=src $(PYTHON) -m hsdl_gap --mode typed-alignment --policies policies/legacy_v11.json --crosswalk alignments/legacy_obligation_crosswalk.json --semantics alignments/legacy_duty_semantics.json > generated/typed-alignment-audit.json
 	PYTHONPATH=src $(PYTHON) -m hsdl_gap --mode asean-ontology --asean-ontology asean/guide_ontology_2024_2025.json > generated/asean-ontology-audit.json
