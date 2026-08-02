@@ -8,6 +8,7 @@ from .asean import build_asean_ontology_audit
 from .current_context import build_current_context_report
 from .current_report import build_decision33_report
 from .hsdl_core import build_hsdl_differential_report, emit_hsdl_core
+from .migration_plan import build_migration_plan
 from .provision_audit import build_provision_audit_report
 from .report import build_legacy_report
 from .review_bundle import build_visual_review_bundle
@@ -32,6 +33,7 @@ def main() -> None:
             "typed-cover",
             "provision-audit",
             "review-readiness",
+            "migration-plan",
             "emit-hsdl",
             "hsdl-differential",
             "acquire-sources",
@@ -91,6 +93,8 @@ def main() -> None:
             args.review_template,
             args.provision_audit,
         )
+    elif args.mode == "migration-plan":
+        report = build_migration_plan(args.provision_audit)
     elif args.mode == "hsdl-differential":
         report = build_hsdl_differential_report(args.policies, args.semantics)
     elif args.mode == "acquire-sources":
@@ -121,6 +125,8 @@ def main() -> None:
         raise SystemExit(6)
     if args.mode == "review-readiness" and report["status"] != "READY_FOR_ASSIGNMENT":
         raise SystemExit(7)
+    if args.mode == "migration-plan" and report["status"] != "READY_FOR_REVIEWED_REENCODING":
+        raise SystemExit(8)
 
 
 if __name__ == "__main__":
