@@ -134,35 +134,51 @@ class SourceSignatureCustodyTests(unittest.TestCase):
             for source_id in source_ids
         }
         targets = {
+            "schema_version": "1.0.0",
             "freeze_date": "2026-08-02",
-            "policy": {"maximum_bytes": 1000000},
+            "policy": {
+                "transport": "https_only",
+                "hash_algorithm": "sha256",
+                "maximum_bytes": 1000000,
+                "notice": "test fixture",
+            },
             "targets": [],
         }
         lock = {
+            "schema_version": "1.0.0",
             "lock_id": "test-lock",
+            "freeze_date": "2026-08-02",
+            "hash_algorithm": "sha256",
+            "custody": "HASH_ONLY_NOT_VENDORED",
             "artifacts": [],
         }
         for source_id in source_ids:
             signed = source_id.startswith("VN_")
+            signature_profile = (
+                "government_portal_signed_pdf"
+                if signed
+                else "official_journal_pdf"
+            )
+            source_url = f"https://example.test/{source_id}.pdf"
             targets["targets"].append(
                 {
                     "id": source_id,
                     "jurisdiction": "VN" if signed else "OTHER",
                     "instrument": source_id,
-                    "official_pdf_url": f"https://example.test/{source_id}.pdf",
-                    "signature_profile": (
-                        "government_portal_signed_pdf"
-                        if signed
-                        else "official_journal_pdf"
-                    ),
+                    "official_pdf_url": source_url,
+                    "declared_page_count": 1,
+                    "signature_profile": signature_profile,
                     "required_for_current_claims": True,
                 }
             )
             lock["artifacts"].append(
                 {
                     "id": source_id,
+                    "official_pdf_url": source_url,
                     "byte_size": len(pdf_bytes[source_id]),
                     "sha256": hashlib.sha256(pdf_bytes[source_id]).hexdigest(),
+                    "declared_page_count": 1,
+                    "signature_profile": signature_profile,
                 }
             )
         policy = {
