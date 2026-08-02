@@ -1,0 +1,36 @@
+name: governance-declarations
+
+on:
+  pull_request:
+    paths:
+      - "governance/**"
+      - "src/hsdl_gap/governance_declarations.py"
+      - "tests/test_governance_declarations.py"
+      - "schemas/project-identity-declaration-v1.schema.json"
+      - "schemas/governance-readiness-report-v1.schema.json"
+      - ".github/workflows/governance-declarations.yml"
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  validate-owner-declaration:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Run owner declaration tests
+        run: PYTHONPATH=src python -m unittest tests.test_governance_declarations -v
+      - name: Build governance readiness report
+        run: |
+          mkdir -p generated
+          PYTHONPATH=src python -m hsdl_gap.governance_declarations --declaration governance/project_identity_declaration.json --repository-root . > generated/governance-readiness-report.json
+          cat generated/governance-readiness-report.json
+      - uses: actions/upload-artifact@v4
+        with:
+          name: governance-readiness-report
+          path: generated/governance-readiness-report.json
+          retention-days: 30
