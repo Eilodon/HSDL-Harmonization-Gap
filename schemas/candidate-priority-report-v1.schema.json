@@ -1,0 +1,57 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://eilodon.github.io/hsdl-harmonization-gap/schemas/candidate-priority-report-v1.schema.json",
+  "title": "Candidate priority graph report v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version", "status", "claim_class", "legal_validation", "profile_id",
+    "priority_graph_hash", "duty_count", "edge_count", "edge_relation_counts",
+    "graph_status", "all_duties_active_probe", "semantics", "limitations"
+  ],
+  "properties": {
+    "schema_version": {"const": "1.0.0"},
+    "status": {"const": "CANDIDATE_PRIORITY_GRAPH_EXECUTABLE"},
+    "claim_class": {"const": "MODEL_RELATIVE"},
+    "legal_validation": {"const": "NOT_ASSERTED"},
+    "profile_id": {"const": "current-candidate-2026-08-02"},
+    "priority_graph_hash": {"type": "string", "pattern": "^sha256:[0-9a-f]{64}$"},
+    "duty_count": {"const": 25},
+    "edge_count": {"const": 0},
+    "edge_relation_counts": {"type": "object", "maxProperties": 0},
+    "graph_status": {"const": "EXPLICIT_EMPTY_PRIORITY_GRAPH"},
+    "all_duties_active_probe": {
+      "type": "object",
+      "required": [
+        "state", "active_ids", "effective_ids", "suppressed",
+        "unresolved_conflicts", "cycle_components"
+      ],
+      "properties": {
+        "state": {"const": "DETERMINATE"},
+        "active_ids": {"type": "array", "minItems": 25, "maxItems": 25},
+        "effective_ids": {"type": "array", "minItems": 25, "maxItems": 25},
+        "suppressed": {"type": "object", "maxProperties": 0},
+        "unresolved_conflicts": {"type": "array", "maxItems": 0},
+        "cycle_components": {"type": "array", "maxItems": 0}
+      }
+    },
+    "semantics": {
+      "type": "object",
+      "required": ["suppressing_relations", "accumulate", "independent", "conflict", "cycles"]
+    },
+    "limitations": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "candidate_edges_declared", "current_candidate_priority_resolution",
+        "conditional_priority_edges", "notice"
+      ],
+      "properties": {
+        "candidate_edges_declared": {"const": false},
+        "current_candidate_priority_resolution": {"const": "NO_EDGES_DECLARED_NO_IMPLICIT_PRIORITY"},
+        "conditional_priority_edges": {"const": "NOT_IMPLEMENTED"},
+        "notice": {"type": "string", "minLength": 1}
+      }
+    }
+  }
+}
