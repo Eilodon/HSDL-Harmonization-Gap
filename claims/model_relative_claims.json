@@ -1,5 +1,5 @@
 {
-  "schema_version": "1.0.0",
+  "schema_version": "1.1.0",
   "ledger_id": "model-relative-claims-v1",
   "claim_class": "MODEL_RELATIVE",
   "legal_validation": "NOT_ASSERTED",
@@ -24,7 +24,7 @@
     },
     {
       "claim_id": "CLAIM-CANDIDATE-DETERMINACY",
-      "text": "The partial candidate IR produces 690 determinate outcomes and 5,750 indeterminate outcomes across 6,440 rule-context evaluations without assumptions.",
+      "text": "The historical partial candidate IR produces 690 determinate outcomes and 5,750 indeterminate outcomes across 6,440 rule-context evaluations without assumptions.",
       "evidence": [
         {"artifact": "model-relative-metric-analysis.json", "pointer": "/metrics/2/numerator", "expected": 690},
         {"artifact": "model-relative-metric-analysis.json", "pointer": "/metrics/2/denominator", "expected": 6440},
@@ -33,7 +33,7 @@
     },
     {
       "claim_id": "CLAIM-CANDIDATE-APPLICABILITY-BOUNDS",
-      "text": "Candidate applicability is bounded between 322/6,440 and 6,072/6,440 when all indeterminate evaluations remain unresolved.",
+      "text": "Historical partial-candidate applicability is bounded between 322/6,440 and 6,072/6,440 when all indeterminate evaluations remain unresolved.",
       "evidence": [
         {"artifact": "model-relative-metric-analysis.json", "pointer": "/metrics/3/numerator", "expected": 322},
         {"artifact": "model-relative-metric-analysis.json", "pointer": "/metrics/3/denominator", "expected": 6440},
@@ -43,11 +43,39 @@
     },
     {
       "claim_id": "CLAIM-ASSUMPTION-SENSITIVITY",
-      "text": "The Article 13 timing assumption changes 184 of 6,440 evaluation states, all within the two explicit catalog routes.",
+      "text": "The Article 13 timing assumption changes 184 of 6,440 historical partial-IR evaluation states, all within the two explicit catalog routes.",
       "evidence": [
         {"artifact": "model-relative-metric-analysis.json", "pointer": "/sensitivity/changed_evaluation_count", "expected": 184},
         {"artifact": "model-relative-metric-analysis.json", "pointer": "/sensitivity/evaluation_count", "expected": 6440},
         {"artifact": "model-relative-metric-analysis.json", "pointer": "/sensitivity/classification", "expected": "ASSUMPTION_SENSITIVE"}
+      ]
+    },
+    {
+      "claim_id": "CLAIM-SOURCE-DERIVED-PREDICATES",
+      "text": "The source-derived profile contains executable predicates for all 20 candidate rules and enriched semantics for all 25 duties, with zero readiness-only predicates.",
+      "evidence": [
+        {"artifact": "source-derived-predicate-report.json", "pointer": "/executable_predicate_count", "expected": 20},
+        {"artifact": "source-derived-predicate-report.json", "pointer": "/readiness_only_predicate_count", "expected": 0},
+        {"artifact": "source-derived-predicate-report.json", "pointer": "/duty_count", "expected": 25}
+      ]
+    },
+    {
+      "claim_id": "CLAIM-EU-NATIVE-CORPUS",
+      "text": "The EU Article 6 and Annex III native corpus contains 36 contexts over nine routes, yielding 18 in-scope, nine out-of-scope and nine unknown classifications.",
+      "evidence": [
+        {"artifact": "eu-article6-context-v2-corpus.json", "pointer": "/context_count", "expected": 36},
+        {"artifact": "eu-article6-context-v2-corpus.json", "pointer": "/native_route_count", "expected": 9},
+        {"artifact": "eu-article6-context-v2-corpus.json", "pointer": "/classification_state_counts/IN_SCOPE", "expected": 18},
+        {"artifact": "eu-article6-context-v2-corpus.json", "pointer": "/classification_state_counts/UNKNOWN", "expected": 9}
+      ]
+    },
+    {
+      "claim_id": "CLAIM-EU-VN-RELATION-SCENARIOS",
+      "text": "Two model-relative EU overlay scenarios execute the native EU–Vietnam relation over all 322 Decision 33 contexts.",
+      "evidence": [
+        {"artifact": "decision33-eu-relation-scenarios.json", "pointer": "/scenario_count", "expected": 2},
+        {"artifact": "decision33-eu-relation-scenarios.json", "pointer": "/context_count_per_scenario", "expected": 322},
+        {"artifact": "decision33-eu-relation-scenarios.json", "pointer": "/completeness/all_322_contexts_receive_scenario_metadata", "expected": true}
       ]
     },
     {
@@ -60,7 +88,7 @@
     },
     {
       "claim_id": "CLAIM-INDEPENDENT-ORACLE-EQUIVALENCE",
-      "text": "The independent JavaScript oracle reproduces the Python projection hash across 12,880 evaluations.",
+      "text": "The independent JavaScript oracle reproduces the Python projection hash across 12,880 historical partial-IR evaluations.",
       "evidence": [
         {"artifact": "independent-javascript-oracle-report.json", "pointer": "/projection_hash_match", "expected": true},
         {"artifact": "independent-javascript-oracle-report.json", "pointer": "/projection_count", "expected": 12880},
@@ -69,25 +97,27 @@
     },
     {
       "claim_id": "CLAIM-SYMBOLIC-COVERAGE",
-      "text": "Symbolic regions currently cover 2 of 20 candidate rules and match the finite oracle on 644 comparisons.",
+      "text": "The finite source-derived symbolic profile covers all 20 candidate rule predicates and five duty triggers with zero differential mismatches.",
       "evidence": [
-        {"artifact": "symbolic-catalog-region-report.json", "pointer": "/symbolically_compiled_rule_count", "expected": 2},
-        {"artifact": "symbolic-catalog-region-report.json", "pointer": "/candidate_rule_count", "expected": 20},
-        {"artifact": "symbolic-catalog-region-report.json", "pointer": "/comparison_count", "expected": 644},
-        {"artifact": "symbolic-catalog-region-report.json", "pointer": "/mismatch_count", "expected": 0}
+        {"artifact": "source-derived-symbolic-profile-v2-report.json", "pointer": "/symbolically_compiled_rule_count", "expected": 20},
+        {"artifact": "source-derived-symbolic-profile-v2-report.json", "pointer": "/candidate_rule_count", "expected": 20},
+        {"artifact": "source-derived-symbolic-profile-v2-report.json", "pointer": "/duty_trigger_expression_count", "expected": 5},
+        {"artifact": "source-derived-symbolic-profile-v2-report.json", "pointer": "/mismatch_count", "expected": 0}
       ]
     },
     {
-      "claim_id": "CLAIM-PRIORITY-GRAPH-EMPTY",
-      "text": "The candidate profile declares no executable priority edges, so the engine infers none.",
+      "claim_id": "CLAIM-PRIORITY-GRAPH-DECLARED",
+      "text": "The source-derived priority graph declares nine evidenced edges, including two conditional provider/fallback edges, without cross-jurisdiction priority.",
       "evidence": [
-        {"artifact": "candidate-priority-report.json", "pointer": "/edge_count", "expected": 0},
-        {"artifact": "candidate-priority-report.json", "pointer": "/limitations/current_candidate_priority_resolution", "expected": "NO_EDGES_DECLARED_NO_IMPLICIT_PRIORITY"}
+        {"artifact": "candidate-priority-report.json", "pointer": "/edge_count", "expected": 9},
+        {"artifact": "candidate-priority-report.json", "pointer": "/conditional_edge_count", "expected": 2},
+        {"artifact": "candidate-priority-report.json", "pointer": "/source_evidenced_edge_count", "expected": 9},
+        {"artifact": "candidate-priority-report.json", "pointer": "/limitations/cross_jurisdiction_priority", "expected": "NOT_DECLARED"}
       ]
     },
     {
       "claim_id": "CLAIM-P0-ENGINEERING-COMPLETE",
-      "text": "All declared P0 engineering gates pass while broader P1 completeness remains blocked.",
+      "text": "All declared P0 engineering gates pass while broader reviewed and release completeness remains blocked.",
       "evidence": [
         {"artifact": "engineering-gate-status.json", "pointer": "/p0/complete", "expected": true},
         {"artifact": "engineering-gate-status.json", "pointer": "/p0/passed", "expected": 7},
@@ -95,5 +125,5 @@
       ]
     }
   ],
-  "notice": "Claims describe declared finite artifacts only. A passing ledger proves evidence consistency, not legal validity or empirical prevalence."
+  "notice": "Claims describe declared finite artifacts only. A passing ledger proves evidence consistency, not legal validity, empirical prevalence or publication authorisation."
 }
