@@ -1,0 +1,53 @@
+{
+  "schema_version": "1.0.0",
+  "declaration_id": "project-identity-and-rights-v1",
+  "status": "PENDING_OWNER_DECLARATION",
+  "repository": "Eilodon/HSDL-Harmonization-Gap",
+  "repository_owner_account": "Eilodon",
+  "owner_approval": {
+    "approved": false,
+    "approved_by": null,
+    "approved_at_utc": null,
+    "approval_reference": null
+  },
+  "license": {
+    "spdx_identifier": null,
+    "copyright_holders": [],
+    "copyright_years": [],
+    "third_party_material_reviewed": false,
+    "source_pdf_redistribution_scope": "NOT_GRANTED_BY_THIS_DECLARATION",
+    "allowed_owner_choices": [
+      "Apache-2.0",
+      "MIT",
+      "BSD-3-Clause",
+      "CC-BY-4.0",
+      "CC-BY-SA-4.0",
+      "PROPRIETARY_OR_CUSTOM"
+    ],
+    "notice": "Only the repository owner or authorised rights holder may select the project licence and identify copyright holders."
+  },
+  "citation": {
+    "title": "HSDL Harmonization Gap",
+    "version": null,
+    "release_date": null,
+    "doi": null,
+    "repository_url": "https://github.com/Eilodon/HSDL-Harmonization-Gap",
+    "authors": [],
+    "contributors": [],
+    "preferred_citation_type": "software",
+    "message": "Author and contributor identities require owner declaration; the repository account name is not automatically treated as a scholarly author."
+  },
+  "publication": {
+    "corresponding_author": null,
+    "affiliations": [],
+    "orcid_identifiers": [],
+    "funding": [],
+    "conflicts_of_interest": null
+  },
+  "generation_policy": {
+    "license_file_allowed": false,
+    "citation_cff_allowed": false,
+    "release_metadata_allowed": false,
+    "fail_closed_on_missing_owner_approval": true
+  }
+}
