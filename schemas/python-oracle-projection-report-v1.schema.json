@@ -1,0 +1,37 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://eilodon.github.io/hsdl-harmonization-gap/schemas/python-oracle-projection-report-v1.schema.json",
+  "title": "Python candidate oracle projection report v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version", "status", "projection_contract", "claim_class",
+    "legal_validation", "rule_count", "context_count", "assumption_set_count",
+    "projection_count", "projection_hash", "state_counts",
+    "projections_by_assumption_set", "projection_samples", "notice"
+  ],
+  "properties": {
+    "schema_version": {"const": "1.0.0"},
+    "status": {"const": "PYTHON_ORACLE_PROJECTION_COMPLETE"},
+    "projection_contract": {"const": "CANDIDATE_IR_EVALUATION_PROJECTION_V1"},
+    "claim_class": {"const": "MODEL_RELATIVE"},
+    "legal_validation": {"const": "NOT_ASSERTED"},
+    "rule_count": {"const": 20},
+    "context_count": {"const": 322},
+    "assumption_set_count": {"const": 2},
+    "projection_count": {"const": 12880},
+    "projection_hash": {"type": "string", "pattern": "^sha256:[0-9a-f]{64}$"},
+    "state_counts": {"type": "object"},
+    "projections_by_assumption_set": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["NO_ASSUMPTIONS", "ASSUME_ARTICLE13_TIMING_TRIGGER_SATISFIED"],
+      "properties": {
+        "NO_ASSUMPTIONS": {"const": 6440},
+        "ASSUME_ARTICLE13_TIMING_TRIGGER_SATISFIED": {"const": 6440}
+      }
+    },
+    "projection_samples": {"type": "array", "minItems": 3, "maxItems": 3},
+    "notice": {"type": "string", "minLength": 1}
+  }
+}

@@ -1,4 +1,5 @@
 PYTHON ?= python3
+NODE ?= node
 
 .PHONY: test schema-check verify reproduce verify-sources clean
 
@@ -23,6 +24,13 @@ reproduce: verify
 	PYTHONPATH=src $(PYTHON) -m hsdl_gap.duty_signature > generated/operational-duty-signature-report.json
 	PYTHONPATH=src $(PYTHON) -m hsdl_gap.candidate_hsdl --emit > generated/current-candidate.hsdl
 	PYTHONPATH=src $(PYTHON) -m hsdl_gap.candidate_hsdl > generated/current-candidate-hsdl-differential-report.json
+	PYTHONPATH=src $(PYTHON) -m hsdl_gap.oracle_expected > generated/python-oracle-projection-report.json
+	$(NODE) reference-engines/javascript/candidate_oracle.mjs \
+		--hsdl generated/current-candidate.hsdl \
+		--corpus generated/decision33-context-v2-corpus.json \
+		--assumptions profiles/current-candidate-2026-08-02/engineering_assumptions.json \
+		--expected generated/python-oracle-projection-report.json \
+		> generated/independent-javascript-oracle-report.json
 	PYTHONPATH=src $(PYTHON) -m hsdl_gap --mode typed-alignment --policies policies/legacy_v11.json --crosswalk alignments/legacy_obligation_crosswalk.json --semantics alignments/legacy_duty_semantics.json > generated/typed-alignment-audit.json
 	PYTHONPATH=src $(PYTHON) -m hsdl_gap --mode asean-ontology --asean-ontology asean/guide_ontology_2024_2025.json > generated/asean-ontology-audit.json
 	PYTHONPATH=src $(PYTHON) -m hsdl_gap --mode emit-hsdl --policies policies/legacy_v11.json --semantics alignments/legacy_duty_semantics.json > generated/legacy-v11.hsdl
