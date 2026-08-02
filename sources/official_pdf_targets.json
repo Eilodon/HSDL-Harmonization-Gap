@@ -1,0 +1,67 @@
+{
+  "schema_version": "1.0.0",
+  "freeze_date": "2026-08-02",
+  "policy": {
+    "transport": "https_only",
+    "required_magic": "%PDF-",
+    "hash_algorithm": "sha256",
+    "maximum_bytes": 150000000,
+    "notice": "A successful network fetch and checksum do not constitute provision-level legal review or visual verification."
+  },
+  "targets": [
+    {
+      "id": "EU_AI_ACT_2024_1689",
+      "jurisdiction": "EU",
+      "instrument": "Regulation (EU) 2024/1689",
+      "official_pdf_url": "https://eur-lex.europa.eu/eli/reg/2024/1689/oj/eng/pdf",
+      "declared_page_count": 144,
+      "signature_profile": "official_journal_pdf",
+      "required_for_current_claims": true
+    },
+    {
+      "id": "VN_LAW_134_2025",
+      "jurisdiction": "VN",
+      "instrument": "Luật 134/2025/QH15",
+      "official_pdf_url": "https://datafiles.chinhphu.vn/cpp/files/vbpq/2026/01/luat134.signed.pdf",
+      "declared_page_count": 20,
+      "signature_profile": "government_portal_signed_pdf",
+      "required_for_current_claims": true
+    },
+    {
+      "id": "VN_DECREE_142_2026",
+      "jurisdiction": "VN",
+      "instrument": "Nghị định 142/2026/NĐ-CP",
+      "official_pdf_url": "https://datafiles.chinhphu.vn/cpp/files/vbpq/2026/4/142-2026-ndcp.signed.pdf",
+      "declared_page_count": 97,
+      "signature_profile": "government_portal_signed_pdf",
+      "required_for_current_claims": true
+    },
+    {
+      "id": "VN_DECISION_33_2026",
+      "jurisdiction": "VN",
+      "instrument": "Quyết định 33/2026/QĐ-TTg",
+      "official_pdf_url": "https://datafiles.chinhphu.vn/cpp/files/vbpq/2026/7/33-qdttg.signed.pdf",
+      "declared_page_count": 16,
+      "signature_profile": "government_portal_signed_pdf",
+      "required_for_current_claims": true
+    },
+    {
+      "id": "ASEAN_GUIDE_2024",
+      "jurisdiction": "ASEAN",
+      "instrument": "ASEAN Guide on AI Governance and Ethics",
+      "official_pdf_url": "https://asean.org/wp-content/uploads/2024/02/ASEAN-Guide-on-AI-Governance-and-Ethics_beautified_201223_v2.pdf",
+      "declared_page_count": 87,
+      "signature_profile": "official_secretariat_pdf",
+      "required_for_current_claims": true
+    },
+    {
+      "id": "ASEAN_GENAI_GUIDE_2025",
+      "jurisdiction": "ASEAN",
+      "instrument": "Expanded ASEAN Guide on AI Governance and Ethics – Generative AI",
+      "official_pdf_url": "https://asean.org/wp-content/uploads/2025/01/Expanded-ASEAN-Guide-on-AI-Governance-and-Ethics-Generative-AI.pdf",
+      "declared_page_count": 52,
+      "signature_profile": "official_secretariat_pdf",
+      "required_for_current_claims": true
+    }
+  ]
+}
