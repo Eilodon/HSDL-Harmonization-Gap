@@ -4,6 +4,7 @@ import argparse
 import json
 
 from .alignment import build_typed_alignment_audit
+from .asean import build_asean_ontology_audit
 from .current_report import build_decision33_report
 from .report import build_legacy_report
 
@@ -12,11 +13,12 @@ def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument(
         "--mode",
-        choices=("legacy", "decision33", "typed-alignment"),
+        choices=("legacy", "decision33", "typed-alignment", "asean-ontology"),
         default="legacy",
     )
     parser.add_argument("--policies", default="policies/legacy_v11.json")
     parser.add_argument("--catalog", default="catalogs/vn_decision_33_2026.csv")
+    parser.add_argument("--asean-ontology", default="asean/guide_ontology_2024_2025.json")
     parser.add_argument(
         "--crosswalk",
         default="alignments/legacy_obligation_crosswalk.json",
@@ -28,6 +30,8 @@ def main() -> None:
     args = parser.parse_args()
     if args.mode == "decision33":
         report = build_decision33_report(args.catalog)
+    elif args.mode == "asean-ontology":
+        report = build_asean_ontology_audit(args.asean_ontology)
     elif args.mode == "typed-alignment":
         report = build_typed_alignment_audit(
             args.policies, args.crosswalk, duty_semantics_path=args.semantics
