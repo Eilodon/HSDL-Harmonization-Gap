@@ -1,0 +1,5 @@
+{
+  "corpus_id": "corpus:engineering:example-v1",
+  "fixture_count": 3,
+  "fixture_types": ["BOUNDARY_BELOW", "BOUNDARY_EXACT", "UNKNOWN_FACT"]
+}
