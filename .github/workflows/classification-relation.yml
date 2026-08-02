@@ -1,0 +1,43 @@
+name: classification-relation
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  validate-relation:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Run test suite
+        run: make verify
+      - name: Build jurisdiction-native classification report
+        run: |
+          mkdir -p generated
+          PYTHONPATH=src python -m hsdl_gap.classification_relation \
+            --catalog catalogs/vn_decision_33_2026.csv \
+            > generated/classification-relation-report.json
+      - name: Show classification boundary
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          report = json.loads(Path("generated/classification-relation-report.json").read_text())
+          print(json.dumps({
+              "status": report["status"],
+              "corpus_eu_state_counts": report["corpus_eu_state_counts"],
+              "corpus_vn_state_counts": report["corpus_vn_state_counts"],
+              "corpus_relation_counts": report["corpus_relation_counts"],
+              "completeness": report["completeness"],
+          }, indent=2))
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: classification-relation-report
+          path: generated/classification-relation-report.json
