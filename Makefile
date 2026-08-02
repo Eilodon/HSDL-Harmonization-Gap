@@ -31,6 +31,7 @@ reproduce: verify
 		--assumptions profiles/current-candidate-2026-08-02/engineering_assumptions.json \
 		--expected generated/python-oracle-projection-report.json \
 		> generated/independent-javascript-oracle-report.json
+	PYTHONPATH=src $(PYTHON) -m hsdl_gap.symbolic_region > generated/symbolic-catalog-region-report.json
 	PYTHONPATH=src $(PYTHON) -m hsdl_gap --mode typed-alignment --policies policies/legacy_v11.json --crosswalk alignments/legacy_obligation_crosswalk.json --semantics alignments/legacy_duty_semantics.json > generated/typed-alignment-audit.json
 	PYTHONPATH=src $(PYTHON) -m hsdl_gap --mode asean-ontology --asean-ontology asean/guide_ontology_2024_2025.json > generated/asean-ontology-audit.json
 	PYTHONPATH=src $(PYTHON) -m hsdl_gap --mode emit-hsdl --policies policies/legacy_v11.json --semantics alignments/legacy_duty_semantics.json > generated/legacy-v11.hsdl

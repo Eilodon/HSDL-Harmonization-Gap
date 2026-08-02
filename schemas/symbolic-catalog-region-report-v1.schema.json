@@ -1,0 +1,65 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://eilodon.github.io/hsdl-harmonization-gap/schemas/symbolic-catalog-region-report-v1.schema.json",
+  "title": "Symbolic explicit catalog-route region report v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version", "status", "claim_class", "legal_validation",
+    "assumption_set_id", "candidate_rule_count", "symbolically_compiled_rule_count",
+    "symbolic_rule_coverage", "context_count", "comparison_count", "mismatch_count",
+    "mismatch_samples", "support_counts", "domain_hash", "domain", "regions",
+    "directed_refinements", "complexity", "limitations"
+  ],
+  "properties": {
+    "schema_version": {"const": "1.0.0"},
+    "status": {"const": "SYMBOLIC_EXPLICIT_ROUTE_ORACLE_EQUIVALENT"},
+    "claim_class": {"const": "MODEL_RELATIVE"},
+    "legal_validation": {"const": "NOT_ASSERTED"},
+    "assumption_set_id": {"const": "ASSUME_ARTICLE13_TIMING_TRIGGER_SATISFIED"},
+    "candidate_rule_count": {"const": 20},
+    "symbolically_compiled_rule_count": {"const": 2},
+    "symbolic_rule_coverage": {"const": 0.1},
+    "context_count": {"const": 322},
+    "comparison_count": {"const": 644},
+    "mismatch_count": {"const": 0},
+    "mismatch_samples": {"type": "array", "maxItems": 0},
+    "support_counts": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "VN_ART13_2A_THIRD_PARTY_CERTIFICATION_ROUTE",
+        "VN_ART13_2B_PROVIDER_OPTION_ROUTE"
+      ],
+      "properties": {
+        "VN_ART13_2A_THIRD_PARTY_CERTIFICATION_ROUTE": {"const": 24},
+        "VN_ART13_2B_PROVIDER_OPTION_ROUTE": {"const": 160}
+      }
+    },
+    "domain_hash": {"type": "string", "pattern": "^sha256:[0-9a-f]{64}$"},
+    "domain": {"type": "object", "minProperties": 4},
+    "regions": {"type": "object", "minProperties": 2, "maxProperties": 2},
+    "directed_refinements": {"type": "object", "minProperties": 2, "maxProperties": 2},
+    "complexity": {
+      "type": "object",
+      "required": ["region_match", "subset", "finite_differential"]
+    },
+    "limitations": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "supported_condition_ops", "generic_candidate_rules",
+        "correlated_field_constraints", "symbolic_current_profile_complete", "notice"
+      ],
+      "properties": {
+        "supported_condition_ops": {
+          "const": ["all", "and", "known", "eq", "in", "not_in"]
+        },
+        "generic_candidate_rules": {"const": "NOT_SYMBOLICALLY_COMPILED"},
+        "correlated_field_constraints": {"const": "NOT_REPRESENTED_BEYOND_CONJUNCTION"},
+        "symbolic_current_profile_complete": {"const": false},
+        "notice": {"type": "string", "minLength": 1}
+      }
+    }
+  }
+}
