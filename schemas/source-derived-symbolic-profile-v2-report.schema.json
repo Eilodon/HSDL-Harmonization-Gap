@@ -1,0 +1,85 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/Eilodon/HSDL-Harmonization-Gap/schemas/source-derived-symbolic-profile-v2-report.schema.json",
+  "title": "Source-derived finite symbolic profile report v2",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "status",
+    "claim_class",
+    "legal_validation",
+    "supported_operators",
+    "candidate_rule_count",
+    "symbolically_compiled_rule_count",
+    "symbolic_rule_coverage",
+    "duty_trigger_expression_count",
+    "expression_count",
+    "comparison_count",
+    "mismatch_count",
+    "mismatch_samples",
+    "expressions",
+    "profile_hash",
+    "limitations"
+  ],
+  "properties": {
+    "schema_version": {"const": "1.0.0"},
+    "status": {"const": "SOURCE_DERIVED_SYMBOLIC_PROFILE_EQUIVALENT"},
+    "claim_class": {"const": "MODEL_RELATIVE"},
+    "legal_validation": {"const": "NOT_ASSERTED"},
+    "supported_operators": {
+      "const": ["all", "and", "eq", "in", "not_in", "or"]
+    },
+    "candidate_rule_count": {"const": 20},
+    "symbolically_compiled_rule_count": {"const": 20},
+    "symbolic_rule_coverage": {"const": 1.0},
+    "duty_trigger_expression_count": {"const": 5},
+    "expression_count": {"const": 25},
+    "comparison_count": {"type": "integer", "minimum": 101},
+    "mismatch_count": {"const": 0},
+    "mismatch_samples": {"type": "array", "maxItems": 0},
+    "expressions": {
+      "type": "array",
+      "minItems": 25,
+      "maxItems": 25,
+      "items": {
+        "type": "object",
+        "required": [
+          "expression_id",
+          "rule_id",
+          "expression_kind",
+          "field_count",
+          "domains",
+          "complete_assignment_count",
+          "missing_probe_count",
+          "support_count",
+          "false_count",
+          "unknown_probe_count",
+          "mismatch_count",
+          "support_hash"
+        ],
+        "properties": {
+          "expression_kind": {"enum": ["RULE_PREDICATE", "DUTY_TRIGGER"]},
+          "mismatch_count": {"const": 0},
+          "support_hash": {"type": "string", "pattern": "^sha256:[0-9a-f]{64}$"}
+        }
+      }
+    },
+    "profile_hash": {"type": "string", "pattern": "^sha256:[0-9a-f]{64}$"},
+    "limitations": {
+      "type": "object",
+      "required": [
+        "finite_domain",
+        "unbounded_symbolic_theorem",
+        "independent_legal_review",
+        "operator_scope",
+        "notice"
+      ],
+      "properties": {
+        "finite_domain": {"const": true},
+        "unbounded_symbolic_theorem": {"const": "NOT_CLAIMED"},
+        "independent_legal_review": {"const": "PENDING"}
+      }
+    }
+  },
+  "additionalProperties": true
+}
