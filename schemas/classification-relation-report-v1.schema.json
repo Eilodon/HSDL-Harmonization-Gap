@@ -1,0 +1,88 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://eilodon.github.io/hsdl-harmonization-gap/schemas/classification-relation-report-v1.schema.json",
+  "title": "Jurisdiction-native classification relation report v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version", "status", "claim_class", "legal_validation",
+    "context_corpus_id", "context_count", "native_classifier_contract",
+    "corpus_eu_state_counts", "corpus_vn_state_counts", "corpus_relation_counts",
+    "synthetic_truth_table", "corpus_result_hash", "corpus_result_samples", "completeness"
+  ],
+  "properties": {
+    "schema_version": {"const": "1.0.0"},
+    "status": {"const": "NATIVE_CLASSIFICATION_RELATION_INTERFACE_COMPLETE"},
+    "claim_class": {"const": "MODEL_RELATIVE"},
+    "legal_validation": {"const": "NOT_ASSERTED"},
+    "context_corpus_id": {"const": "corpus:VN:decision33-catalog-context-v2"},
+    "context_count": {"const": 322},
+    "native_classifier_contract": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "shared_factual_context", "jurisdiction_native_taxonomies_preserved",
+        "shared_risk_tier_used", "unknown_is_distinct_from_out_of_scope"
+      ],
+      "properties": {
+        "shared_factual_context": {"const": true},
+        "jurisdiction_native_taxonomies_preserved": {"const": true},
+        "shared_risk_tier_used": {"const": false},
+        "unknown_is_distinct_from_out_of_scope": {"const": true}
+      }
+    },
+    "corpus_eu_state_counts": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["UNKNOWN"],
+      "properties": {"UNKNOWN": {"const": 322}}
+    },
+    "corpus_vn_state_counts": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["IN_SCOPE", "OUT_OF_SCOPE", "UNKNOWN"],
+      "properties": {
+        "IN_SCOPE": {"const": 184},
+        "OUT_OF_SCOPE": {"const": 46},
+        "UNKNOWN": {"const": 92}
+      }
+    },
+    "corpus_relation_counts": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["UNKNOWN_MISSING_FACTS"],
+      "properties": {"UNKNOWN_MISSING_FACTS": {"const": 322}}
+    },
+    "synthetic_truth_table": {
+      "type": "object",
+      "required": ["case_count", "relation_counts", "complete", "results"],
+      "properties": {
+        "case_count": {"const": 5},
+        "complete": {"const": true},
+        "results": {"type": "array", "minItems": 5, "maxItems": 5}
+      }
+    },
+    "corpus_result_hash": {"type": "string", "pattern": "^sha256:[0-9a-f]{64}$"},
+    "corpus_result_samples": {"type": "array", "minItems": 5, "maxItems": 5},
+    "completeness": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "interface_executable", "vn_catalog_classifier_executable",
+        "eu_high_risk_classifier_interface_executable",
+        "current_corpus_contains_eu_classification_facts",
+        "reviewed_eu_vn_crosswalk_available", "shared_classification_relation_complete",
+        "notice"
+      ],
+      "properties": {
+        "interface_executable": {"const": true},
+        "vn_catalog_classifier_executable": {"const": true},
+        "eu_high_risk_classifier_interface_executable": {"const": true},
+        "current_corpus_contains_eu_classification_facts": {"const": false},
+        "reviewed_eu_vn_crosswalk_available": {"const": false},
+        "shared_classification_relation_complete": {"const": false},
+        "notice": {"type": "string", "minLength": 1}
+      }
+    }
+  }
+}
