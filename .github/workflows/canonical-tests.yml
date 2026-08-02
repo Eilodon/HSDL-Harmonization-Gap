@@ -51,3 +51,33 @@ jobs:
       - name: Enforce pinned checksums
         if: steps.verify.outcome != 'success'
         run: exit 1
+
+  source-visual-review:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install PDF rendering tools
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y poppler-utils
+      - name: Build checksum-verified visual review bundle
+        run: |
+          mkdir -p generated
+          PYTHONPATH=src python -m hsdl_gap \
+            --mode build-review-bundle \
+            --lock sources/official_pdf_lock_2026-08-02.json \
+            --output-dir generated/source-review-bundle \
+            > generated/source-review-index.json
+      - name: Show review-bundle index
+        run: cat generated/source-review-index.json
+      - uses: actions/upload-artifact@v4
+        with:
+          name: source-visual-review-bundle
+          path: |
+            generated/source-review-index.json
+            generated/source-review-bundle/
+          retention-days: 14
