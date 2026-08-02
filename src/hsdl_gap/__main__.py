@@ -8,6 +8,7 @@ from .asean import build_asean_ontology_audit
 from .current_context import build_current_context_report
 from .current_report import build_decision33_report
 from .hsdl_core import build_hsdl_differential_report, emit_hsdl_core
+from .provision_audit import build_provision_audit_report
 from .report import build_legacy_report
 from .review_bundle import build_visual_review_bundle
 from .robust_provenance import (
@@ -28,6 +29,7 @@ def main() -> None:
             "typed-alignment",
             "asean-ontology",
             "typed-cover",
+            "provision-audit",
             "emit-hsdl",
             "hsdl-differential",
             "acquire-sources",
@@ -39,6 +41,10 @@ def main() -> None:
     parser.add_argument("--policies", default="policies/legacy_v11.json")
     parser.add_argument("--catalog", default="catalogs/vn_decision_33_2026.csv")
     parser.add_argument("--asean-ontology", default="asean/guide_ontology_2024_2025.json")
+    parser.add_argument(
+        "--provision-audit",
+        default="sources/reviews/legacy_v11_provision_audit.json",
+    )
     parser.add_argument(
         "--targets",
         default="sources/official_pdf_targets.json",
@@ -72,6 +78,8 @@ def main() -> None:
         report = build_asean_ontology_audit(args.asean_ontology)
     elif args.mode == "typed-cover":
         report = build_typed_cover_audit(args.policies, args.semantics)
+    elif args.mode == "provision-audit":
+        report = build_provision_audit_report(args.policies, args.provision_audit)
     elif args.mode == "hsdl-differential":
         report = build_hsdl_differential_report(args.policies, args.semantics)
     elif args.mode == "acquire-sources":
@@ -98,6 +106,8 @@ def main() -> None:
         raise SystemExit(4)
     if args.mode == "hsdl-differential" and report["status"] != "EQUIVALENT":
         raise SystemExit(5)
+    if args.mode == "provision-audit" and report["status"] != "VALIDATED":
+        raise SystemExit(6)
 
 
 if __name__ == "__main__":
