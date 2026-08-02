@@ -1,0 +1,57 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://eilodon.github.io/hsdl-harmonization-gap/schemas/engineering-release-preview-report-v1.schema.json",
+  "title": "Engineering release preview report v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version", "status", "claim_class", "legal_validation", "release_id",
+    "output_directory", "zip_path", "zip_sha256", "zip_byte_size", "manifest_hash",
+    "entry_count", "unique_object_count", "publication_blockers", "verification",
+    "custody_boundary"
+  ],
+  "properties": {
+    "schema_version": {"const": "1.0.0"},
+    "status": {"const": "ENGINEERING_RELEASE_PREVIEW_COMPLETE_BLOCKED"},
+    "claim_class": {"const": "MODEL_RELATIVE"},
+    "legal_validation": {"const": "NOT_ASSERTED"},
+    "release_id": {"const": "engineering-preview-0.2.0-dev"},
+    "output_directory": {"type": "string"},
+    "zip_path": {"type": "string"},
+    "zip_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "zip_byte_size": {"type": "integer", "minimum": 1},
+    "manifest_hash": {"type": "string", "pattern": "^sha256:[0-9a-f]{64}$"},
+    "entry_count": {"type": "integer", "minimum": 1},
+    "unique_object_count": {"type": "integer", "minimum": 1},
+    "publication_blockers": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": {"type": "string", "minLength": 1}
+    },
+    "verification": {
+      "type": "object",
+      "required": ["status", "entry_count", "error_count", "errors", "manifest_hash"],
+      "properties": {
+        "status": {"const": "RELEASE_PACKAGE_VERIFIED"},
+        "error_count": {"const": 0},
+        "errors": {"type": "array", "maxItems": 0}
+      }
+    },
+    "custody_boundary": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "content_addressed_local_package", "durable_external_deposit",
+        "official_pdf_bytes_included", "official_pdf_lock_included", "notice"
+      ],
+      "properties": {
+        "content_addressed_local_package": {"const": true},
+        "durable_external_deposit": {"const": false},
+        "official_pdf_bytes_included": {"const": false},
+        "official_pdf_lock_included": {"const": true},
+        "notice": {"type": "string", "minLength": 1}
+      }
+    }
+  }
+}
