@@ -1,0 +1,62 @@
+name: engineering-release-preview
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  build-preview:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - name: Reproduce engineering evidence
+        run: make reproduce
+      - name: Validate claim ledger
+        run: |
+          PYTHONPATH=src python -m hsdl_gap.claim_ledger \
+            --ledger claims/model_relative_claims.json \
+            --artifact-dir generated \
+            > generated/claim-ledger-report.json
+      - name: Build content-addressed engineering preview
+        run: |
+          PYTHONPATH=src python -m hsdl_gap.release_package build \
+            --root . \
+            --spec release/engineering_preview_spec.json \
+            --output generated/engineering-release-preview \
+            > generated/engineering-release-preview-report.json
+      - name: Verify engineering preview
+        run: |
+          PYTHONPATH=src python -m hsdl_gap.release_package verify \
+            --package generated/engineering-release-preview \
+            > generated/engineering-release-preview-verification.json
+      - name: Show release boundary
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          report = json.loads(Path("generated/engineering-release-preview-report.json").read_text())
+          print(json.dumps({
+              "status": report["status"],
+              "entry_count": report["entry_count"],
+              "unique_object_count": report["unique_object_count"],
+              "zip_sha256": report["zip_sha256"],
+              "publication_blockers": report["publication_blockers"],
+              "custody_boundary": report["custody_boundary"],
+          }, indent=2))
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: engineering-release-preview
+          path: |
+            generated/engineering-release-preview.zip
+            generated/engineering-release-preview-report.json
+            generated/engineering-release-preview-verification.json
