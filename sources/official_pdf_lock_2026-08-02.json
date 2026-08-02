@@ -39,7 +39,8 @@
       "alternate_official_pdf_urls": [
         "https://eur-lex.europa.eu/legal-content/EN/TXT/PDF/?uri=OJ%3AL_202401689",
         "https://eur-lex.europa.eu/legal-content/EN/TXT/PDF/?uri=CELEX%3A32024R1689",
-        "https://data.europa.eu/eli/reg/2024/1689/oj/eng/pdf"
+        "https://data.europa.eu/eli/reg/2024/1689/oj/eng/pdf",
+        "https://op.europa.eu/o/opportal-service/download-handler?identifier=dc8116a1-3fe6-11ef-865a-01aa75ed71a1&format=PDF&language=en&productionSystem=cellar&part="
       ],
       "byte_size": 2583319,
       "sha256": "bba630444b3278e881066774002a1d7824308934f49ccfa203e65be43692f55e",
