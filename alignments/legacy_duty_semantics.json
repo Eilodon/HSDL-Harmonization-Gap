@@ -1,0 +1,102 @@
+{
+  "schema_version": "0.1.0",
+  "status": "AUTHOR_INTERPRETED_PENDING_SECOND_LEGAL_REVIEW",
+  "duties": {
+    "EU_G1_MONITOR": {
+      "alignment_key": "risk_governance",
+      "normative_slot": "risk_governance.continuous_monitoring"
+    },
+    "EU_G2_ASSESS": {
+      "alignment_key": "conformity_assessment",
+      "normative_slot": "conformity_assessment.perform"
+    },
+    "EU_G3_DESIGN": {
+      "alignment_key": "human_oversight",
+      "normative_slot": "human_oversight.design"
+    },
+    "EU_G3_IMPLEMENT": {
+      "alignment_key": "human_oversight",
+      "normative_slot": "human_oversight.operate"
+    },
+    "EU_G4_LOG": {
+      "alignment_key": "recordkeeping",
+      "normative_slot": "recordkeeping.enable_logging"
+    },
+    "EU_G4_RETAIN": {
+      "alignment_key": "recordkeeping",
+      "normative_slot": "recordkeeping.retain_logs"
+    },
+    "EU_G5_DISCLOSE": {
+      "alignment_key": "interaction_transparency",
+      "normative_slot": "interaction_transparency.disclose"
+    },
+    "EU_G6_MONITOR": {
+      "alignment_key": "risk_control",
+      "normative_slot": "risk_control.continuous_monitoring"
+    },
+    "VN_G1_CLASSIFY": {
+      "alignment_key": "risk_governance",
+      "normative_slot": "risk_governance.classify"
+    },
+    "VN_G1_RECLASSIFY": {
+      "alignment_key": "risk_governance",
+      "normative_slot": "risk_governance.reclassify"
+    },
+    "VN_G1_INSPECT_HIGH": {
+      "alignment_key": "risk_governance",
+      "normative_slot": "risk_governance.regulatory_inspection"
+    },
+    "VN_G1_INSPECT_MEDIUM": {
+      "alignment_key": "risk_governance",
+      "normative_slot": "risk_governance.regulatory_inspection"
+    },
+    "VN_G2_ASSESS": {
+      "alignment_key": "conformity_assessment",
+      "normative_slot": "conformity_assessment.perform"
+    },
+    "VN_G2_REUSE": {
+      "alignment_key": "conformity_assessment",
+      "normative_slot": "conformity_assessment.certification_reuse"
+    },
+    "VN_G3_HUMAN_CONTROL": {
+      "alignment_key": "human_oversight",
+      "normative_slot": "human_oversight.general_principle"
+    },
+    "VN_G4_NOTIFY": {
+      "alignment_key": "classification_notification",
+      "normative_slot": "classification_notification.notify"
+    },
+    "VN_G4_REPORT_PRIMARY": {
+      "alignment_key": "incident_reporting",
+      "normative_slot": "incident_reporting.serious_harm"
+    },
+    "VN_G4_REPORT_FALLBACK": {
+      "alignment_key": "incident_reporting",
+      "normative_slot": "incident_reporting.serious_harm"
+    },
+    "VN_G5_DISCLOSE": {
+      "alignment_key": "interaction_transparency",
+      "normative_slot": "interaction_transparency.disclose"
+    },
+    "VN_G6_CONTROL": {
+      "alignment_key": "risk_control",
+      "normative_slot": "risk_control.event_triggered_control"
+    },
+    "ASEAN_G1_ACCOUNTABILITY_DUTY": {
+      "alignment_key": "accountability",
+      "normative_slot": "accountability.general_principle"
+    },
+    "ASEAN_G3_HUMAN_CENTRICITY_DUTY": {
+      "alignment_key": "human_oversight",
+      "normative_slot": "human_oversight.human_centricity"
+    },
+    "ASEAN_G4_LABEL_DUTY": {
+      "alignment_key": "content_transparency",
+      "normative_slot": "content_transparency.generated_content_label"
+    },
+    "ASEAN_G5_TRANSPARENCY_DUTY": {
+      "alignment_key": "interaction_transparency",
+      "normative_slot": "interaction_transparency.general_principle"
+    }
+  }
+}
