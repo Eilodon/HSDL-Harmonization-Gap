@@ -3,17 +3,20 @@ from __future__ import annotations
 import argparse
 import json
 from collections import Counter, defaultdict
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from enum import Enum
 from pathlib import Path
 from typing import Any, Iterable, Mapping
 
 from .candidate_ir import compile_candidate_profile
+from .conditions_v2 import evaluate_condition_v2
 from .stable_id import content_sha256
+from .tristate import TruthValue
 
 
 class PriorityRelation(str, Enum):
     ACCUMULATE = "ACCUMULATE"
+    PRECEDES = "PRECEDES"
     OVERRIDE = "OVERRIDE"
     EXCEPTION = "EXCEPTION"
     SPECIALISE = "SPECIALISE"
@@ -37,12 +40,14 @@ class PriorityGraphError(ValueError):
     """Raised when a priority graph violates its executable contract."""
 
 
-@dataclass(frozen=True, slots=True, order=True)
+@dataclass(frozen=True, slots=True)
 class PriorityEdge:
     source_id: str
     target_id: str
     relation: PriorityRelation
     reason_code: str
+    condition: Mapping[str, Any] | None = field(default=None, compare=False)
+    source_evidence: Mapping[str, Any] | None = field(default=None, compare=False)
 
     def __post_init__(self) -> None:
         if not self.source_id or not self.target_id:
@@ -51,14 +56,35 @@ class PriorityEdge:
             raise PriorityGraphError("priority edge reason_code must be non-empty")
         if self.source_id == self.target_id and self.relation is not PriorityRelation.INDEPENDENT:
             raise PriorityGraphError("non-independent priority edges cannot be self-referential")
+        if self.condition is not None:
+            if not isinstance(self.condition, Mapping):
+                raise PriorityGraphError("priority edge condition must be an object")
+            try:
+                evaluate_condition_v2(self.condition, {})
+            except ValueError as exc:
+                raise PriorityGraphError(f"invalid priority edge condition: {exc}") from exc
+        if self.source_evidence is not None and not isinstance(
+            self.source_evidence, Mapping
+        ):
+            raise PriorityGraphError("source_evidence must be an object")
 
-    def as_mapping(self) -> dict[str, str]:
+    def as_mapping(self) -> dict[str, Any]:
         return {
             "source_id": self.source_id,
             "target_id": self.target_id,
             "relation": self.relation.value,
             "reason_code": self.reason_code,
+            "condition": dict(self.condition) if self.condition is not None else None,
+            "source_evidence": (
+                dict(self.source_evidence)
+                if self.source_evidence is not None
+                else None
+            ),
         }
+
+
+def _edge_key(edge: PriorityEdge) -> tuple[str, str, str, str]:
+    return edge.source_id, edge.target_id, edge.relation.value, edge.reason_code
 
 
 @dataclass(frozen=True, slots=True)
@@ -69,6 +95,8 @@ class PriorityResolution:
     suppressed: Mapping[str, tuple[dict[str, str], ...]]
     unresolved_conflicts: tuple[tuple[str, str], ...]
     cycle_components: tuple[tuple[str, ...], ...]
+    unknown_edge_conditions: tuple[dict[str, Any], ...]
+    inactive_conditional_edges: tuple[dict[str, Any], ...]
 
     def as_mapping(self) -> dict[str, Any]:
         return {
@@ -81,6 +109,8 @@ class PriorityResolution:
             },
             "unresolved_conflicts": [list(pair) for pair in self.unresolved_conflicts],
             "cycle_components": [list(component) for component in self.cycle_components],
+            "unknown_edge_conditions": list(self.unknown_edge_conditions),
+            "inactive_conditional_edges": list(self.inactive_conditional_edges),
         }
 
 
@@ -112,6 +142,8 @@ def load_priority_graph(path: str | Path) -> tuple[str, tuple[PriorityEdge, ...]
                 target_id=raw["target_id"],
                 relation=PriorityRelation(raw["relation"]),
                 reason_code=raw["reason_code"],
+                condition=raw.get("condition"),
+                source_evidence=raw.get("source_evidence"),
             )
         except (KeyError, ValueError, TypeError) as exc:
             raise PriorityGraphError(f"invalid edges[{index}]") from exc
@@ -143,9 +175,8 @@ def _strongly_connected_components(
 ) -> tuple[tuple[str, ...], ...]:
     adjacency: dict[str, list[str]] = defaultdict(list)
     for edge in edges:
-        if edge.relation in SUPPRESSING_RELATIONS and edge.source_id in nodes and edge.target_id in nodes:
+        if edge.relation in SUPPRESSING_RELATIONS:
             adjacency[edge.source_id].append(edge.target_id)
-
     index = 0
     stack: list[str] = []
     on_stack: set[str] = set()
@@ -183,29 +214,64 @@ def _strongly_connected_components(
     return tuple(sorted(components))
 
 
+def _conditioned_edges(
+    active_set: set[str],
+    edges: tuple[PriorityEdge, ...],
+    facts: Mapping[str, Any],
+) -> tuple[tuple[PriorityEdge, ...], tuple[dict[str, Any], ...], tuple[dict[str, Any], ...]]:
+    enabled: list[PriorityEdge] = []
+    unknown: list[dict[str, Any]] = []
+    inactive: list[dict[str, Any]] = []
+    for edge in edges:
+        if edge.source_id not in active_set or edge.target_id not in active_set:
+            continue
+        if edge.condition is None:
+            enabled.append(edge)
+            continue
+        trace = evaluate_condition_v2(edge.condition, facts)
+        record = {
+            "source_id": edge.source_id,
+            "target_id": edge.target_id,
+            "relation": edge.relation.value,
+            "reason_code": edge.reason_code,
+            "condition_value": trace.value.value,
+            "missing_facts": list(trace.missing_facts),
+        }
+        if trace.value is TruthValue.TRUE:
+            enabled.append(edge)
+        elif trace.value is TruthValue.FALSE:
+            inactive.append(record)
+        else:
+            unknown.append(record)
+    return (
+        tuple(sorted(enabled, key=_edge_key)),
+        tuple(sorted(unknown, key=lambda item: (item["source_id"], item["target_id"]))),
+        tuple(sorted(inactive, key=lambda item: (item["source_id"], item["target_id"]))),
+    )
+
+
 def resolve_priority(
     active_ids: Iterable[str],
     edges: Iterable[PriorityEdge],
     *,
     known_ids: Iterable[str] | None = None,
+    facts: Mapping[str, Any] | None = None,
 ) -> PriorityResolution:
     active = tuple(sorted(set(active_ids)))
     active_set = set(active)
-    edge_tuple = tuple(sorted(edges))
+    edge_tuple = tuple(sorted(edges, key=_edge_key))
     if known_ids is not None:
         validate_edge_ids(edge_tuple, known_ids)
-    cycles = _strongly_connected_components(active_set, edge_tuple)
-    if cycles:
-        cycle_members = {member for component in cycles for member in component}
-    else:
-        cycle_members = set()
+    enabled, unknown_conditions, inactive_conditions = _conditioned_edges(
+        active_set, edge_tuple, facts or {}
+    )
+    cycles = _strongly_connected_components(active_set, enabled)
+    cycle_members = {member for component in cycles for member in component}
 
     suppressed_reasons: dict[str, list[dict[str, str]]] = defaultdict(list)
-    for edge in edge_tuple:
+    for edge in enabled:
         if (
             edge.relation in SUPPRESSING_RELATIONS
-            and edge.source_id in active_set
-            and edge.target_id in active_set
             and edge.source_id not in cycle_members
             and edge.target_id not in cycle_members
         ):
@@ -219,14 +285,14 @@ def resolve_priority(
 
     effective = active_set - set(suppressed_reasons) - cycle_members
     conflicts: set[tuple[str, str]] = set()
-    for edge in edge_tuple:
+    for edge in enabled:
         if edge.relation is PriorityRelation.CONFLICT:
             if edge.source_id in effective and edge.target_id in effective:
                 conflicts.add(tuple(sorted((edge.source_id, edge.target_id))))
 
     state = (
         PriorityResolutionState.PRIORITY_INDETERMINATE
-        if cycles or conflicts
+        if cycles or conflicts or unknown_conditions
         else PriorityResolutionState.DETERMINATE
     )
     return PriorityResolution(
@@ -234,11 +300,20 @@ def resolve_priority(
         active_ids=active,
         effective_ids=tuple(sorted(effective)),
         suppressed={
-            target: tuple(sorted(reasons, key=lambda item: (item["source_id"], item["relation"], item["reason_code"])))
+            target: tuple(
+                sorted(
+                    reasons,
+                    key=lambda item: (
+                        item["source_id"], item["relation"], item["reason_code"]
+                    ),
+                )
+            )
             for target, reasons in suppressed_reasons.items()
         },
         unresolved_conflicts=tuple(sorted(conflicts)),
         cycle_components=cycles,
+        unknown_edge_conditions=unknown_conditions,
+        inactive_conditional_edges=inactive_conditions,
     )
 
 
@@ -253,9 +328,23 @@ def build_candidate_priority_report(
     profile_id, edges, graph_payload = load_priority_graph(priority_graph_path)
     validate_edge_ids(edges, duty_ids)
     all_active = resolve_priority(duty_ids, edges, known_ids=duty_ids)
+    reachable = resolve_priority(
+        duty_ids,
+        edges,
+        known_ids=duty_ids,
+        facts={"operations": {"provider_contact_status": "REACHABLE"}},
+    )
+    unreachable = resolve_priority(
+        duty_ids,
+        edges,
+        known_ids=duty_ids,
+        facts={"operations": {"provider_contact_status": "UNREACHABLE"}},
+    )
     relation_counts = Counter(edge.relation.value for edge in edges)
+    conditional_count = sum(edge.condition is not None for edge in edges)
+    evidence_count = sum(edge.source_evidence is not None for edge in edges)
     return {
-        "schema_version": "1.0.0",
+        "schema_version": "2.0.0",
         "status": "CANDIDATE_PRIORITY_GRAPH_EXECUTABLE",
         "claim_class": "MODEL_RELATIVE",
         "legal_validation": "NOT_ASSERTED",
@@ -263,27 +352,31 @@ def build_candidate_priority_report(
         "priority_graph_hash": content_sha256(graph_payload),
         "duty_count": len(duty_ids),
         "edge_count": len(edges),
+        "conditional_edge_count": conditional_count,
+        "source_evidenced_edge_count": evidence_count,
         "edge_relation_counts": dict(sorted(relation_counts.items())),
         "graph_status": graph_payload.get("status"),
         "all_duties_active_probe": all_active.as_mapping(),
+        "provider_reachable_probe": reachable.as_mapping(),
+        "provider_unreachable_probe": unreachable.as_mapping(),
         "semantics": {
             "suppressing_relations": sorted(item.value for item in SUPPRESSING_RELATIONS),
             "accumulate": "retains both active duties",
+            "precedes": "records source-derived sequence without suppressing either duty",
             "independent": "retains both active duties",
             "conflict": "marks priority indeterminate when both unsuppressed duties remain",
-            "cycles": "marks every cycle member indeterminate and removes it from effective duties",
+            "conditional_unknown": "marks priority indeterminate until the edge condition is known",
+            "cycles": "marks every active suppressing-cycle member indeterminate",
         },
         "limitations": {
             "candidate_edges_declared": bool(edges),
-            "current_candidate_priority_resolution": (
-                "NO_EDGES_DECLARED_NO_IMPLICIT_PRIORITY"
-                if not edges
-                else "DECLARED_EDGES_APPLIED"
-            ),
-            "conditional_priority_edges": "NOT_IMPLEMENTED",
+            "current_candidate_priority_resolution": "DECLARED_SOURCE_DERIVED_EDGES_APPLIED",
+            "conditional_priority_edges": "IMPLEMENTED",
+            "cross_jurisdiction_priority": "NOT_DECLARED",
+            "independent_legal_review": "PENDING",
             "notice": (
-                "An empty graph is explicit. The engine does not infer priority, "
-                "exceptions or accumulation from rule order or bindingness."
+                "Declared edges encode coexistence, sequence and fallback within the "
+                "same instrument. They do not infer cross-jurisdiction priority."
             ),
         },
     }
