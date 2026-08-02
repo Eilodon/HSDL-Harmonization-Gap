@@ -1,0 +1,433 @@
+{
+  "schema_version": "1.0.0",
+  "profile_id": "current-candidate-2026-08-02-source-derived-predicates",
+  "candidate_profile_id": "current-candidate-2026-08-02",
+  "status": "EXECUTABLE_SOURCE_DERIVED_PENDING_INDEPENDENT_REVIEW",
+  "claim_class": "MODEL_RELATIVE",
+  "legal_validation": "NOT_ASSERTED",
+  "review_policy": {
+    "source_text_checked": true,
+    "independent_legal_review": "PENDING",
+    "quantitative_current_law_claims_allowed": false,
+    "notice": "The predicates encode explicit textual scope, polarity, exceptions and route conditions for reproducible evaluation. They remain provisional legal interpretations until independent review."
+  },
+  "sources": [
+    {
+      "source_id": "EU_AI_ACT_2024_1689",
+      "instrument": "Regulation (EU) 2024/1689",
+      "official_pdf": "sources/official_pdf_targets.json#EU_AI_ACT_2024_1689",
+      "pages_reviewed": [55, 58, 59, 60, 67, 77, 78, 81]
+    },
+    {
+      "source_id": "VN_LAW_134_2025",
+      "instrument": "Luật 134/2025/QH15",
+      "official_pdf": "sources/official_pdf_targets.json#VN_LAW_134_2025",
+      "pages_reviewed": [3, 5, 6, 7]
+    },
+    {
+      "source_id": "VN_DECREE_142_2026",
+      "instrument": "Nghị định 142/2026/NĐ-CP",
+      "official_pdf": "sources/official_pdf_targets.json#VN_DECREE_142_2026",
+      "pages_reviewed": [16, 17, 18]
+    },
+    {
+      "source_id": "VN_DECISION_33_2026",
+      "instrument": "Quyết định 33/2026/QĐ-TTg",
+      "official_pdf": "sources/official_pdf_targets.json#VN_DECISION_33_2026",
+      "pages_reviewed": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16]
+    }
+  ],
+  "rules": [
+    {
+      "rule_id": "EU_ART9_RISK_MANAGEMENT_SYSTEM",
+      "source_evidence": {"source_id": "EU_AI_ACT_2024_1689", "provision": "Article 9(1)-(2)", "pdf_pages": [55, 56]},
+      "predicate": {"op": "eq", "args": [{"field": "classification.eu.is_high_risk_ai_system"}, {"literal": true}]},
+      "duties": {
+        "risk_management_system_lifecycle": {
+          "modality": "OBLIGATION",
+          "recipients": [],
+          "trigger": null,
+          "trigger_signature": "high_risk_ai_system"
+        }
+      }
+    },
+    {
+      "rule_id": "EU_ART43_CONFORMITY_ASSESSMENT",
+      "source_evidence": {"source_id": "EU_AI_ACT_2024_1689", "provision": "Article 43(1)-(4)", "pdf_pages": [77, 78]},
+      "predicate": {
+        "op": "and",
+        "args": [
+          {"op": "eq", "args": [{"field": "classification.eu.is_high_risk_ai_system"}, {"literal": true}]},
+          {"op": "or", "args": [
+            {"op": "eq", "args": [{"field": "operations.before_placing_on_market_or_putting_into_service"}, {"literal": true}]},
+            {"op": "eq", "args": [{"field": "operations.substantial_modification"}, {"literal": true}]}
+          ]},
+          {"op": "or", "args": [
+            {"op": "eq", "args": [{"field": "classification.eu.product_law_route"}, {"literal": "ANNEX_I_SECTION_A"}]},
+            {"op": "in", "args": [{"field": "classification.eu.annex_category"}, {"literal": ["ANNEX_III_POINT_1", "ANNEX_III_POINTS_2_TO_8"]}]}
+          ]}
+        ]
+      },
+      "duties": {
+        "conformity_assessment_procedure_selection": {
+          "modality": "OBLIGATION",
+          "recipients": [],
+          "trigger": null,
+          "trigger_signature": "initial_market_event_or_substantial_modification"
+        },
+        "notified_body_participation": {
+          "modality": "CONDITIONAL_OBLIGATION",
+          "recipients": ["Provider"],
+          "trigger": {
+            "op": "and",
+            "args": [
+              {"op": "eq", "args": [{"field": "classification.eu.annex_category"}, {"literal": "ANNEX_III_POINT_1"}]},
+              {"op": "or", "args": [
+                {"op": "in", "args": [{"field": "classification.eu.harmonised_standard_status"}, {"literal": ["NOT_AVAILABLE", "NOT_APPLIED", "PARTIALLY_APPLIED", "RESTRICTED"]}]},
+                {"op": "in", "args": [{"field": "classification.eu.common_specification_status"}, {"literal": ["NOT_AVAILABLE", "NOT_APPLIED"]}]}
+              ]}
+            ]
+          },
+          "trigger_signature": "annex_iii_point_1_external_assessment_route"
+        }
+      }
+    },
+    {
+      "rule_id": "EU_ART14_PROVIDER_HUMAN_OVERSIGHT_DESIGN",
+      "source_evidence": {"source_id": "EU_AI_ACT_2024_1689", "provision": "Article 14(1)-(4)", "pdf_pages": [59, 60]},
+      "predicate": {"op": "eq", "args": [{"field": "classification.eu.is_high_risk_ai_system"}, {"literal": true}]},
+      "duties": {
+        "human_oversight_design_measures": {
+          "modality": "OBLIGATION",
+          "recipients": ["Deployer", "NaturalPersonOversightAssignee"],
+          "trigger": null,
+          "trigger_signature": "high_risk_commensurate_with_risk_autonomy_context"
+        }
+      }
+    },
+    {
+      "rule_id": "EU_ART26_DEPLOYER_HUMAN_OVERSIGHT_ASSIGNMENT",
+      "source_evidence": {"source_id": "EU_AI_ACT_2024_1689", "provision": "Article 26(2)-(3)", "pdf_page": 67},
+      "predicate": {
+        "op": "and",
+        "args": [
+          {"op": "eq", "args": [{"field": "classification.eu.is_high_risk_ai_system"}, {"literal": true}]},
+          {"op": "eq", "args": [{"field": "actors.deployer_use"}, {"literal": true}]}
+        ]
+      },
+      "duties": {
+        "human_oversight_person_assignment": {
+          "modality": "OBLIGATION",
+          "recipients": ["NaturalPersonOversightAssignee"],
+          "trigger": null,
+          "trigger_signature": "deployer_use_of_high_risk_ai_system"
+        }
+      }
+    },
+    {
+      "rule_id": "EU_ART12_AUTOMATIC_LOGGING_CAPABILITY",
+      "source_evidence": {"source_id": "EU_AI_ACT_2024_1689", "provision": "Article 12(1)-(3)", "pdf_page": 58},
+      "predicate": {"op": "eq", "args": [{"field": "classification.eu.is_high_risk_ai_system"}, {"literal": true}]},
+      "duties": {
+        "automatic_event_logging_capability": {
+          "modality": "OBLIGATION",
+          "recipients": ["Deployer", "MarketSurveillanceAuthority"],
+          "trigger": null,
+          "trigger_signature": "all_high_risk_ai_systems"
+        }
+      }
+    },
+    {
+      "rule_id": "EU_ART26_6_LOG_RETENTION",
+      "source_evidence": {"source_id": "EU_AI_ACT_2024_1689", "provision": "Article 26(6)", "pdf_page": 67},
+      "predicate": {
+        "op": "and",
+        "args": [
+          {"op": "eq", "args": [{"field": "classification.eu.is_high_risk_ai_system"}, {"literal": true}]},
+          {"op": "eq", "args": [{"field": "operations.logs_under_deployer_control"}, {"literal": true}]}
+        ]
+      },
+      "duties": {
+        "deployer_log_retention": {
+          "modality": "OBLIGATION",
+          "recipients": ["CompetentAuthority"],
+          "trigger": null,
+          "trigger_signature": "logs_under_deployer_control_with_other_law_duration_override"
+        }
+      }
+    },
+    {
+      "rule_id": "EU_ART50_DIRECT_INTERACTION_TRANSPARENCY",
+      "source_evidence": {"source_id": "EU_AI_ACT_2024_1689", "provision": "Article 50(1), (5)", "pdf_pages": [81, 82]},
+      "predicate": {
+        "op": "and",
+        "args": [
+          {"op": "eq", "args": [{"field": "system.intended_direct_interaction"}, {"literal": true}]},
+          {"op": "eq", "args": [{"field": "system.interaction_obvious_to_reasonably_informed_person"}, {"literal": false}]},
+          {"op": "eq", "args": [{"field": "operations.authorised_law_exception"}, {"literal": false}]}
+        ]
+      },
+      "duties": {
+        "direct_interaction_ai_disclosure": {
+          "modality": "OBLIGATION",
+          "recipients": ["NaturalPersonInteractingWithSystem"],
+          "trigger": null,
+          "trigger_signature": "direct_interaction_not_obvious_no_law_exception"
+        }
+      }
+    },
+    {
+      "rule_id": "VN_ART4_2_HUMAN_CONTROL_PRINCIPLE",
+      "source_evidence": {"source_id": "VN_LAW_134_2025", "provision": "Điều 4 khoản 2", "pdf_page": 3},
+      "predicate": {"op": "all", "args": []},
+      "duties": {
+        "general_human_authority_control_principle": {
+          "modality": "STATUTORY_PRINCIPLE",
+          "recipients": [],
+          "trigger": null,
+          "trigger_signature": "general_principle_no_specific_actor"
+        }
+      }
+    },
+    {
+      "rule_id": "VN_ART10_1_PROVIDER_PREUSE_CLASSIFICATION",
+      "source_evidence": {"source_id": "VN_LAW_134_2025", "provision": "Điều 10 khoản 1", "pdf_page": 5},
+      "predicate": {
+        "op": "and",
+        "args": [
+          {"op": "eq", "args": [{"field": "actors.provider_role"}, {"literal": true}]},
+          {"op": "eq", "args": [{"field": "time.before_putting_into_use"}, {"literal": true}]}
+        ]
+      },
+      "duties": {
+        "provider_preuse_risk_classification": {
+          "modality": "OBLIGATION",
+          "recipients": [],
+          "trigger": null,
+          "trigger_signature": "provider_before_putting_into_use"
+        }
+      }
+    },
+    {
+      "rule_id": "VN_ART10_2_DEPLOYER_RECLASSIFICATION_COORDINATION",
+      "source_evidence": {"source_id": "VN_LAW_134_2025", "provision": "Điều 10 khoản 2", "pdf_page": 5},
+      "predicate": {"op": "eq", "args": [{"field": "actors.deployer_role"}, {"literal": true}]},
+      "duties": {
+        "deployer_risk_integrity_responsibility": {
+          "modality": "OBLIGATION",
+          "recipients": ["Provider", "AffectedPersons"],
+          "trigger": null,
+          "trigger_signature": "deployer_during_use"
+        },
+        "risk_reclassification_after_change": {
+          "modality": "CONDITIONAL_OBLIGATION",
+          "recipients": ["Provider"],
+          "trigger": {
+            "op": "and",
+            "args": [
+              {"op": "eq", "args": [{"field": "operations.modification_or_integration_or_function_change"}, {"literal": true}]},
+              {"op": "eq", "args": [{"field": "classification.vn.new_or_higher_risk"}, {"literal": true}]}
+            ]
+          },
+          "trigger_signature": "change_creates_new_or_higher_risk"
+        }
+      }
+    },
+    {
+      "rule_id": "VN_ART10_3_CLASSIFICATION_NOTIFICATION",
+      "source_evidence": {"source_id": "VN_LAW_134_2025", "provision": "Điều 10 khoản 3", "pdf_page": 5},
+      "predicate": {
+        "op": "and",
+        "args": [
+          {"op": "eq", "args": [{"field": "actors.provider_role"}, {"literal": true}]},
+          {"op": "eq", "args": [{"field": "classification.vn.medium_or_high_risk"}, {"literal": true}]},
+          {"op": "eq", "args": [{"field": "time.before_use"}, {"literal": true}]}
+        ]
+      },
+      "duties": {
+        "classification_result_notification": {
+          "modality": "OBLIGATION",
+          "recipients": ["MinistryOfScienceAndTechnologyViaNationalAIPortal"],
+          "trigger": null,
+          "trigger_signature": "provider_medium_or_high_risk_before_use"
+        }
+      }
+    },
+    {
+      "rule_id": "VN_ART10_5A_HIGH_RISK_INSPECTION_MECHANISM",
+      "source_evidence": {"source_id": "VN_LAW_134_2025", "provision": "Điều 10 khoản 5 điểm a và khoản 6", "pdf_pages": [5, 6]},
+      "predicate": {
+        "op": "and",
+        "args": [
+          {"op": "eq", "args": [{"field": "classification.vn.high_risk"}, {"literal": true}]},
+          {"op": "eq", "args": [{"field": "operations.periodic_schedule_or_sign_of_violation"}, {"literal": true}]}
+        ]
+      },
+      "duties": {
+        "high_risk_inspection_mechanism": {
+          "modality": "PUBLIC_POWER",
+          "recipients": ["Provider", "Deployer"],
+          "trigger": null,
+          "trigger_signature": "high_risk_periodic_or_violation_trigger"
+        }
+      }
+    },
+    {
+      "rule_id": "VN_ART10_5B_MEDIUM_RISK_MONITORING_MECHANISMS",
+      "source_evidence": {"source_id": "VN_LAW_134_2025", "provision": "Điều 10 khoản 5 điểm b", "pdf_pages": [5, 6]},
+      "predicate": {"op": "eq", "args": [{"field": "classification.vn.medium_risk"}, {"literal": true}]},
+      "duties": {
+        "medium_risk_monitoring_mechanism": {
+          "modality": "PUBLIC_POWER",
+          "recipients": ["Provider", "Deployer"],
+          "trigger": null,
+          "trigger_signature": "medium_risk_monitoring"
+        }
+      }
+    },
+    {
+      "rule_id": "VN_ART13_2A_THIRD_PARTY_CERTIFICATION_ROUTE",
+      "source_evidence": {"source_id": "VN_LAW_134_2025_AND_DECISION_33_2026", "provision": "Điều 13 khoản 1-3; Quyết định 33/2026/QĐ-TTg", "law_pdf_page": 7},
+      "predicate": {
+        "op": "and",
+        "args": [
+          {"op": "eq", "args": [{"field": "classification.vn.listed"}, {"literal": true}]},
+          {"op": "eq", "args": [{"field": "classification.vn.assessment_route"}, {"literal": "ARTICLE_13_2_A_THIRD_PARTY_CERTIFICATION"}]},
+          {"op": "in", "args": [{"field": "classification.vn.catalog_item_id"}, {"literal": ["VN_D33_ERA_04", "VN_D33_ERA_05", "VN_D33_ERA_06", "VN_D33_ERA_07", "VN_D33_HLT_02", "VN_D33_PRC_01"]}]},
+          {"op": "eq", "args": [{"field": "operations.before_use_or_after_significant_change"}, {"literal": true}]}
+        ]
+      },
+      "duties": {
+        "point_a_conformity_certification": {
+          "modality": "OBLIGATION",
+          "recipients": ["CompetentAuthority", "Users"],
+          "trigger": null,
+          "trigger_signature": "listed_point_a_before_use_or_significant_change"
+        },
+        "point_a_third_party_assessment": {
+          "modality": "OBLIGATION",
+          "recipients": ["Provider", "CompetentAuthority"],
+          "trigger": null,
+          "trigger_signature": "mandatory_registered_or_recognised_third_party"
+        }
+      }
+    },
+    {
+      "rule_id": "VN_ART13_2B_PROVIDER_OPTION_ROUTE",
+      "source_evidence": {"source_id": "VN_LAW_134_2025_AND_DECISION_33_2026", "provision": "Điều 13 khoản 1-3; Quyết định 33/2026/QĐ-TTg", "law_pdf_page": 7},
+      "predicate": {
+        "op": "and",
+        "args": [
+          {"op": "eq", "args": [{"field": "classification.vn.listed"}, {"literal": true}]},
+          {"op": "eq", "args": [{"field": "classification.vn.assessment_route"}, {"literal": "ARTICLE_13_2_B_PROVIDER_SELF_OR_THIRD_PARTY"}]},
+          {"op": "not_in", "args": [{"field": "classification.vn.catalog_item_id"}, {"literal": ["VN_D33_ERA_04", "VN_D33_ERA_05", "VN_D33_ERA_06", "VN_D33_ERA_07", "VN_D33_HLT_02", "VN_D33_PRC_01"]}]},
+          {"op": "eq", "args": [{"field": "operations.before_use_or_after_significant_change"}, {"literal": true}]}
+        ]
+      },
+      "duties": {
+        "point_b_conformity_assessment_choice": {
+          "modality": "OBLIGATION_WITH_OPTION",
+          "recipients": ["CompetentAuthority", "Users"],
+          "trigger": null,
+          "trigger_signature": "listed_point_b_before_use_or_significant_change"
+        },
+        "point_b_optional_third_party_assessment": {
+          "modality": "CONDITIONAL_OBLIGATION",
+          "recipients": ["Provider", "CompetentAuthority"],
+          "trigger": {"op": "eq", "args": [{"field": "operations.third_party_assessment_engaged"}, {"literal": true}]},
+          "trigger_signature": "provider_elects_third_party_route"
+        }
+      }
+    },
+    {
+      "rule_id": "VN_ART11_1_DIRECT_INTERACTION_RECOGNISABILITY",
+      "source_evidence": {"source_id": "VN_LAW_134_2025", "provision": "Điều 11 khoản 1", "pdf_page": 6},
+      "predicate": {
+        "op": "and",
+        "args": [
+          {"op": "eq", "args": [{"field": "system.direct_human_interaction"}, {"literal": true}]},
+          {"op": "eq", "args": [{"field": "operations.statutory_exception"}, {"literal": false}]}
+        ]
+      },
+      "duties": {
+        "direct_interaction_ai_recognisability": {
+          "modality": "OBLIGATION",
+          "recipients": ["NaturalPersonInteractingWithSystem"],
+          "trigger": null,
+          "trigger_signature": "direct_interaction_no_statutory_exception"
+        }
+      }
+    },
+    {
+      "rule_id": "VN_ND142_ART19_1_DEPLOYER_USER_INITIAL_RESPONSE",
+      "source_evidence": {"source_id": "VN_DECREE_142_2026", "provision": "Điều 19 khoản 2 điểm a", "pdf_page": 17},
+      "predicate": {
+        "op": "and",
+        "args": [
+          {"op": "eq", "args": [{"field": "operations.serious_incident_identified"}, {"literal": true}]},
+          {"op": "eq", "args": [{"field": "actors.deployer_or_user_role"}, {"literal": true}]}
+        ]
+      },
+      "duties": {
+        "serious_incident_record_and_initial_mitigation": {
+          "modality": "OBLIGATION",
+          "recipients": ["Provider"],
+          "trigger": null,
+          "trigger_signature": "serious_incident_deployer_or_user"
+        }
+      }
+    },
+    {
+      "rule_id": "VN_ND142_ART19_2_PROVIDER_TECHNICAL_REMEDIATION",
+      "source_evidence": {"source_id": "VN_DECREE_142_2026", "provision": "Điều 19 khoản 2 điểm b", "pdf_page": 17},
+      "predicate": {"op": "eq", "args": [{"field": "operations.provider_notified_of_serious_incident"}, {"literal": true}]},
+      "duties": {
+        "provider_serious_incident_technical_remediation": {
+          "modality": "OBLIGATION",
+          "recipients": ["Deployer", "User", "AffectedPersons"],
+          "trigger": null,
+          "trigger_signature": "provider_notified_of_serious_incident"
+        }
+      }
+    },
+    {
+      "rule_id": "VN_ND142_ART19_3_PROVIDER_DEPLOYER_COORDINATION",
+      "source_evidence": {"source_id": "VN_DECREE_142_2026", "provision": "Điều 19 khoản 2 điểm c", "pdf_page": 17},
+      "predicate": {"op": "eq", "args": [{"field": "operations.serious_incident_response_in_progress"}, {"literal": true}]},
+      "duties": {
+        "serious_incident_information_and_response_coordination": {
+          "modality": "RECIPROCAL_OBLIGATION",
+          "recipients": ["Provider", "Deployer"],
+          "trigger": null,
+          "trigger_signature": "incident_response_in_progress"
+        }
+      }
+    },
+    {
+      "rule_id": "VN_ND142_ART19_4_PRELIMINARY_REPORTING",
+      "source_evidence": {"source_id": "VN_DECREE_142_2026", "provision": "Điều 19 khoản 3", "pdf_page": 17},
+      "predicate": {
+        "op": "and",
+        "args": [
+          {"op": "eq", "args": [{"field": "operations.serious_incident"}, {"literal": true}]},
+          {"op": "in", "args": [{"field": "operations.reporting_deadline_class"}, {"literal": ["URGENT_72_HOURS", "OTHER_5_WORKING_DAYS"]}]},
+          {"op": "in", "args": [{"field": "operations.provider_contact_status"}, {"literal": ["REACHABLE", "UNREACHABLE"]}]}
+        ]
+      },
+      "duties": {
+        "serious_incident_preliminary_report": {
+          "modality": "OBLIGATION",
+          "recipients": ["CompetentStateAuthorityViaNationalAIPortal"],
+          "trigger": {"op": "eq", "args": [{"field": "operations.provider_contact_status"}, {"literal": "REACHABLE"}]},
+          "trigger_signature": "provider_report_72_hours_or_5_working_days"
+        },
+        "serious_incident_preliminary_report_fallback": {
+          "modality": "CONDITIONAL_FALLBACK_OBLIGATION",
+          "recipients": ["CompetentStateAuthorityViaNationalAIPortal"],
+          "trigger": {"op": "eq", "args": [{"field": "operations.provider_contact_status"}, {"literal": "UNREACHABLE"}]},
+          "trigger_signature": "deployer_fallback_when_provider_unreachable"
+        }
+      }
+    }
+  ]
+}
