@@ -1,0 +1,112 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://eilodon.github.io/hsdl-harmonization-gap/schemas/metric-analysis-report-v1.schema.json",
+  "title": "Model-relative metric analysis report v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version", "status", "claim_class", "legal_validation", "registry",
+    "candidate", "corpus", "rule_count", "evaluation_count_per_scenario",
+    "metrics", "sensitivity", "claim_boundary"
+  ],
+  "properties": {
+    "schema_version": {"const": "1.0.0"},
+    "status": {"const": "MODEL_RELATIVE_METRIC_ANALYSIS_COMPLETE"},
+    "claim_class": {"const": "MODEL_RELATIVE"},
+    "legal_validation": {"const": "NOT_ASSERTED"},
+    "registry": {"$ref": "#/$defs/hashedRegistry"},
+    "candidate": {"$ref": "#/$defs/hashedProfile"},
+    "corpus": {"$ref": "#/$defs/hashedCorpus"},
+    "rule_count": {"const": 20},
+    "evaluation_count_per_scenario": {"const": 6440},
+    "metrics": {
+      "type": "array",
+      "minItems": 5,
+      "items": {"$ref": "#/$defs/metricResult"}
+    },
+    "sensitivity": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "baseline_scenario_id", "alternative_scenario_id", "evaluation_count",
+        "changed_evaluation_count", "changed_evaluation_share", "classification",
+        "transition_counts", "changed_evaluations"
+      ],
+      "properties": {
+        "baseline_scenario_id": {"const": "NO_ASSUMPTIONS"},
+        "alternative_scenario_id": {"const": "ASSUME_ARTICLE13_TIMING_TRIGGER_SATISFIED"},
+        "evaluation_count": {"const": 6440},
+        "changed_evaluation_count": {"const": 184},
+        "changed_evaluation_share": {"type": "number", "minimum": 0, "maximum": 1},
+        "classification": {"const": "ASSUMPTION_SENSITIVE"},
+        "transition_counts": {"type": "object"},
+        "changed_evaluations": {"type": "array", "minItems": 184, "maxItems": 184}
+      }
+    },
+    "claim_boundary": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "empirical_prevalence", "independent_legal_conclusion",
+        "uniform_model_space_percentage", "notice"
+      ],
+      "properties": {
+        "empirical_prevalence": {"const": "NOT_SUPPORTED"},
+        "independent_legal_conclusion": {"const": "NOT_ASSERTED"},
+        "uniform_model_space_percentage": {"const": "NOT_USED"},
+        "notice": {"type": "string", "minLength": 1}
+      }
+    }
+  },
+  "$defs": {
+    "hashedRegistry": {
+      "type": "object",
+      "required": ["registry_id", "registry_hash"],
+      "properties": {
+        "registry_id": {"type": "string"},
+        "registry_hash": {"type": "string", "pattern": "^sha256:[0-9a-f]{64}$"}
+      }
+    },
+    "hashedProfile": {
+      "type": "object",
+      "required": ["profile_id", "profile_hash"],
+      "properties": {
+        "profile_id": {"type": "string"},
+        "profile_hash": {"type": "string", "pattern": "^sha256:[0-9a-f]{64}$"}
+      }
+    },
+    "hashedCorpus": {
+      "type": "object",
+      "required": ["corpus_id", "corpus_hash", "context_count"],
+      "properties": {
+        "corpus_id": {"type": "string"},
+        "corpus_hash": {"type": "string", "pattern": "^sha256:[0-9a-f]{64}$"},
+        "context_count": {"const": 322}
+      }
+    },
+    "metricResult": {
+      "type": "object",
+      "required": [
+        "metric_id", "scenario_id", "measure_id", "population", "numerator",
+        "denominator", "unknown_count", "excluded_count", "value", "lower_bound",
+        "upper_bound", "numerator_definition", "denominator_definition", "interpretation"
+      ],
+      "properties": {
+        "metric_id": {"type": "string"},
+        "scenario_id": {"type": "string"},
+        "measure_id": {"type": "string"},
+        "population": {"type": "string"},
+        "numerator": {"type": "integer", "minimum": 0},
+        "denominator": {"type": "integer", "minimum": 0},
+        "unknown_count": {"type": "integer", "minimum": 0},
+        "excluded_count": {"type": "integer", "minimum": 0},
+        "value": {"type": ["number", "null"], "minimum": 0, "maximum": 1},
+        "lower_bound": {"type": ["number", "null"], "minimum": 0, "maximum": 1},
+        "upper_bound": {"type": ["number", "null"], "minimum": 0, "maximum": 1},
+        "numerator_definition": {"type": "string"},
+        "denominator_definition": {"type": "string"},
+        "interpretation": {"type": "string"}
+      }
+    }
+  }
+}

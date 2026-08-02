@@ -1,0 +1,80 @@
+{
+  "schema_version": "1.0.0",
+  "registry_id": "model-relative-metrics-v1",
+  "claim_class": "MODEL_RELATIVE",
+  "legal_validation": "NOT_ASSERTED",
+  "metrics": [
+    {
+      "metric_id": "metric:decision33:point-a-positive-catalog-share",
+      "scenario_id": "ASSUME_ARTICLE13_TIMING_TRIGGER_SATISFIED",
+      "measure_id": "UNWEIGHTED_CATALOG_ROW_SHARE",
+      "population": "POSITIVE_DECISION33_WITNESSES",
+      "rule_ids": ["VN_ART13_2A_THIRD_PARTY_CERTIFICATION_ROUTE"],
+      "numerator_states": ["APPLICABLE_DETERMINATE"],
+      "unknown_states": ["INDETERMINATE_MISSING_FACTS", "INDETERMINATE_PREDICATE_NOT_COMPILED"],
+      "unknown_policy": "COUNT_AS_SEPARATE_CATEGORY",
+      "numerator_definition": "Positive Decision 33 catalog witnesses applicable to the explicit point-a route under the declared timing assumption.",
+      "denominator_definition": "All 46 positive Decision 33 catalog witnesses.",
+      "interpretation": "Share of catalog rows in this source-derived witness inventory, not share of deployed AI systems."
+    },
+    {
+      "metric_id": "metric:decision33:point-b-positive-catalog-share",
+      "scenario_id": "ASSUME_ARTICLE13_TIMING_TRIGGER_SATISFIED",
+      "measure_id": "UNWEIGHTED_CATALOG_ROW_SHARE",
+      "population": "POSITIVE_DECISION33_WITNESSES",
+      "rule_ids": ["VN_ART13_2B_PROVIDER_OPTION_ROUTE"],
+      "numerator_states": ["APPLICABLE_DETERMINATE"],
+      "unknown_states": ["INDETERMINATE_MISSING_FACTS", "INDETERMINATE_PREDICATE_NOT_COMPILED"],
+      "unknown_policy": "COUNT_AS_SEPARATE_CATEGORY",
+      "numerator_definition": "Positive Decision 33 catalog witnesses applicable to the explicit point-b route under the declared timing assumption.",
+      "denominator_definition": "All 46 positive Decision 33 catalog witnesses.",
+      "interpretation": "Share of catalog rows in this source-derived witness inventory, not share of deployed AI systems."
+    },
+    {
+      "metric_id": "metric:candidate:determinate-outcome-share",
+      "scenario_id": "NO_ASSUMPTIONS",
+      "measure_id": "UNWEIGHTED_RULE_CONTEXT_EVALUATION_SHARE",
+      "population": "ALL_CANDIDATE_RULE_CONTEXT_EVALUATIONS",
+      "rule_ids": [],
+      "numerator_states": [
+        "NOT_APPLICABLE", "APPLICABLE_DETERMINATE",
+        "APPLICABLE_UNSPECIFIED_OBLIGOR", "APPLICABLE_PARTIALLY_UNSPECIFIED_OBLIGOR"
+      ],
+      "unknown_states": ["INDETERMINATE_MISSING_FACTS", "INDETERMINATE_PREDICATE_NOT_COMPILED"],
+      "unknown_policy": "COUNT_AS_SEPARATE_CATEGORY",
+      "numerator_definition": "Rule-context evaluations with a determinate applicable or not-applicable state.",
+      "denominator_definition": "All 20 compiled rules evaluated against all 322 corpus contexts.",
+      "interpretation": "Engineering determinacy of this partial candidate IR, not legal certainty."
+    },
+    {
+      "metric_id": "metric:candidate:applicable-outcome-bounds",
+      "scenario_id": "NO_ASSUMPTIONS",
+      "measure_id": "UNWEIGHTED_RULE_CONTEXT_EVALUATION_SHARE",
+      "population": "ALL_CANDIDATE_RULE_CONTEXT_EVALUATIONS",
+      "rule_ids": [],
+      "numerator_states": [
+        "APPLICABLE_DETERMINATE", "APPLICABLE_UNSPECIFIED_OBLIGOR",
+        "APPLICABLE_PARTIALLY_UNSPECIFIED_OBLIGOR"
+      ],
+      "unknown_states": ["INDETERMINATE_MISSING_FACTS", "INDETERMINATE_PREDICATE_NOT_COMPILED"],
+      "unknown_policy": "LOWER_UPPER_BOUND",
+      "numerator_definition": "Rule-context evaluations currently determined applicable.",
+      "denominator_definition": "All 20 compiled rules evaluated against all 322 corpus contexts.",
+      "interpretation": "Lower and upper model bounds when indeterminate evaluations are treated as respectively non-applicable or applicable."
+    },
+    {
+      "metric_id": "metric:candidate:indeterminate-outcome-share",
+      "scenario_id": "NO_ASSUMPTIONS",
+      "measure_id": "UNWEIGHTED_RULE_CONTEXT_EVALUATION_SHARE",
+      "population": "ALL_CANDIDATE_RULE_CONTEXT_EVALUATIONS",
+      "rule_ids": [],
+      "numerator_states": ["INDETERMINATE_MISSING_FACTS", "INDETERMINATE_PREDICATE_NOT_COMPILED"],
+      "unknown_states": [],
+      "unknown_policy": "COUNT_AS_SEPARATE_CATEGORY",
+      "numerator_definition": "Rule-context evaluations that cannot be decided because facts or predicate semantics are incomplete.",
+      "denominator_definition": "All 20 compiled rules evaluated against all 322 corpus contexts.",
+      "interpretation": "Engineering incompleteness of this candidate IR."
+    }
+  ],
+  "notice": "Every percentage is tied to a declared finite population. No metric in this registry supports empirical-prevalence wording or independent legal conclusions."
+}
