@@ -6,7 +6,9 @@ import unittest
 from hsdl_gap.provenance import (
     ProvenanceError,
     fingerprint_pdf_bytes,
+    validate_source_lock,
     validate_source_targets,
+    verify_provenance_report_against_lock,
 )
 
 
@@ -30,6 +32,48 @@ class SourceProvenanceTests(unittest.TestCase):
                     "declared_page_count": 1,
                     "signature_profile": "test_pdf",
                     "required_for_current_claims": True,
+                }
+            ],
+        }
+
+    def _lock(self) -> dict:
+        return {
+            "schema_version": "1.0.0",
+            "lock_id": "test-lock",
+            "freeze_date": "2026-08-02",
+            "custody": "HASH_ONLY_NOT_VENDORED",
+            "hash_algorithm": "sha256",
+            "review_gates": {
+                "visual_pdf_review": "PENDING",
+                "provision_level_legal_review": "PENDING",
+                "second_reviewer_signoff": "PENDING",
+            },
+            "artifacts": [
+                {
+                    "id": "SOURCE_A",
+                    "official_pdf_url": "https://example.test/a.pdf",
+                    "byte_size": 10,
+                    "sha256": "a" * 64,
+                    "declared_page_count": 1,
+                    "signature_profile": "test_pdf",
+                }
+            ],
+            "notice": "test lock",
+        }
+
+    def _acquisition(self) -> dict:
+        return {
+            "status": "COMPLETE",
+            "retrieved_at_utc": "2026-08-02T00:00:00+00:00",
+            "errors": [],
+            "artifacts": [
+                {
+                    "id": "SOURCE_A",
+                    "requested_url": "https://example.test/a.pdf",
+                    "byte_size": 10,
+                    "sha256": "a" * 64,
+                    "declared_page_count": 1,
+                    "signature_profile": "test_pdf",
                 }
             ],
         }
@@ -60,6 +104,33 @@ class SourceProvenanceTests(unittest.TestCase):
     def test_non_pdf_artifact_is_rejected(self) -> None:
         with self.assertRaisesRegex(ProvenanceError, "PDF magic"):
             fingerprint_pdf_bytes(b"not a pdf")
+
+    def test_valid_source_lock(self) -> None:
+        validate_source_lock(self._lock())
+
+    def test_invalid_lock_digest_is_rejected(self) -> None:
+        lock = self._lock()
+        lock["artifacts"][0]["sha256"] = "ABC"
+        with self.assertRaisesRegex(ProvenanceError, "64 lowercase hex"):
+            validate_source_lock(lock)
+
+    def test_matching_acquisition_verifies(self) -> None:
+        result = verify_provenance_report_against_lock(
+            self._acquisition(), self._lock()
+        )
+        self.assertEqual(result["status"], "VERIFIED")
+        self.assertEqual(result["mismatches"], [])
+        self.assertEqual(result["artifact_results"][0]["status"], "VERIFIED")
+
+    def test_hash_drift_fails_verification(self) -> None:
+        acquisition = self._acquisition()
+        acquisition["artifacts"][0]["sha256"] = "b" * 64
+        result = verify_provenance_report_against_lock(
+            acquisition, self._lock()
+        )
+        self.assertEqual(result["status"], "FAILED")
+        self.assertEqual(result["artifact_results"][0]["status"], "DRIFT")
+        self.assertEqual(result["mismatches"][0]["field"], "sha256")
 
 
 if __name__ == "__main__":
