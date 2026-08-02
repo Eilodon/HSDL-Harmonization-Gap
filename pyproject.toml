@@ -4,10 +4,14 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "hsdl-harmonization-gap"
-version = "0.1.0"
-description = "Canonical, typed reference model for the HSDL harmonization-gap research program"
+version = "0.2.0.dev0"
+description = "Canonical, typed reference model and model-relative experiment framework for the HSDL harmonization-gap research program"
 requires-python = ">=3.11"
 dependencies = []
+
+[project.scripts]
+hsdl-gap = "hsdl_gap.__main__:main"
+hsdl-gap-engineering = "hsdl_gap.engineering_cli:main"
 
 [tool.setuptools.packages.find]
 where = ["src"]
