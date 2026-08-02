@@ -44,6 +44,7 @@ reproduce: verify
 	PYTHONPATH=src $(PYTHON) -m hsdl_gap --mode gate-status --policies policies/legacy_v11.json --semantics alignments/legacy_duty_semantics.json --catalog catalogs/vn_decision_33_2026.csv --provision-audit sources/reviews/legacy_v11_provision_audit.json --review-template reviews/independent_legal_review_template.json > generated/research-gate-status.json
 	PYTHONPATH=src $(PYTHON) -m hsdl_gap.engineering_demo > generated/engineering-experiment-demo.json
 	PYTHONPATH=src $(PYTHON) -m hsdl_gap.engineering_cli schema-inventory --schema-dir schemas > generated/schema-inventory.json
+	PYTHONPATH=src $(PYTHON) -m hsdl_gap.engineering_gates --artifact-dir generated > generated/engineering-gate-status.json
 
 verify-sources:
 	mkdir -p generated
