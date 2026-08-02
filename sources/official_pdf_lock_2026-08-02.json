@@ -36,6 +36,11 @@
     {
       "id": "EU_AI_ACT_2024_1689",
       "official_pdf_url": "https://eur-lex.europa.eu/eli/reg/2024/1689/oj/eng/pdf",
+      "alternate_official_pdf_urls": [
+        "https://eur-lex.europa.eu/legal-content/EN/TXT/PDF/?uri=OJ%3AL_202401689",
+        "https://eur-lex.europa.eu/legal-content/EN/TXT/PDF/?uri=CELEX%3A32024R1689",
+        "https://data.europa.eu/eli/reg/2024/1689/oj/eng/pdf"
+      ],
       "byte_size": 2583319,
       "sha256": "bba630444b3278e881066774002a1d7824308934f49ccfa203e65be43692f55e",
       "declared_page_count": 144,
@@ -66,5 +71,5 @@
       "signature_profile": "government_portal_signed_pdf"
     }
   ],
-  "notice": "This lock records the exact bytes acquired from official PDF endpoints. It is not a substitute for durable artifact custody, signature validation, visual inspection, or legal review."
+  "notice": "This lock records the exact bytes acquired from official PDF endpoints. Alternate official URLs are transport-only fallbacks and are accepted only when they reproduce the pinned byte size and SHA-256. The lock is not a substitute for durable artifact custody, signature validation, visual inspection, or legal review."
 }
