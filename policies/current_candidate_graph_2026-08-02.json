@@ -1,0 +1,539 @@
+{
+  "schema_version": "1.0.0",
+  "profile_id": "current-candidate-2026-08-02",
+  "status": "PROVISIONAL_REVIEW_DEPENDENT_NO_QUANTITATIVE_EVALUATION",
+  "source_lock_id": "official-pdf-lock-2026-08-02",
+  "provision_audit_id": "legacy-v11-provision-audit-2026-08-02",
+  "evaluation_policy": {
+    "quantitative_evaluation_allowed": false,
+    "directional_gap_metrics_allowed": false,
+    "actor_mismatch_metrics_allowed": false,
+    "typed_rule_graph_validation_allowed": true,
+    "reason": "Independent legal/policy review, shared current classification, negative contexts and current-profile differential validation remain incomplete."
+  },
+  "removed_legacy_rules": [
+    {
+      "legacy_rule_id": "EU_G6_ART9",
+      "disposition": "REMOVE_DUPLICATE_AND_DERIVE_TEMPORAL_PROJECTION",
+      "reason": "Article 9 already appears as the G1 risk-management norm."
+    },
+    {
+      "legacy_rule_id": "VN_G2_ART13_REUSE",
+      "disposition": "RETRACT_UNLESS_NEW_SOURCE_IDENTIFIED",
+      "reason": "No automatic sector-certification reuse rule was identified in the cited Article 13 provision."
+    },
+    {
+      "legacy_rule_id": "VN_G6_ND142_EVENT",
+      "disposition": "RETRACT_GENERIC_RULE",
+      "reason": "Decree 142 Article 19 contains a typed incident-duty graph rather than one generic deployer control-risk duty."
+    }
+  ],
+  "binding_rule_graph": [
+    {
+      "id": "EU_ART9_RISK_MANAGEMENT_SYSTEM",
+      "jurisdiction": "EU",
+      "source_id": "EU_AI_ACT_2024_1689",
+      "provision": "Article 9(1)-(2)",
+      "review_status": "PENDING_INDEPENDENT_REVIEW",
+      "activation_model": {
+        "status": "PENDING_CURRENT_HIGH_RISK_RELATION",
+        "required_facts": ["is_high_risk_ai_system", "lifecycle_stage"]
+      },
+      "consequences": [
+        {
+          "normative_slot": "risk_management_system_lifecycle",
+          "actions": ["establish", "implement", "document", "maintain", "iterate"],
+          "object": "risk_management_system",
+          "obligors": ["Provider"],
+          "actor_relation": "primary",
+          "timing": "continuous_iterative_lifecycle"
+        }
+      ]
+    },
+    {
+      "id": "EU_ART43_CONFORMITY_ASSESSMENT",
+      "jurisdiction": "EU",
+      "source_id": "EU_AI_ACT_2024_1689",
+      "provision": "Article 43(1)-(4)",
+      "review_status": "PENDING_INDEPENDENT_REVIEW",
+      "activation_model": {
+        "status": "PENDING_CURRENT_HIGH_RISK_AND_PROCEDURE_RELATION",
+        "required_facts": ["annex_category", "harmonised_standard_status", "common_specification_status", "product_law_route", "substantial_modification"]
+      },
+      "consequences": [
+        {
+          "normative_slot": "conformity_assessment_procedure_selection",
+          "actions": ["select_applicable_procedure", "complete_conformity_assessment"],
+          "object": "high_risk_ai_system",
+          "obligors": ["Provider"],
+          "actor_relation": "primary",
+          "timing": "before_placing_on_market_or_after_retrigger"
+        },
+        {
+          "normative_slot": "notified_body_participation",
+          "actions": ["assess_conformity_when_required"],
+          "object": "high_risk_ai_system",
+          "obligors": ["NotifiedBody"],
+          "actor_relation": "conditional_third_party",
+          "timing": "procedure_dependent"
+        }
+      ]
+    },
+    {
+      "id": "EU_ART14_PROVIDER_HUMAN_OVERSIGHT_DESIGN",
+      "jurisdiction": "EU",
+      "source_id": "EU_AI_ACT_2024_1689",
+      "provision": "Article 14(1)-(4)",
+      "review_status": "PENDING_INDEPENDENT_REVIEW",
+      "activation_model": {
+        "status": "PENDING_CURRENT_HIGH_RISK_RELATION",
+        "required_facts": ["is_high_risk_ai_system", "risk_level", "autonomy_level", "context_of_use"]
+      },
+      "consequences": [
+        {
+          "normative_slot": "human_oversight_design_measures",
+          "actions": ["design_for_effective_human_oversight", "identify_oversight_measures"],
+          "object": "high_risk_ai_system",
+          "obligors": ["Provider"],
+          "actor_relation": "primary",
+          "timing": "design_and_development"
+        }
+      ]
+    },
+    {
+      "id": "EU_ART26_DEPLOYER_HUMAN_OVERSIGHT_ASSIGNMENT",
+      "jurisdiction": "EU",
+      "source_id": "EU_AI_ACT_2024_1689",
+      "provision": "Article 26(2)-(3)",
+      "review_status": "PENDING_INDEPENDENT_REVIEW",
+      "activation_model": {
+        "status": "PENDING_CURRENT_HIGH_RISK_RELATION",
+        "required_facts": ["is_high_risk_ai_system", "deployer_use"]
+      },
+      "consequences": [
+        {
+          "normative_slot": "human_oversight_person_assignment",
+          "actions": ["assign_oversight_persons", "ensure_competence_training_authority_support"],
+          "object": "deployment_of_high_risk_ai_system",
+          "obligors": ["Deployer"],
+          "actor_relation": "primary",
+          "timing": "before_and_during_use"
+        }
+      ]
+    },
+    {
+      "id": "EU_ART12_AUTOMATIC_LOGGING_CAPABILITY",
+      "jurisdiction": "EU",
+      "source_id": "EU_AI_ACT_2024_1689",
+      "provision": "Article 12(1)-(3)",
+      "review_status": "PENDING_INDEPENDENT_REVIEW",
+      "activation_model": {
+        "status": "PENDING_CURRENT_HIGH_RISK_RELATION",
+        "required_facts": ["is_high_risk_ai_system", "annex_category"]
+      },
+      "consequences": [
+        {
+          "normative_slot": "automatic_event_logging_capability",
+          "actions": ["design_enable_automatic_event_recording"],
+          "object": "high_risk_ai_system",
+          "obligors": ["Provider"],
+          "actor_relation": "primary",
+          "timing": "system_lifetime"
+        }
+      ]
+    },
+    {
+      "id": "EU_ART26_6_LOG_RETENTION",
+      "jurisdiction": "EU",
+      "source_id": "EU_AI_ACT_2024_1689",
+      "provision": "Article 26(6)",
+      "review_status": "PENDING_INDEPENDENT_REVIEW",
+      "activation_model": {
+        "status": "PENDING_CURRENT_HIGH_RISK_RELATION",
+        "required_facts": ["is_high_risk_ai_system", "logs_under_deployer_control", "other_applicable_law"]
+      },
+      "consequences": [
+        {
+          "normative_slot": "deployer_log_retention",
+          "actions": ["retain_automatically_generated_logs"],
+          "object": "logs_under_deployer_control",
+          "obligors": ["Deployer"],
+          "actor_relation": "primary",
+          "timing": "appropriate_period_at_least_six_months_unless_other_law"
+        }
+      ]
+    },
+    {
+      "id": "EU_ART50_DIRECT_INTERACTION_TRANSPARENCY",
+      "jurisdiction": "EU",
+      "source_id": "EU_AI_ACT_2024_1689",
+      "provision": "Article 50(1), (5)",
+      "review_status": "PENDING_INDEPENDENT_REVIEW",
+      "activation_model": {
+        "status": "PROVISIONALLY_TYPED",
+        "required_facts": ["intended_direct_interaction", "interaction_obvious_to_reasonably_informed_person", "authorised_law_exception"]
+      },
+      "consequences": [
+        {
+          "normative_slot": "direct_interaction_ai_disclosure",
+          "actions": ["inform_natural_person_of_ai_interaction"],
+          "object": "direct_interaction",
+          "obligors": ["Provider"],
+          "actor_relation": "primary",
+          "timing": "first_interaction_in_clear_accessible_manner"
+        }
+      ]
+    },
+    {
+      "id": "VN_ART4_2_HUMAN_CONTROL_PRINCIPLE",
+      "jurisdiction": "VN",
+      "source_id": "VN_LAW_134_2025",
+      "provision": "Điều 4 khoản 2",
+      "review_status": "PENDING_INDEPENDENT_REVIEW",
+      "activation_model": {
+        "status": "GENERAL_STATUTORY_PRINCIPLE",
+        "required_facts": []
+      },
+      "consequences": [
+        {
+          "normative_slot": "general_human_authority_control_principle",
+          "actions": ["preserve_human_authority_and_responsibility", "ensure_human_control_and_intervention_capability"],
+          "object": "ai_system_decisions_and_behaviour",
+          "obligors": [],
+          "actor_relation": "unspecified_by_source",
+          "timing": "general"
+        }
+      ],
+      "comparison_policy": "ANALOGICAL_OR_STRUCTURAL_UNLESS_EXACT_CROSSWALK_REVIEWED"
+    },
+    {
+      "id": "VN_ART10_1_PROVIDER_PREUSE_CLASSIFICATION",
+      "jurisdiction": "VN",
+      "source_id": "VN_LAW_134_2025",
+      "provision": "Điều 10 khoản 1",
+      "review_status": "PENDING_INDEPENDENT_REVIEW",
+      "activation_model": {
+        "status": "PENDING_FINAL_CLASSIFICATION_RELATION",
+        "required_facts": ["provider_role", "before_putting_into_use", "final_risk_criteria"]
+      },
+      "consequences": [
+        {
+          "normative_slot": "provider_preuse_risk_classification",
+          "actions": ["self_classify_ai_system_risk"],
+          "object": "ai_system",
+          "obligors": ["Provider"],
+          "actor_relation": "primary",
+          "timing": "before_putting_into_use"
+        }
+      ]
+    },
+    {
+      "id": "VN_ART10_2_DEPLOYER_RECLASSIFICATION_COORDINATION",
+      "jurisdiction": "VN",
+      "source_id": "VN_LAW_134_2025",
+      "provision": "Điều 10 khoản 2",
+      "review_status": "PENDING_INDEPENDENT_REVIEW",
+      "activation_model": {
+        "status": "PROVISIONALLY_TYPED",
+        "required_facts": ["deployer_role", "modification_or_integration_or_function_change", "new_or_higher_risk"]
+      },
+      "consequences": [
+        {
+          "normative_slot": "deployer_risk_integrity_responsibility",
+          "actions": ["assume_safety_integrity_responsibility_during_use"],
+          "object": "deployed_ai_system",
+          "obligors": ["Deployer"],
+          "actor_relation": "primary",
+          "timing": "during_use"
+        },
+        {
+          "normative_slot": "risk_reclassification_after_change",
+          "actions": ["coordinate_and_reclassify"],
+          "object": "modified_or_integrated_ai_system",
+          "obligors": ["Deployer", "Provider"],
+          "actor_relation": "deployer_responsibility_with_provider_coordination",
+          "timing": "when_change_creates_new_or_higher_risk"
+        }
+      ]
+    },
+    {
+      "id": "VN_ART10_3_CLASSIFICATION_NOTIFICATION",
+      "jurisdiction": "VN",
+      "source_id": "VN_LAW_134_2025",
+      "provision": "Điều 10 khoản 3",
+      "review_status": "PENDING_INDEPENDENT_REVIEW",
+      "activation_model": {
+        "status": "PENDING_FINAL_MEDIUM_HIGH_CLASSIFICATION_RELATION",
+        "required_facts": ["provider_role", "medium_or_high_risk", "before_use"]
+      },
+      "consequences": [
+        {
+          "normative_slot": "classification_result_notification",
+          "actions": ["notify_classification_result_via_national_ai_portal"],
+          "object": "medium_or_high_risk_classification",
+          "obligors": ["Provider"],
+          "actor_relation": "primary",
+          "timing": "before_putting_into_use"
+        }
+      ]
+    },
+    {
+      "id": "VN_ART10_5A_HIGH_RISK_INSPECTION_MECHANISM",
+      "jurisdiction": "VN",
+      "source_id": "VN_LAW_134_2025",
+      "provision": "Điều 10 khoản 5 điểm a và khoản 6",
+      "review_status": "PENDING_INDEPENDENT_REVIEW",
+      "activation_model": {
+        "status": "PENDING_FINAL_HIGH_RISK_RELATION",
+        "required_facts": ["high_risk", "periodic_schedule_or_sign_of_violation"]
+      },
+      "consequences": [
+        {
+          "normative_slot": "high_risk_inspection_mechanism",
+          "actions": ["subject_to_periodic_or_violation_triggered_inspection"],
+          "object": "high_risk_ai_system",
+          "obligors": ["CompetentAuthority"],
+          "actor_relation": "provisional_enforcement_actor",
+          "timing": "periodic_or_upon_sign_of_violation"
+        }
+      ]
+    },
+    {
+      "id": "VN_ART10_5B_MEDIUM_RISK_MONITORING_MECHANISMS",
+      "jurisdiction": "VN",
+      "source_id": "VN_LAW_134_2025",
+      "provision": "Điều 10 khoản 5 điểm b",
+      "review_status": "PENDING_INDEPENDENT_REVIEW",
+      "activation_model": {
+        "status": "PENDING_FINAL_MEDIUM_RISK_RELATION",
+        "required_facts": ["medium_risk"]
+      },
+      "consequences": [
+        {
+          "normative_slot": "medium_risk_monitoring_mechanism",
+          "actions": ["monitor_by_reporting", "sample_inspection", "independent_assessment"],
+          "object": "medium_risk_ai_system",
+          "obligors": ["CompetentAuthority"],
+          "actor_relation": "provisional_monitoring_actor",
+          "timing": "as_applicable"
+        }
+      ]
+    },
+    {
+      "id": "VN_ART13_2A_THIRD_PARTY_CERTIFICATION_ROUTE",
+      "jurisdiction": "VN",
+      "source_id": "VN_LAW_134_2025_AND_DECISION_33_2026",
+      "provision": "Điều 13 khoản 1-3; Quyết định 33/2026/QĐ-TTg",
+      "review_status": "PENDING_INDEPENDENT_REVIEW",
+      "activation_model": {
+        "status": "CATALOG_ROUTE_VISUALLY_VERIFIED",
+        "catalog_route": "ARTICLE_13_2_A_THIRD_PARTY_CERTIFICATION",
+        "catalog_item_ids": ["VN_D33_ERA_04", "VN_D33_ERA_05", "VN_D33_ERA_06", "VN_D33_ERA_07", "VN_D33_HLT_02", "VN_D33_PRC_01"],
+        "required_facts": ["catalog_item_id", "before_use_or_after_significant_change"]
+      },
+      "consequences": [
+        {
+          "normative_slot": "point_a_conformity_certification",
+          "actions": ["obtain_conformity_certification"],
+          "object": "catalog_high_risk_ai_system",
+          "obligors": ["Provider"],
+          "actor_relation": "responsible_party",
+          "timing": "before_use_or_after_significant_change"
+        },
+        {
+          "normative_slot": "point_a_third_party_assessment",
+          "actions": ["perform_registered_or_recognised_conformity_assessment"],
+          "object": "catalog_high_risk_ai_system",
+          "obligors": ["ConformityAssessmentOrganisation"],
+          "actor_relation": "required_third_party",
+          "timing": "certification_procedure"
+        }
+      ]
+    },
+    {
+      "id": "VN_ART13_2B_PROVIDER_OPTION_ROUTE",
+      "jurisdiction": "VN",
+      "source_id": "VN_LAW_134_2025_AND_DECISION_33_2026",
+      "provision": "Điều 13 khoản 1-3; Quyết định 33/2026/QĐ-TTg",
+      "review_status": "PENDING_INDEPENDENT_REVIEW",
+      "activation_model": {
+        "status": "CATALOG_ROUTE_VISUALLY_VERIFIED",
+        "catalog_route": "ARTICLE_13_2_B_PROVIDER_SELF_OR_THIRD_PARTY",
+        "catalog_item_set": "ALL_DECISION33_ITEMS_EXCEPT_POINT_A_IDS",
+        "catalog_item_count": 40,
+        "required_facts": ["catalog_item_id", "before_use_or_after_significant_change"]
+      },
+      "consequences": [
+        {
+          "normative_slot": "point_b_conformity_assessment_choice",
+          "actions": ["self_assess_or_engage_conformity_assessment_organisation"],
+          "object": "other_high_risk_ai_system",
+          "obligors": ["Provider"],
+          "actor_relation": "provider_choice",
+          "timing": "before_use_or_after_significant_change"
+        },
+        {
+          "normative_slot": "point_b_optional_third_party_assessment",
+          "actions": ["perform_conformity_assessment_if_engaged"],
+          "object": "other_high_risk_ai_system",
+          "obligors": ["ConformityAssessmentOrganisation"],
+          "actor_relation": "optional_third_party",
+          "timing": "when_engaged_by_provider"
+        }
+      ]
+    },
+    {
+      "id": "VN_ART11_1_DIRECT_INTERACTION_RECOGNISABILITY",
+      "jurisdiction": "VN",
+      "source_id": "VN_LAW_134_2025",
+      "provision": "Điều 11 khoản 1",
+      "review_status": "PENDING_INDEPENDENT_REVIEW",
+      "activation_model": {
+        "status": "PROVISIONALLY_TYPED",
+        "required_facts": ["direct_human_interaction", "statutory_exception"]
+      },
+      "consequences": [
+        {
+          "normative_slot": "direct_interaction_ai_recognisability",
+          "actions": ["design_and_operate_for_user_recognition_of_ai_interaction"],
+          "object": "direct_interaction",
+          "obligors": ["Provider"],
+          "actor_relation": "primary",
+          "timing": "during_interaction"
+        }
+      ]
+    },
+    {
+      "id": "VN_ND142_ART19_1_DEPLOYER_USER_INITIAL_RESPONSE",
+      "jurisdiction": "VN",
+      "source_id": "VN_DECREE_142_2026",
+      "provision": "Điều 19 khoản 1",
+      "review_status": "PENDING_INDEPENDENT_REVIEW",
+      "activation_model": {
+        "status": "PROVISIONALLY_TYPED",
+        "required_facts": ["serious_incident_identified", "deployer_or_user_role"]
+      },
+      "consequences": [
+        {
+          "normative_slot": "serious_incident_record_and_initial_mitigation",
+          "actions": ["record_incident", "take_necessary_response_measures", "notify_provider"],
+          "object": "serious_ai_incident",
+          "obligors": ["Deployer", "User"],
+          "actor_relation": "role_applicable",
+          "timing": "immediate"
+        }
+      ]
+    },
+    {
+      "id": "VN_ND142_ART19_2_PROVIDER_TECHNICAL_REMEDIATION",
+      "jurisdiction": "VN",
+      "source_id": "VN_DECREE_142_2026",
+      "provision": "Điều 19 khoản 2",
+      "review_status": "PENDING_INDEPENDENT_REVIEW",
+      "activation_model": {
+        "status": "PROVISIONALLY_TYPED",
+        "required_facts": ["provider_notified_of_serious_incident"]
+      },
+      "consequences": [
+        {
+          "normative_slot": "provider_serious_incident_technical_remediation",
+          "actions": ["apply_technical_measures_to_remedy_incident"],
+          "object": "serious_ai_incident",
+          "obligors": ["Provider"],
+          "actor_relation": "primary",
+          "timing": "without_undue_delay"
+        }
+      ]
+    },
+    {
+      "id": "VN_ND142_ART19_3_PROVIDER_DEPLOYER_COORDINATION",
+      "jurisdiction": "VN",
+      "source_id": "VN_DECREE_142_2026",
+      "provision": "Điều 19 khoản 3",
+      "review_status": "PENDING_INDEPENDENT_REVIEW",
+      "activation_model": {
+        "status": "PROVISIONALLY_TYPED",
+        "required_facts": ["serious_incident_response_in_progress"]
+      },
+      "consequences": [
+        {
+          "normative_slot": "serious_incident_information_and_response_coordination",
+          "actions": ["coordinate_information", "coordinate_response"],
+          "object": "serious_ai_incident",
+          "obligors": ["Provider", "Deployer"],
+          "actor_relation": "coordinated",
+          "timing": "during_incident_response"
+        }
+      ]
+    },
+    {
+      "id": "VN_ND142_ART19_4_PRELIMINARY_REPORTING",
+      "jurisdiction": "VN",
+      "source_id": "VN_DECREE_142_2026",
+      "provision": "Điều 19 khoản 4",
+      "review_status": "PENDING_INDEPENDENT_REVIEW",
+      "activation_model": {
+        "status": "PROVISIONALLY_TYPED_PENDING_DEADLINE_REVIEW",
+        "required_facts": ["serious_incident", "provider_contact_status", "reporting_deadline_class"]
+      },
+      "consequences": [
+        {
+          "normative_slot": "serious_incident_preliminary_report",
+          "actions": ["submit_preliminary_report"],
+          "object": "serious_ai_incident",
+          "obligors": ["Provider"],
+          "actor_relation": "primary_reporter",
+          "timing": "statutory_deadline_pending_second_review"
+        },
+        {
+          "normative_slot": "serious_incident_preliminary_report_fallback",
+          "actions": ["submit_preliminary_report_when_provider_unreachable"],
+          "object": "serious_ai_incident",
+          "obligors": ["Deployer"],
+          "actor_relation": "conditional_fallback",
+          "timing": "statutory_deadline_pending_second_review"
+        }
+      ]
+    }
+  ],
+  "non_binding_policy_objects": [
+    {
+      "id": "ASEAN_PRINCIPLE_TRANSPARENCY_EXPLAINABILITY",
+      "source_id": "ASEAN_GUIDE_2024",
+      "section": "Guiding Principle 1",
+      "object_type": "VOLUNTARY_GUIDING_PRINCIPLE",
+      "former_legacy_rule_id": "ASEAN_G5_TRANSPARENCY"
+    },
+    {
+      "id": "ASEAN_PRINCIPLE_HUMAN_CENTRICITY",
+      "source_id": "ASEAN_GUIDE_2024",
+      "section": "Guiding Principle 4",
+      "object_type": "VOLUNTARY_GUIDING_PRINCIPLE",
+      "former_legacy_rule_id": "ASEAN_G3_HUMAN_CENTRICITY"
+    },
+    {
+      "id": "ASEAN_PRINCIPLE_ACCOUNTABILITY_INTEGRITY",
+      "source_id": "ASEAN_GUIDE_2024",
+      "section": "Guiding Principle 6",
+      "object_type": "VOLUNTARY_GUIDING_PRINCIPLE",
+      "former_legacy_rule_id": "ASEAN_G1_ACCOUNTABILITY"
+    },
+    {
+      "id": "ASEAN_RECOMMENDATION_CONTENT_PROVENANCE",
+      "source_id": "ASEAN_GENAI_GUIDE_2025",
+      "section": "3.7 Content Provenance",
+      "object_type": "POLICY_RECOMMENDATION_DIMENSION",
+      "former_legacy_rule_id": "ASEAN_G4_GENAI_LABEL"
+    }
+  ],
+  "research_gates": {
+    "independent_review": "PENDING",
+    "shared_current_context": "PENDING",
+    "negative_and_boundary_cases": "PENDING",
+    "current_hsdl_profile": "PENDING",
+    "current_typed_cover": "PENDING",
+    "current_quantitative_results": "BLOCKED",
+    "manuscript_regeneration": "BLOCKED"
+  },
+  "notice": "This graph captures source-audited structural corrections and provisional typed consequences. It is not an independently reviewed current-law policy model and cannot be used for quantitative comparison."
+}
