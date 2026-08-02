@@ -1,33 +1,51 @@
 from __future__ import annotations
 
-import hashlib
 import json
 import shutil
 import subprocess
 import tempfile
 from pathlib import Path
 from typing import Any
-from urllib.request import Request, urlopen
 
-
-PDF_MAGIC = b"%PDF-"
-USER_AGENT = "HSDL-Harmonization-Gap/1.0 visual-review"
-DEFAULT_MAXIMUM_BYTES = 150_000_000
+from .source_transport import SourceTransportError, fetch_declared_pdf
 
 
 class ReviewBundleError(RuntimeError):
     """Raised when a visual-review artifact cannot be built safely."""
 
 
+RENDER_PROFILES: dict[str, dict[str, Any]] = {
+    "VN_DECISION_33_2026": {
+        "directory": "decision33-pages",
+        "dpi": 120,
+        "purpose": "catalog route and transition visual review",
+    },
+    "VN_LAW_134_2025": {
+        "directory": "law134-pages",
+        "dpi": 110,
+        "purpose": "provision locator and source interpretation review",
+    },
+    "VN_DECREE_142_2026": {
+        "directory": "decree142-pages",
+        "dpi": 90,
+        "purpose": "provision locator and source interpretation review",
+    },
+}
+
+
 def verify_locked_pdf_bytes(data: bytes, artifact: dict[str, Any]) -> None:
-    if not data.startswith(PDF_MAGIC):
+    """Compatibility helper retained for unit-level identity tests."""
+    transport_record = dict(artifact)
+    transport_record.setdefault("official_pdf_url", "https://example.invalid/source.pdf")
+    if not data.startswith(b"%PDF-"):
         raise ReviewBundleError(f"{artifact['id']}: downloaded payload is not a PDF")
-    actual_size = len(data)
-    actual_hash = hashlib.sha256(data).hexdigest()
-    if actual_size != artifact["byte_size"]:
+    if len(data) != artifact["byte_size"]:
         raise ReviewBundleError(
-            f"{artifact['id']}: byte-size drift: {actual_size} != {artifact['byte_size']}"
+            f"{artifact['id']}: byte-size drift: {len(data)} != {artifact['byte_size']}"
         )
+    import hashlib
+
+    actual_hash = hashlib.sha256(data).hexdigest()
     if actual_hash != artifact["sha256"]:
         raise ReviewBundleError(
             f"{artifact['id']}: SHA-256 drift: {actual_hash} != {artifact['sha256']}"
@@ -55,30 +73,6 @@ def _require_executable(name: str) -> str:
     return path
 
 
-def _download(url: str, *, maximum_bytes: int = DEFAULT_MAXIMUM_BYTES) -> bytes:
-    request = Request(
-        url,
-        headers={
-            "User-Agent": USER_AGENT,
-            "Accept": "application/pdf,*/*;q=0.1",
-        },
-    )
-    chunks: list[bytes] = []
-    total = 0
-    with urlopen(request, timeout=90) as response:
-        while True:
-            chunk = response.read(1024 * 1024)
-            if not chunk:
-                break
-            total += len(chunk)
-            if total > maximum_bytes:
-                raise ReviewBundleError(
-                    f"artifact exceeds maximum_bytes={maximum_bytes}"
-                )
-            chunks.append(chunk)
-    return b"".join(chunks)
-
-
 def _run(command: list[str]) -> str:
     completed = subprocess.run(
         command,
@@ -88,6 +82,34 @@ def _run(command: list[str]) -> str:
         stderr=subprocess.PIPE,
     )
     return completed.stdout
+
+
+def _render_pdf(
+    pdftoppm: str,
+    pdf_path: Path,
+    image_dir: Path,
+    *,
+    dpi: int,
+    expected_pages: int,
+) -> int:
+    image_dir.mkdir(parents=True, exist_ok=True)
+    prefix = image_dir / "page"
+    _run(
+        [
+            pdftoppm,
+            "-png",
+            "-r",
+            str(dpi),
+            str(pdf_path),
+            str(prefix),
+        ]
+    )
+    rendered_pages = len(list(image_dir.glob("page-*.png")))
+    if rendered_pages != expected_pages:
+        raise ReviewBundleError(
+            f"{pdf_path.stem}: rendered {rendered_pages} pages, expected {expected_pages}"
+        )
+    return rendered_pages
 
 
 def build_visual_review_bundle(
@@ -105,16 +127,21 @@ def build_visual_review_bundle(
 
     root = Path(output_dir)
     text_dir = root / "text"
-    image_dir = root / "decision33-pages"
     text_dir.mkdir(parents=True, exist_ok=True)
-    image_dir.mkdir(parents=True, exist_ok=True)
 
     records: list[dict[str, Any]] = []
     with tempfile.TemporaryDirectory(prefix="hsdl-source-review-") as temp_name:
         temp_root = Path(temp_name)
         for artifact in artifacts:
-            data = _download(artifact["official_pdf_url"])
-            verify_locked_pdf_bytes(data, artifact)
+            try:
+                fetch = fetch_declared_pdf(
+                    artifact,
+                    expected_sha256=artifact["sha256"],
+                    expected_byte_size=artifact["byte_size"],
+                )
+            except SourceTransportError as exc:
+                raise ReviewBundleError(str(exc)) from exc
+            data = fetch.data
 
             pdf_path = temp_root / f"{artifact['id']}.pdf"
             pdf_path.write_bytes(data)
@@ -130,53 +157,64 @@ def build_visual_review_bundle(
             _run([pdftotext, "-layout", str(pdf_path), str(text_path)])
 
             rendered_pages = 0
-            if artifact["id"] == "VN_DECISION_33_2026":
-                prefix = image_dir / "page"
-                _run(
-                    [
-                        pdftoppm,
-                        "-png",
-                        "-r",
-                        "120",
-                        str(pdf_path),
-                        str(prefix),
-                    ]
+            rendered_image_dir: str | None = None
+            render_dpi: int | None = None
+            render_purpose: str | None = None
+            profile = RENDER_PROFILES.get(artifact["id"])
+            if profile is not None:
+                image_dir = root / profile["directory"]
+                rendered_pages = _render_pdf(
+                    pdftoppm,
+                    pdf_path,
+                    image_dir,
+                    dpi=profile["dpi"],
+                    expected_pages=actual_pages,
                 )
-                rendered_pages = len(list(image_dir.glob("page-*.png")))
-                if rendered_pages != actual_pages:
-                    raise ReviewBundleError(
-                        "Decision 33 render did not produce one image per PDF page"
-                    )
+                rendered_image_dir = str(image_dir.relative_to(root))
+                render_dpi = profile["dpi"]
+                render_purpose = profile["purpose"]
 
             records.append(
                 {
                     "id": artifact["id"],
                     "official_pdf_url": artifact["official_pdf_url"],
+                    "transport_url_used": fetch.transport_url_used,
+                    "transport_attempt_number": fetch.attempt_number,
                     "sha256": artifact["sha256"],
                     "byte_size": artifact["byte_size"],
                     "declared_page_count": declared_pages,
                     "recounted_page_count": actual_pages,
                     "text_path": str(text_path.relative_to(root)),
+                    "rendered_image_dir": rendered_image_dir,
                     "rendered_page_count": rendered_pages,
+                    "render_dpi": render_dpi,
+                    "render_purpose": render_purpose,
                     "visual_review_status": "EVIDENCE_BUNDLE_GENERATED_NOT_REVIEWED",
                 }
             )
 
     records.sort(key=lambda item: item["id"])
     report = {
-        "schema_version": "1.0.0",
+        "schema_version": "1.1.0",
         "lock_id": lock["lock_id"],
         "status": "CHECKSUM_VERIFIED_AND_RENDERED",
         "artifact_count": len(records),
+        "rendered_source_count": sum(
+            record["rendered_page_count"] > 0 for record in records
+        ),
+        "rendered_page_count": sum(
+            record["rendered_page_count"] for record in records
+        ),
         "records": records,
         "attestation": {
             "pdf_bytes_retained": False,
             "extracted_text_is_derivative_evidence": True,
             "rendered_images_are_derivative_evidence": True,
+            "transport_fallbacks_change_identity": False,
             "legal_review_performed": False,
             "notice": (
-                "Every derivative was generated only after the downloaded PDF matched "
-                "the pinned byte size and SHA-256. Generation is not legal sign-off."
+                "Every derivative was generated only after one declared official transport "
+                "reproduced the pinned byte size and SHA-256. Generation is not legal sign-off."
             ),
         },
     }
