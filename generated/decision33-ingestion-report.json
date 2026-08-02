@@ -1,4 +1,11 @@
 {
+  "assessment_route_counts": {
+    "ARTICLE_13_2_A_THIRD_PARTY_CERTIFICATION": 6,
+    "ARTICLE_13_2_B_PROVIDER_SELF_OR_THIRD_PARTY": 40
+  },
+  "assessment_route_evidence_statuses": [
+    "TWO_HTML_TRANSCRIPTIONS_MATCH_PENDING_SIGNED_PDF_VISUAL"
+  ],
   "catalog_id": "VN_DECISION_33_2026",
   "freeze_date": "2026-08-02",
   "item_count": 46,
@@ -20,7 +27,7 @@
   },
   "legal_status_at_freeze": "ISSUED_NOT_YET_EFFECTIVE",
   "research_gates": {
-    "G2_conformity_assessment": "REQUIRES_REENCODING_AFTER_ROUTE_VERIFICATION",
+    "G2_conformity_assessment": "ROUTES_INGESTED_PENDING_SIGNED_PDF_VISUAL_AND_RULE_ENCODING",
     "H7_1_classification_compatibility": "REQUIRES_REPROOF",
     "draft_four_group_catalog_claims": "SUPERSEDED_BY_FINAL_SIX_SECTOR_CATALOG",
     "legacy_quantitative_tables": "HISTORICAL_ONLY_UNTIL_CURRENT_PROFILE_EXISTS"
@@ -41,6 +48,6 @@
     "systems_started_within_six_months_deadline": "2027-03-01"
   },
   "transport_share": 0.6739130434782609,
-  "unresolved_assessment_routes": 46,
+  "unresolved_assessment_routes": 0,
   "validation_errors": []
 }
