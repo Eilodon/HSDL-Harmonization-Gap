@@ -1,12 +1,13 @@
 {
-  "schema_version": "1.0.0",
+  "schema_version": "1.1.0",
   "profile_id": "current-candidate-2026-08-02",
-  "status": "PROVISIONAL_SCHEMA_BINDINGS_NOT_LEGAL_PREDICATES",
+  "status": "PROVISIONAL_SCHEMA_BINDINGS_WITH_SOURCE_DERIVED_PREDICATE_PROFILE",
   "legal_validation": "NOT_ASSERTED",
   "bindings": {
     "annex_category": "classification.eu.annex_category",
     "authorised_law_exception": "operations.authorised_law_exception",
     "autonomy_level": "system.autonomy_level",
+    "before_placing_on_market_or_putting_into_service": "operations.before_placing_on_market_or_putting_into_service",
     "before_putting_into_use": "time.before_putting_into_use",
     "before_use": "time.before_use",
     "before_use_or_after_significant_change": "operations.before_use_or_after_significant_change",
@@ -41,7 +42,9 @@
     "serious_incident_identified": "operations.serious_incident_identified",
     "serious_incident_response_in_progress": "operations.serious_incident_response_in_progress",
     "statutory_exception": "operations.statutory_exception",
-    "substantial_modification": "operations.substantial_modification"
+    "substantial_modification": "operations.substantial_modification",
+    "third_party_assessment_engaged": "operations.third_party_assessment_engaged"
   },
-  "notice": "These bindings map candidate fact names to typed context paths. They do not define the truth conditions, polarity, exceptions or legal meaning of those facts."
+  "predicate_profile": "source_derived_predicates.json",
+  "notice": "Bindings identify typed context paths. Source-derived predicates define polarity, exceptions and duty-level triggers but remain pending independent legal review."
 }
