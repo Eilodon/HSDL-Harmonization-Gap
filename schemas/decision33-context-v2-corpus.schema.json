@@ -1,0 +1,93 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://eilodon.github.io/hsdl-harmonization-gap/schemas/decision33-context-v2-corpus.schema.json",
+  "title": "Decision 33 context v2 corpus report",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version", "status", "claim_class", "legal_validation", "profile_id",
+    "corpus_id", "catalog", "context_count", "positive_witness_count",
+    "derived_fixture_count", "contexts_per_catalog_row", "fixture_counts",
+    "positive_assessment_route_counts", "positive_sector_counts",
+    "validation_errors", "coverage_contract", "contexts"
+  ],
+  "properties": {
+    "schema_version": {"const": "1.0.0"},
+    "status": {
+      "enum": [
+        "DECISION33_CONTEXT_V2_CORPUS_COMPLETE",
+        "DECISION33_CONTEXT_V2_CORPUS_INVALID"
+      ]
+    },
+    "claim_class": {"const": "MODEL_RELATIVE"},
+    "legal_validation": {"const": "NOT_ASSERTED"},
+    "profile_id": {"type": "string", "minLength": 1},
+    "corpus_id": {"type": "string", "minLength": 1},
+    "catalog": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "catalog_id", "catalog_hash", "issued_on", "effective_from",
+        "freeze_date", "legal_status_at_freeze"
+      ],
+      "properties": {
+        "catalog_id": {"const": "VN_DECISION_33_2026"},
+        "catalog_hash": {"type": "string", "pattern": "^sha256:[0-9a-f]{64}$"},
+        "issued_on": {"type": "string", "format": "date"},
+        "effective_from": {"type": "string", "format": "date"},
+        "freeze_date": {"type": "string", "format": "date"},
+        "legal_status_at_freeze": {"type": "string", "minLength": 1}
+      }
+    },
+    "context_count": {"const": 322},
+    "positive_witness_count": {"const": 46},
+    "derived_fixture_count": {"const": 276},
+    "contexts_per_catalog_row": {"const": 7},
+    "fixture_counts": {
+      "type": "object",
+      "additionalProperties": {"type": "integer", "minimum": 0}
+    },
+    "positive_assessment_route_counts": {
+      "type": "object",
+      "additionalProperties": {"type": "integer", "minimum": 0}
+    },
+    "positive_sector_counts": {
+      "type": "object",
+      "additionalProperties": {"type": "integer", "minimum": 0}
+    },
+    "validation_errors": {
+      "type": "array",
+      "items": {"type": "string"}
+    },
+    "coverage_contract": {
+      "type": "object",
+      "required": [
+        "every_catalog_row_has_positive_witness",
+        "every_catalog_row_has_nonlisted_control",
+        "every_catalog_row_has_missing_catalog_identity",
+        "every_catalog_row_has_missing_assessment_route",
+        "every_catalog_row_has_effective_date_below_exact_above",
+        "is_exhaustive_real_world_universe",
+        "supports_empirical_prevalence_inference",
+        "notice"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "every_catalog_row_has_positive_witness": {"const": true},
+        "every_catalog_row_has_nonlisted_control": {"const": true},
+        "every_catalog_row_has_missing_catalog_identity": {"const": true},
+        "every_catalog_row_has_missing_assessment_route": {"const": true},
+        "every_catalog_row_has_effective_date_below_exact_above": {"const": true},
+        "is_exhaustive_real_world_universe": {"const": false},
+        "supports_empirical_prevalence_inference": {"const": false},
+        "notice": {"type": "string", "minLength": 1}
+      }
+    },
+    "contexts": {
+      "type": "array",
+      "minItems": 322,
+      "maxItems": 322,
+      "items": {"$ref": "context-v2.schema.json"}
+    }
+  }
+}
