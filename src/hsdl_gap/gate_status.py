@@ -3,6 +3,7 @@ from __future__ import annotations
 from pathlib import Path
 from typing import Any
 
+from .current_candidate import build_current_candidate_report
 from .current_context import build_current_context_report
 from .current_report import build_decision33_report
 from .hsdl_core import build_hsdl_differential_report
@@ -17,11 +18,13 @@ def build_research_gate_status(
     policy_path: str | Path,
     duty_semantics_path: str | Path,
     catalog_path: str | Path,
+    current_candidate_path: str | Path,
     provision_audit_path: str | Path,
     review_template_path: str | Path,
 ) -> dict[str, Any]:
     decision33 = build_decision33_report(catalog_path)
     current_context = build_current_context_report(catalog_path)
+    current_candidate = build_current_candidate_report(current_candidate_path)
     hsdl = build_hsdl_differential_report(policy_path, duty_semantics_path)
     cover = build_typed_cover_audit(policy_path, duty_semantics_path)
     provision = build_provision_audit_report(policy_path, provision_audit_path)
@@ -40,6 +43,9 @@ def build_research_gate_status(
         "current_context_witness_profile": (
             current_context["status"]
             == "CATALOG_DRIVEN_POSITIVE_WITNESSES_COMPLETE"
+        ),
+        "provisional_current_rule_graph": (
+            current_candidate["status"] == "VALIDATED_PROVISIONAL_GRAPH"
         ),
         "legacy_hsdl_roundtrip": hsdl["status"] == "EQUIVALENT",
         "typed_cover_finite_oracle": (
@@ -77,12 +83,13 @@ def build_research_gate_status(
         "Reuse H7.1 without a shared current classification relation and negative cases.",
         "Reuse H7.2 as a single-valued ASEAN harm partition.",
         "Present the finite typed-cover oracle as the symbolic theorem implementation.",
+        "Treat the provisional current rule graph as independently reviewed law.",
         "Regenerate final manuscripts as legally reviewed current-law results.",
         "Claim external HSDL or HolySeed compatibility.",
     ]
 
     return {
-        "schema_version": "1.0.0",
+        "schema_version": "1.1.0",
         "status": (
             "EXECUTION_READY_PUBLICATION_BLOCKED"
             if technical_ready and not all(substantive_gates.values())
@@ -103,6 +110,15 @@ def build_research_gate_status(
                 "ARTICLE_13_2_B_PROVIDER_SELF_OR_THIRD_PARTY", 0
             ),
             "current_positive_witnesses": current_context["witness_count"],
+            "provisional_current_binding_rules": current_candidate[
+                "binding_rule_count"
+            ],
+            "provisional_current_normative_slots": current_candidate[
+                "typed_normative_slot_count"
+            ],
+            "provisional_non_binding_policy_objects": current_candidate[
+                "non_binding_policy_object_count"
+            ],
             "legacy_hsdl_comparisons": hsdl["comparison_count"],
             "legacy_hsdl_mismatches": hsdl["mismatch_count"],
             "provision_audited_rules": provision["audited_rule_count"],
@@ -119,9 +135,9 @@ def build_research_gate_status(
         "prohibited_actions": prohibited_actions,
         "next_gate_sequence": [
             "Assign and complete independent legal/policy review.",
-            "Apply reviewer decisions to the 23-rule migration plan.",
+            "Apply reviewer decisions to the 23-rule migration plan and provisional graph.",
             "Implement the shared current EU–Vietnam classification relation.",
-            "Encode current EU and Vietnam typed policy graphs.",
+            "Promote reviewed current EU and Vietnam typed policy graphs.",
             "Generate negative and boundary contexts, not only positive catalog witnesses.",
             "Run current-profile HSDL differential and typed-cover audits.",
             "Generate a reason-coded legacy-to-current change log.",
@@ -129,12 +145,13 @@ def build_research_gate_status(
         ],
         "attestation": {
             "independent_review_completed": False,
+            "provisional_current_graph_exists": True,
             "current_law_quantitative_results_exist": False,
             "publication_ready": False,
             "notice": (
                 "Technical readiness means the project can proceed with a controlled "
-                "re-encoding. It does not mean the legal analysis or manuscripts are ready "
-                "for publication."
+                "re-encoding. It does not mean the provisional graph, legal analysis or "
+                "manuscripts are ready for publication."
             ),
         },
     }
