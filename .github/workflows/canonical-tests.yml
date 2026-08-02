@@ -18,5 +18,7 @@ jobs:
       - run: make reproduce
       - uses: actions/upload-artifact@v4
         with:
-          name: canonical-legacy-results
-          path: generated/legacy-v11-results.json
+          name: canonical-research-results
+          path: |
+            generated/legacy-v11-results.json
+            generated/decision33-ingestion-report.json
