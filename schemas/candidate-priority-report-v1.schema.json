@@ -1,56 +1,76 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://eilodon.github.io/hsdl-harmonization-gap/schemas/candidate-priority-report-v1.schema.json",
-  "title": "Candidate priority graph report v1",
+  "$id": "https://eilodon.github.io/hsdl-harmonization-gap/schemas/candidate-priority-report-v2.schema.json",
+  "title": "Candidate priority graph report v2",
   "type": "object",
   "additionalProperties": false,
   "required": [
     "schema_version", "status", "claim_class", "legal_validation", "profile_id",
-    "priority_graph_hash", "duty_count", "edge_count", "edge_relation_counts",
-    "graph_status", "all_duties_active_probe", "semantics", "limitations"
+    "priority_graph_hash", "duty_count", "edge_count", "conditional_edge_count",
+    "source_evidenced_edge_count", "edge_relation_counts", "graph_status",
+    "all_duties_active_probe", "provider_reachable_probe",
+    "provider_unreachable_probe", "semantics", "limitations"
   ],
   "properties": {
-    "schema_version": {"const": "1.0.0"},
+    "schema_version": {"const": "2.0.0"},
     "status": {"const": "CANDIDATE_PRIORITY_GRAPH_EXECUTABLE"},
     "claim_class": {"const": "MODEL_RELATIVE"},
     "legal_validation": {"const": "NOT_ASSERTED"},
     "profile_id": {"const": "current-candidate-2026-08-02"},
     "priority_graph_hash": {"type": "string", "pattern": "^sha256:[0-9a-f]{64}$"},
     "duty_count": {"const": 25},
-    "edge_count": {"const": 0},
-    "edge_relation_counts": {"type": "object", "maxProperties": 0},
-    "graph_status": {"const": "EXPLICIT_EMPTY_PRIORITY_GRAPH"},
-    "all_duties_active_probe": {
-      "type": "object",
-      "required": [
-        "state", "active_ids", "effective_ids", "suppressed",
-        "unresolved_conflicts", "cycle_components"
-      ],
-      "properties": {
-        "state": {"const": "DETERMINATE"},
-        "active_ids": {"type": "array", "minItems": 25, "maxItems": 25},
-        "effective_ids": {"type": "array", "minItems": 25, "maxItems": 25},
-        "suppressed": {"type": "object", "maxProperties": 0},
-        "unresolved_conflicts": {"type": "array", "maxItems": 0},
-        "cycle_components": {"type": "array", "maxItems": 0}
-      }
+    "edge_count": {"const": 9},
+    "conditional_edge_count": {"const": 2},
+    "source_evidenced_edge_count": {"const": 9},
+    "edge_relation_counts": {
+      "const": {"ACCUMULATE": 3, "EXCEPTION": 1, "OVERRIDE": 1, "PRECEDES": 4}
     },
+    "graph_status": {"const": "SOURCE_DERIVED_DECLARED_PRIORITY_GRAPH_PENDING_REVIEW"},
+    "all_duties_active_probe": {"$ref": "#/$defs/resolution"},
+    "provider_reachable_probe": {"$ref": "#/$defs/resolution"},
+    "provider_unreachable_probe": {"$ref": "#/$defs/resolution"},
     "semantics": {
       "type": "object",
-      "required": ["suppressing_relations", "accumulate", "independent", "conflict", "cycles"]
+      "required": [
+        "suppressing_relations", "accumulate", "precedes", "independent",
+        "conflict", "conditional_unknown", "cycles"
+      ]
     },
     "limitations": {
       "type": "object",
       "additionalProperties": false,
       "required": [
         "candidate_edges_declared", "current_candidate_priority_resolution",
-        "conditional_priority_edges", "notice"
+        "conditional_priority_edges", "cross_jurisdiction_priority",
+        "independent_legal_review", "notice"
       ],
       "properties": {
-        "candidate_edges_declared": {"const": false},
-        "current_candidate_priority_resolution": {"const": "NO_EDGES_DECLARED_NO_IMPLICIT_PRIORITY"},
-        "conditional_priority_edges": {"const": "NOT_IMPLEMENTED"},
+        "candidate_edges_declared": {"const": true},
+        "current_candidate_priority_resolution": {"const": "DECLARED_SOURCE_DERIVED_EDGES_APPLIED"},
+        "conditional_priority_edges": {"const": "IMPLEMENTED"},
+        "cross_jurisdiction_priority": {"const": "NOT_DECLARED"},
+        "independent_legal_review": {"const": "PENDING"},
         "notice": {"type": "string", "minLength": 1}
+      }
+    }
+  },
+  "$defs": {
+    "resolution": {
+      "type": "object",
+      "required": [
+        "state", "active_ids", "effective_ids", "suppressed",
+        "unresolved_conflicts", "cycle_components", "unknown_edge_conditions",
+        "inactive_conditional_edges"
+      ],
+      "properties": {
+        "state": {"enum": ["DETERMINATE", "PRIORITY_INDETERMINATE"]},
+        "active_ids": {"type": "array"},
+        "effective_ids": {"type": "array"},
+        "suppressed": {"type": "object"},
+        "unresolved_conflicts": {"type": "array"},
+        "cycle_components": {"type": "array"},
+        "unknown_edge_conditions": {"type": "array"},
+        "inactive_conditional_edges": {"type": "array"}
       }
     }
   }
