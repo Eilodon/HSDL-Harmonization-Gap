@@ -1,0 +1,78 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://eilodon.github.io/hsdl-harmonization-gap/schemas/candidate-ir-report-v1.schema.json",
+  "title": "Current candidate model-relative executable IR report v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version", "status", "claim_class", "legal_validation",
+    "candidate_profile_id", "candidate_hash", "context_corpus_id", "context_count",
+    "compiled_rule_count", "compiled_duty_count", "compilation_mode_counts",
+    "required_fact_count", "required_facts", "rules", "assumption_scenarios",
+    "decision33_route_audit", "limitations"
+  ],
+  "properties": {
+    "schema_version": {"const": "1.0.0"},
+    "status": {"const": "CANDIDATE_EXECUTABLE_IR_COMPLETE_MODEL_RELATIVE"},
+    "claim_class": {"const": "MODEL_RELATIVE"},
+    "legal_validation": {"const": "NOT_ASSERTED"},
+    "candidate_profile_id": {"const": "current-candidate-2026-08-02"},
+    "candidate_hash": {"type": "string", "pattern": "^sha256:[0-9a-f]{64}$"},
+    "context_corpus_id": {"type": "string", "minLength": 1},
+    "context_count": {"const": 322},
+    "compiled_rule_count": {"const": 20},
+    "compiled_duty_count": {"const": 25},
+    "compilation_mode_counts": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "UNCONDITIONAL_DECLARED", "EXPLICIT_CATALOG_ROUTE",
+        "REQUIRED_FACTS_READINESS_ONLY"
+      ],
+      "properties": {
+        "UNCONDITIONAL_DECLARED": {"const": 1},
+        "EXPLICIT_CATALOG_ROUTE": {"const": 2},
+        "REQUIRED_FACTS_READINESS_ONLY": {"const": 17}
+      }
+    },
+    "required_fact_count": {"type": "integer", "minimum": 1},
+    "required_facts": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": {"type": "string", "minLength": 1}
+    },
+    "rules": {
+      "type": "array",
+      "minItems": 20,
+      "maxItems": 20,
+      "items": {
+        "type": "object",
+        "required": [
+          "rule_id", "jurisdiction", "source_id", "provision", "review_status",
+          "activation_status", "compilation_mode", "required_facts", "fact_paths",
+          "readiness_condition", "structural_condition", "predicate_semantics_complete",
+          "uncompiled_predicate_facts", "duties"
+        ]
+      }
+    },
+    "assumption_scenarios": {"type": "object", "minProperties": 2},
+    "decision33_route_audit": {"type": "object", "minProperties": 2},
+    "limitations": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "required_fact_presence_is_not_predicate_truth", "generic_rule_predicates_compiled",
+        "explicit_catalog_route_predicates_compiled", "priority_and_exception_resolution",
+        "quantitative_current_law_claims", "notice"
+      ],
+      "properties": {
+        "required_fact_presence_is_not_predicate_truth": {"const": true},
+        "generic_rule_predicates_compiled": {"const": false},
+        "explicit_catalog_route_predicates_compiled": {"const": true},
+        "priority_and_exception_resolution": {"const": "NOT_IMPLEMENTED_IN_THIS_SLICE"},
+        "quantitative_current_law_claims": {"const": "PROHIBITED"},
+        "notice": {"type": "string", "minLength": 1}
+      }
+    }
+  }
+}

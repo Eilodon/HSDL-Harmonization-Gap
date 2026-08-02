@@ -1,0 +1,25 @@
+{
+  "schema_version": "1.0.0",
+  "profile_id": "current-candidate-2026-08-02",
+  "claim_class": "MODEL_RELATIVE",
+  "legal_validation": "NOT_ASSERTED",
+  "assumption_sets": [
+    {
+      "id": "NO_ASSUMPTIONS",
+      "values": {},
+      "satisfied_required_facts": [],
+      "purpose": "Expose missing facts and uncompiled predicate semantics without filling them."
+    },
+    {
+      "id": "ASSUME_ARTICLE13_TIMING_TRIGGER_SATISFIED",
+      "values": {
+        "before_use_or_after_significant_change": true
+      },
+      "satisfied_required_facts": [
+        "before_use_or_after_significant_change"
+      ],
+      "purpose": "Exercise the already declared Decision 33 point-a/point-b route split under an explicit synthetic timing assumption."
+    }
+  ],
+  "notice": "An assumption set is a technical fixture. It does not promote the candidate graph or establish that the assumed fact is true for a real system."
+}

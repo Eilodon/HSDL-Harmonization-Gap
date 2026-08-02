@@ -18,6 +18,7 @@ reproduce: verify
 	PYTHONPATH=src $(PYTHON) -m hsdl_gap --mode current-context --catalog catalogs/vn_decision_33_2026.csv > generated/decision33-current-context.json
 	PYTHONPATH=src $(PYTHON) -m hsdl_gap.decision33_context_v2 --catalog catalogs/vn_decision_33_2026.csv > generated/decision33-context-v2-corpus.json
 	PYTHONPATH=src $(PYTHON) -m hsdl_gap --mode current-candidate --current-candidate policies/current_candidate_graph_2026-08-02.json > generated/current-candidate-audit.json
+	PYTHONPATH=src $(PYTHON) -m hsdl_gap.candidate_ir > generated/current-candidate-ir-report.json
 	PYTHONPATH=src $(PYTHON) -m hsdl_gap --mode typed-alignment --policies policies/legacy_v11.json --crosswalk alignments/legacy_obligation_crosswalk.json --semantics alignments/legacy_duty_semantics.json > generated/typed-alignment-audit.json
 	PYTHONPATH=src $(PYTHON) -m hsdl_gap --mode asean-ontology --asean-ontology asean/guide_ontology_2024_2025.json > generated/asean-ontology-audit.json
 	PYTHONPATH=src $(PYTHON) -m hsdl_gap --mode emit-hsdl --policies policies/legacy_v11.json --semantics alignments/legacy_duty_semantics.json > generated/legacy-v11.hsdl
