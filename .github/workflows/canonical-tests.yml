@@ -20,3 +20,33 @@ jobs:
         with:
           name: canonical-research-results
           path: generated/*.json
+
+  source-provenance:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Acquire and fingerprint official PDFs
+        id: acquire
+        continue-on-error: true
+        run: |
+          mkdir -p generated
+          PYTHONPATH=src python -m hsdl_gap \
+            --mode acquire-sources \
+            --targets sources/official_pdf_targets.json \
+            > generated/source-provenance-candidate.json
+      - name: Show acquisition report
+        if: always()
+        run: cat generated/source-provenance-candidate.json
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: source-provenance-candidate
+          path: generated/source-provenance-candidate.json
+          retention-days: 14
+      - name: Enforce complete acquisition
+        if: steps.acquire.outcome != 'success'
+        run: exit 1
