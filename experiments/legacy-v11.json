@@ -1,0 +1,7 @@
+{
+  "id": "legacy-v11",
+  "policy_bundle": "policies/legacy_v11.json",
+  "context_profile": "legacy-cartesian-2880",
+  "measure": "uniform-enumerated-model-contexts",
+  "notes": "Historical compatibility profile. It preserves the frozen hackathon-era assumptions and does not claim current legal validity."
+}
