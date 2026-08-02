@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import json
 import unittest
+from pathlib import Path
 
 from hsdl_gap.current_report import build_decision33_report
 
@@ -23,10 +24,9 @@ class Decision33VisualReviewTests(unittest.TestCase):
 
     def test_visual_overlay_identifies_six_point_a_rows(self) -> None:
         payload = json.loads(
-            open(
-                "sources/reviews/vn_decision_33_2026.visual.json",
-                encoding="utf-8",
-            ).read()
+            Path("sources/reviews/vn_decision_33_2026.visual.json").read_text(
+                encoding="utf-8"
+            )
         )
         findings = payload["findings"]
         self.assertEqual(findings["route_a_count"], 6)
