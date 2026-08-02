@@ -1,0 +1,58 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://eilodon.github.io/hsdl-harmonization-gap/schemas/project-identity-declaration-v1.schema.json",
+  "title": "Owner project identity and rights declaration v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version", "declaration_id", "status", "repository",
+    "repository_owner_account", "owner_approval", "license", "citation",
+    "publication", "generation_policy"
+  ],
+  "properties": {
+    "schema_version": {"const": "1.0.0"},
+    "declaration_id": {"const": "project-identity-and-rights-v1"},
+    "status": {"enum": ["PENDING_OWNER_DECLARATION", "OWNER_APPROVED"]},
+    "repository": {"const": "Eilodon/HSDL-Harmonization-Gap"},
+    "repository_owner_account": {"const": "Eilodon"},
+    "owner_approval": {
+      "type": "object",
+      "required": ["approved", "approved_by", "approved_at_utc", "approval_reference"],
+      "properties": {
+        "approved": {"type": "boolean"},
+        "approved_by": {"type": ["string", "null"]},
+        "approved_at_utc": {"type": ["string", "null"]},
+        "approval_reference": {"type": ["string", "null"]}
+      }
+    },
+    "license": {
+      "type": "object",
+      "required": [
+        "spdx_identifier", "copyright_holders", "copyright_years",
+        "third_party_material_reviewed", "source_pdf_redistribution_scope",
+        "allowed_owner_choices", "notice"
+      ]
+    },
+    "citation": {
+      "type": "object",
+      "required": [
+        "title", "version", "release_date", "doi", "repository_url",
+        "authors", "contributors", "preferred_citation_type", "message"
+      ]
+    },
+    "publication": {"type": "object"},
+    "generation_policy": {
+      "type": "object",
+      "required": [
+        "license_file_allowed", "citation_cff_allowed",
+        "release_metadata_allowed", "fail_closed_on_missing_owner_approval"
+      ],
+      "properties": {
+        "license_file_allowed": {"type": "boolean"},
+        "citation_cff_allowed": {"type": "boolean"},
+        "release_metadata_allowed": {"type": "boolean"},
+        "fail_closed_on_missing_owner_approval": {"const": true}
+      }
+    }
+  }
+}
