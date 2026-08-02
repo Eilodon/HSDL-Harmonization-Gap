@@ -53,7 +53,7 @@ class Decision33CatalogTests(unittest.TestCase):
             "REQUIRES_REPROOF",
         )
 
-    def test_assessment_routes_are_encoded_but_not_legally_signed_off(self) -> None:
+    def test_assessment_routes_are_encoded_and_visually_verified_without_legal_signoff(self) -> None:
         self.assertEqual(
             self.report["assessment_route_counts"],
             {ROUTE_A: 6, ROUTE_B: 40},
@@ -63,9 +63,15 @@ class Decision33CatalogTests(unittest.TestCase):
             self.report["assessment_route_evidence_statuses"],
             [ROUTE_EVIDENCE],
         )
+        review = self.report["assessment_route_visual_review"]
+        self.assertEqual(
+            review["status"],
+            "VISUALLY_VERIFIED_AGAINST_CHECKSUM_PINNED_PDF",
+        )
+        self.assertFalse(review["independent_legal_signoff"])
         self.assertEqual(
             self.report["research_gates"]["G2_conformity_assessment"],
-            "ROUTES_INGESTED_PENDING_SIGNED_PDF_VISUAL_AND_RULE_ENCODING",
+            "ROUTES_VISUALLY_VERIFIED_PENDING_CURRENT_RULE_ENCODING_AND_SECOND_REVIEW",
         )
 
 
