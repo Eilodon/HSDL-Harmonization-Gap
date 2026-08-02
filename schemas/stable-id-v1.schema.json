@@ -1,0 +1,7 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://eilodon.github.io/hsdl-harmonization-gap/schemas/stable-id-v1.schema.json",
+  "title": "HSDL Gap stable identifier v1",
+  "type": "string",
+  "pattern": "^(source|provision|policy|rule|duty|context|corpus|metric|profile|assumption):[A-Za-z0-9][A-Za-z0-9._-]*:[A-Za-z0-9][A-Za-z0-9._-]*$"
+}
