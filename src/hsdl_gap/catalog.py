@@ -16,6 +16,7 @@ class CatalogItem:
     name_vi: str
     activation_features: tuple[str, ...]
     assessment_route: str
+    assessment_route_evidence: str
 
 
 @dataclass(frozen=True, slots=True)
@@ -31,6 +32,10 @@ class RegulatoryCatalog:
     @property
     def sector_counts(self) -> dict[str, int]:
         return dict(sorted(Counter(item.sector for item in self.items).items()))
+
+    @property
+    def assessment_route_counts(self) -> dict[str, int]:
+        return dict(sorted(Counter(item.assessment_route for item in self.items).items()))
 
 
 def load_catalog(csv_path: str | Path, meta_path: str | Path | None = None) -> RegulatoryCatalog:
@@ -48,6 +53,7 @@ def load_catalog(csv_path: str | Path, meta_path: str | Path | None = None) -> R
             name_vi=row["name_vi"],
             activation_features=tuple(filter(None, row["activation_features"].split("|"))),
             assessment_route=row["assessment_route"],
+            assessment_route_evidence=row["assessment_route_evidence"],
         )
         for row in rows
     )
@@ -72,6 +78,8 @@ def validate_catalog(catalog: RegulatoryCatalog) -> list[str]:
         per_sector.setdefault(item.sector, []).append(item.sector_ordinal)
         if not item.activation_features:
             errors.append(f"{item.id} has no activation features")
+        if not item.assessment_route_evidence:
+            errors.append(f"{item.id} has no assessment-route evidence status")
     for sector, ordinals in per_sector.items():
         expected = list(range(1, len(ordinals) + 1))
         if sorted(ordinals) != expected:
