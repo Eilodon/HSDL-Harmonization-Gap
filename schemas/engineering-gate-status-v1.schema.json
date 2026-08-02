@@ -1,0 +1,91 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://eilodon.github.io/hsdl-harmonization-gap/schemas/engineering-gate-status-v1.schema.json",
+  "title": "Engineering gate status report v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version", "status", "claim_class", "legal_validation",
+    "artifact_directory", "evidence", "p0", "p1_capabilities",
+    "engineering_completeness", "remaining_engineering_work", "summary", "boundary"
+  ],
+  "properties": {
+    "schema_version": {"const": "1.0.0"},
+    "status": {
+      "enum": [
+        "ENGINEERING_COMPLETE",
+        "P0_COMPLETE_P1_CAPABILITIES_READY_COMPLETENESS_BLOCKED",
+        "P0_COMPLETE_P1_CAPABILITIES_INCOMPLETE",
+        "P0_ENGINEERING_INCOMPLETE"
+      ]
+    },
+    "claim_class": {"const": "MODEL_RELATIVE"},
+    "legal_validation": {"const": "NOT_ASSERTED"},
+    "artifact_directory": {"type": "string"},
+    "evidence": {
+      "type": "object",
+      "minProperties": 10,
+      "additionalProperties": {
+        "type": "object",
+        "required": ["artifact", "expected_status", "actual_status", "passed", "sha256"],
+        "properties": {
+          "artifact": {"type": "string"},
+          "expected_status": {"type": "string"},
+          "actual_status": {"type": ["string", "null"]},
+          "passed": {"type": "boolean"},
+          "sha256": {"type": "string", "pattern": "^sha256:[0-9a-f]{64}$"}
+        }
+      }
+    },
+    "p0": {
+      "type": "object",
+      "required": ["gate_count", "passed", "complete", "gates"],
+      "properties": {
+        "gate_count": {"const": 7},
+        "passed": {"type": "integer", "minimum": 0, "maximum": 7},
+        "complete": {"type": "boolean"},
+        "gates": {"type": "object", "minProperties": 7, "maxProperties": 7}
+      }
+    },
+    "p1_capabilities": {
+      "type": "object",
+      "required": ["gate_count", "passed", "ready", "gates"],
+      "properties": {
+        "gate_count": {"const": 3},
+        "passed": {"type": "integer", "minimum": 0, "maximum": 3},
+        "ready": {"type": "boolean"},
+        "gates": {"type": "object", "minProperties": 3, "maxProperties": 3}
+      }
+    },
+    "engineering_completeness": {
+      "type": "object",
+      "additionalProperties": {"type": "boolean"},
+      "minProperties": 8,
+      "maxProperties": 8
+    },
+    "remaining_engineering_work": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": {"type": "string"}
+    },
+    "summary": {
+      "type": "object",
+      "required": [
+        "context_count", "candidate_rule_count", "candidate_duty_count",
+        "candidate_readiness_only_rule_count", "independent_projection_count",
+        "symbolically_compiled_rule_count", "symbolic_rule_coverage",
+        "priority_edge_count", "same_slot_cross_jurisdiction_pair_count"
+      ]
+    },
+    "boundary": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["legal_review_gate_included", "publication_authorisation", "notice"],
+      "properties": {
+        "legal_review_gate_included": {"const": false},
+        "publication_authorisation": {"const": "NOT_PROVIDED"},
+        "notice": {"type": "string", "minLength": 1}
+      }
+    }
+  }
+}
