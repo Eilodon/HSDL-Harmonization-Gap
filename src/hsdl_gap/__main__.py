@@ -5,6 +5,7 @@ import json
 
 from .alignment import build_typed_alignment_audit
 from .asean import build_asean_ontology_audit
+from .current_candidate import build_current_candidate_report
 from .current_context import build_current_context_report
 from .current_report import build_decision33_report
 from .gate_status import build_research_gate_status
@@ -29,6 +30,7 @@ def main() -> None:
             "legacy",
             "decision33",
             "current-context",
+            "current-candidate",
             "typed-alignment",
             "asean-ontology",
             "typed-cover",
@@ -46,6 +48,10 @@ def main() -> None:
     )
     parser.add_argument("--policies", default="policies/legacy_v11.json")
     parser.add_argument("--catalog", default="catalogs/vn_decision_33_2026.csv")
+    parser.add_argument(
+        "--current-candidate",
+        default="policies/current_candidate_graph_2026-08-02.json",
+    )
     parser.add_argument("--asean-ontology", default="asean/guide_ontology_2024_2025.json")
     parser.add_argument(
         "--provision-audit",
@@ -84,6 +90,8 @@ def main() -> None:
         report = build_decision33_report(args.catalog)
     elif args.mode == "current-context":
         report = build_current_context_report(args.catalog)
+    elif args.mode == "current-candidate":
+        report = build_current_candidate_report(args.current_candidate)
     elif args.mode == "asean-ontology":
         report = build_asean_ontology_audit(args.asean_ontology)
     elif args.mode == "typed-cover":
@@ -139,6 +147,8 @@ def main() -> None:
         raise SystemExit(8)
     if args.mode == "gate-status" and report["status"] != "EXECUTION_READY_PUBLICATION_BLOCKED":
         raise SystemExit(9)
+    if args.mode == "current-candidate" and report["status"] != "VALIDATED_PROVISIONAL_GRAPH":
+        raise SystemExit(10)
 
 
 if __name__ == "__main__":
