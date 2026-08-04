@@ -20,25 +20,38 @@ class EngineeringGateTests(unittest.TestCase):
                 "status": "DECISION33_CONTEXT_V2_CORPUS_COMPLETE",
                 "context_count": 322,
             },
+            "eu_article6_context_v2": {
+                "status": "EU_ARTICLE6_CONTEXT_V2_CORPUS_COMPLETE",
+                "context_count": 36,
+                "native_route_count": 9,
+            },
             "candidate_ir": {
                 "status": "CANDIDATE_EXECUTABLE_IR_COMPLETE_MODEL_RELATIVE",
                 "compiled_rule_count": 20,
                 "compiled_duty_count": 25,
-                "compilation_mode_counts": {
-                    "REQUIRED_FACTS_READINESS_ONLY": 17
+                "compilation_mode_counts": {"REQUIRED_FACTS_READINESS_ONLY": 17},
+            },
+            "source_derived_predicates": {
+                "status": "ALL_CANDIDATE_PREDICATES_EXECUTABLE_PENDING_REVIEW",
+                "executable_predicate_count": 20,
+                "readiness_only_predicate_count": 0,
+            },
+            "eu_vn_relation_scenarios": {
+                "status": "DECISION33_EU_RELATION_SCENARIOS_EXECUTED",
+                "scenario_count": 2,
+                "context_count_per_scenario": 322,
+                "completeness": {
+                    "all_322_contexts_receive_scenario_metadata": True,
+                    "reviewed_eu_vn_crosswalk_available": False,
                 },
             },
-            "metric_analysis": {
-                "status": "MODEL_RELATIVE_METRIC_ANALYSIS_COMPLETE"
-            },
+            "metric_analysis": {"status": "MODEL_RELATIVE_METRIC_ANALYSIS_COMPLETE"},
             "operational_signatures": {
                 "status": "OPERATIONAL_DUTY_SIGNATURE_INVENTORY_COMPLETE",
                 "same_slot_cross_jurisdiction_pair_count": 0,
             },
             "candidate_hsdl_roundtrip": {"status": "EQUIVALENT"},
-            "python_oracle_projection": {
-                "status": "PYTHON_ORACLE_PROJECTION_COMPLETE"
-            },
+            "python_oracle_projection": {"status": "PYTHON_ORACLE_PROJECTION_COMPLETE"},
             "independent_javascript_oracle": {
                 "status": "EQUIVALENT",
                 "projection_hash_match": True,
@@ -49,17 +62,22 @@ class EngineeringGateTests(unittest.TestCase):
                 "symbolically_compiled_rule_count": 2,
                 "symbolic_rule_coverage": 0.1,
             },
+            "symbolic_full_profile": {
+                "status": "SOURCE_DERIVED_SYMBOLIC_PROFILE_EQUIVALENT",
+                "symbolically_compiled_rule_count": 20,
+                "symbolic_rule_coverage": 1.0,
+                "mismatch_count": 0,
+            },
             "priority_engine": {
                 "status": "CANDIDATE_PRIORITY_GRAPH_EXECUTABLE",
-                "edge_count": 0,
+                "edge_count": 9,
+                "conditional_edge_count": 2,
             },
         }
         for gate_id, (filename, _) in REQUIRED_ARTIFACTS.items():
-            (root / filename).write_text(
-                json.dumps(payloads[gate_id]), encoding="utf-8"
-            )
+            (root / filename).write_text(json.dumps(payloads[gate_id]), encoding="utf-8")
 
-    def test_current_engineering_state_is_p0_complete_and_p1_partial(self) -> None:
+    def test_current_engineering_state_has_all_model_capabilities(self) -> None:
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)
             self._write_artifacts(root)
@@ -71,32 +89,30 @@ class EngineeringGateTests(unittest.TestCase):
         self.assertTrue(report["p0"]["complete"])
         self.assertEqual(report["p0"]["passed"], 7)
         self.assertTrue(report["p1_capabilities"]["ready"])
-        self.assertEqual(report["p1_capabilities"]["passed"], 3)
+        self.assertEqual(report["p1_capabilities"]["gate_count"], 6)
+        self.assertEqual(report["p1_capabilities"]["passed"], 6)
+        completeness = report["engineering_completeness"]
+        self.assertTrue(completeness["all_candidate_predicates_executable"])
+        self.assertTrue(completeness["eu_native_context_corpus_available"])
         self.assertTrue(
-            report["engineering_completeness"]["independent_oracle_hash_match"]
+            completeness["shared_eu_vn_classification_relation_executable"]
         )
-        self.assertFalse(
-            report["engineering_completeness"]["all_candidate_predicates_executable"]
-        )
-        self.assertFalse(
-            report["engineering_completeness"]["full_candidate_symbolic_coverage"]
-        )
+        self.assertTrue(completeness["full_candidate_symbolic_coverage"])
+        self.assertTrue(completeness["candidate_priority_edges_declared"])
+        self.assertTrue(completeness["independent_oracle_hash_match"])
 
-    def test_remaining_work_is_machine_readable(self) -> None:
+    def test_remaining_work_is_review_release_and_publication_scoped(self) -> None:
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)
             self._write_artifacts(root)
             report = build_engineering_gate_status(root)
-        remaining = set(report["remaining_engineering_work"])
         self.assertEqual(
-            remaining,
+            set(report["remaining_engineering_work"]),
             {
-                "all_candidate_predicates_executable",
-                "shared_eu_vn_classification_relation",
+                "reviewed_eu_vn_crosswalk_available",
                 "same_slot_cross_jurisdiction_crosswalk_available",
-                "full_candidate_symbolic_coverage",
-                "candidate_priority_edges_declared",
                 "source_custody_release_package",
+                "license_and_citation_owner_declarations",
                 "claim_ledger_and_generated_publication",
             },
         )
@@ -109,14 +125,20 @@ class EngineeringGateTests(unittest.TestCase):
         self.assertEqual(
             report["summary"],
             {
-                "context_count": 322,
+                "decision33_context_count": 322,
+                "eu_context_count": 36,
+                "eu_native_route_count": 9,
                 "candidate_rule_count": 20,
                 "candidate_duty_count": 25,
-                "candidate_readiness_only_rule_count": 17,
+                "source_derived_executable_predicate_count": 20,
+                "source_derived_readiness_only_count": 0,
                 "independent_projection_count": 12880,
-                "symbolically_compiled_rule_count": 2,
-                "symbolic_rule_coverage": 0.1,
-                "priority_edge_count": 0,
+                "symbolically_compiled_rule_count": 20,
+                "symbolic_rule_coverage": 1.0,
+                "priority_edge_count": 9,
+                "conditional_priority_edge_count": 2,
+                "relation_scenario_count": 2,
+                "relation_context_count_per_scenario": 322,
                 "same_slot_cross_jurisdiction_pair_count": 0,
             },
         )
@@ -156,9 +178,7 @@ class EngineeringGateTests(unittest.TestCase):
             self._write_artifacts(root)
             report = build_engineering_gate_status(root)
         self.assertFalse(report["boundary"]["legal_review_gate_included"])
-        self.assertEqual(
-            report["boundary"]["publication_authorisation"], "NOT_PROVIDED"
-        )
+        self.assertEqual(report["boundary"]["publication_authorisation"], "NOT_PROVIDED")
         self.assertEqual(report["claim_class"], "MODEL_RELATIVE")
         self.assertEqual(report["legal_validation"], "NOT_ASSERTED")
 

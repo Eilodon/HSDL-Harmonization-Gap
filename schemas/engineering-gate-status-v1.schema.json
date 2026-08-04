@@ -1,7 +1,7 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://eilodon.github.io/hsdl-harmonization-gap/schemas/engineering-gate-status-v1.schema.json",
-  "title": "Engineering gate status report v1",
+  "$id": "https://eilodon.github.io/hsdl-harmonization-gap/schemas/engineering-gate-status-v2.schema.json",
+  "title": "Engineering gate status report v2",
   "type": "object",
   "additionalProperties": false,
   "required": [
@@ -10,7 +10,7 @@
     "engineering_completeness", "remaining_engineering_work", "summary", "boundary"
   ],
   "properties": {
-    "schema_version": {"const": "1.0.0"},
+    "schema_version": {"const": "2.0.0"},
     "status": {
       "enum": [
         "ENGINEERING_COMPLETE",
@@ -24,7 +24,7 @@
     "artifact_directory": {"type": "string"},
     "evidence": {
       "type": "object",
-      "minProperties": 10,
+      "minProperties": 14,
       "additionalProperties": {
         "type": "object",
         "required": ["artifact", "expected_status", "actual_status", "passed", "sha256"],
@@ -51,17 +51,17 @@
       "type": "object",
       "required": ["gate_count", "passed", "ready", "gates"],
       "properties": {
-        "gate_count": {"const": 3},
-        "passed": {"type": "integer", "minimum": 0, "maximum": 3},
+        "gate_count": {"const": 6},
+        "passed": {"type": "integer", "minimum": 0, "maximum": 6},
         "ready": {"type": "boolean"},
-        "gates": {"type": "object", "minProperties": 3, "maxProperties": 3}
+        "gates": {"type": "object", "minProperties": 6, "maxProperties": 6}
       }
     },
     "engineering_completeness": {
       "type": "object",
       "additionalProperties": {"type": "boolean"},
-      "minProperties": 8,
-      "maxProperties": 8
+      "minProperties": 11,
+      "maxProperties": 11
     },
     "remaining_engineering_work": {
       "type": "array",
@@ -71,10 +71,14 @@
     "summary": {
       "type": "object",
       "required": [
-        "context_count", "candidate_rule_count", "candidate_duty_count",
-        "candidate_readiness_only_rule_count", "independent_projection_count",
+        "decision33_context_count", "eu_context_count", "eu_native_route_count",
+        "candidate_rule_count", "candidate_duty_count",
+        "source_derived_executable_predicate_count",
+        "source_derived_readiness_only_count", "independent_projection_count",
         "symbolically_compiled_rule_count", "symbolic_rule_coverage",
-        "priority_edge_count", "same_slot_cross_jurisdiction_pair_count"
+        "priority_edge_count", "conditional_priority_edge_count",
+        "relation_scenario_count", "relation_context_count_per_scenario",
+        "same_slot_cross_jurisdiction_pair_count"
       ]
     },
     "boundary": {
