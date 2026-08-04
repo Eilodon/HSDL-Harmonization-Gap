@@ -1,0 +1,63 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://eilodon.github.io/hsdl-harmonization-gap/schemas/governance-readiness-report-v1.schema.json",
+  "title": "Owner governance readiness report v1",
+  "type": "object",
+  "required": [
+    "schema_version", "status", "repository", "repository_owner_account",
+    "owner_approved", "blockers", "official_files_present",
+    "generation_readiness", "identity_counts", "declaration_hash", "boundary"
+  ],
+  "properties": {
+    "schema_version": {"const": "1.0.0"},
+    "status": {
+      "enum": [
+        "OWNER_GOVERNANCE_DECLARATION_PENDING",
+        "OWNER_GOVERNANCE_APPROVED_GENERATION_READY"
+      ]
+    },
+    "repository": {"const": "Eilodon/HSDL-Harmonization-Gap"},
+    "repository_owner_account": {"const": "Eilodon"},
+    "owner_approved": {"type": "boolean"},
+    "blockers": {"type": "array", "items": {"type": "string"}},
+    "official_files_present": {
+      "type": "object",
+      "required": ["LICENSE", "LICENSE.md", "CITATION.cff"],
+      "properties": {
+        "LICENSE": {"type": "boolean"},
+        "LICENSE.md": {"type": "boolean"},
+        "CITATION.cff": {"type": "boolean"}
+      }
+    },
+    "generation_readiness": {
+      "type": "object",
+      "required": [
+        "license_file_allowed", "citation_cff_allowed",
+        "release_metadata_allowed"
+      ],
+      "additionalProperties": {"type": "boolean"}
+    },
+    "identity_counts": {
+      "type": "object",
+      "required": ["declared_author_count", "declared_contributor_count"],
+      "properties": {
+        "declared_author_count": {"type": "integer", "minimum": 0},
+        "declared_contributor_count": {"type": "integer", "minimum": 0}
+      }
+    },
+    "declaration_hash": {"type": "string", "pattern": "^sha256:[0-9a-f]{64}$"},
+    "boundary": {
+      "type": "object",
+      "required": [
+        "repository_account_implies_authorship", "assistant_may_select_license",
+        "assistant_may_invent_authors", "notice"
+      ],
+      "properties": {
+        "repository_account_implies_authorship": {"const": false},
+        "assistant_may_select_license": {"const": false},
+        "assistant_may_invent_authors": {"const": false}
+      }
+    }
+  },
+  "additionalProperties": false
+}
