@@ -1,0 +1,92 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/Eilodon/HSDL-Harmonization-Gap/schemas/source-derived-predicate-report-v1.schema.json",
+  "title": "Source-derived candidate predicate report v1",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "status",
+    "claim_class",
+    "legal_validation",
+    "candidate_rule_count",
+    "executable_predicate_count",
+    "readiness_only_predicate_count",
+    "duty_count",
+    "profile_hash",
+    "rules",
+    "review_boundary"
+  ],
+  "properties": {
+    "schema_version": {"const": "1.0.0"},
+    "status": {"const": "ALL_CANDIDATE_PREDICATES_EXECUTABLE_PENDING_REVIEW"},
+    "claim_class": {"const": "MODEL_RELATIVE"},
+    "legal_validation": {"const": "NOT_ASSERTED"},
+    "candidate_rule_count": {"const": 20},
+    "executable_predicate_count": {"const": 20},
+    "readiness_only_predicate_count": {"const": 0},
+    "duty_count": {"const": 25},
+    "duties_with_modality_count": {"const": 25},
+    "duties_with_trigger_signature_count": {"const": 25},
+    "duties_with_recipient_field_count": {"const": 25},
+    "profile_hash": {"type": "string", "pattern": "^sha256:[0-9a-f]{64}$"},
+    "rules": {
+      "type": "array",
+      "minItems": 20,
+      "maxItems": 20,
+      "items": {
+        "type": "object",
+        "required": [
+          "rule_id",
+          "jurisdiction",
+          "source_id",
+          "provision",
+          "review_status",
+          "source_evidence",
+          "predicate",
+          "predicate_semantics_complete",
+          "duties"
+        ],
+        "properties": {
+          "rule_id": {"type": "string", "minLength": 1},
+          "jurisdiction": {"enum": ["EU", "VN"]},
+          "predicate_semantics_complete": {"const": true},
+          "duties": {
+            "type": "array",
+            "minItems": 1,
+            "items": {
+              "type": "object",
+              "required": [
+                "duty_id",
+                "normative_slot",
+                "actions",
+                "object",
+                "obligors",
+                "actor_relation",
+                "timing",
+                "modality",
+                "recipients",
+                "trigger_condition",
+                "trigger_signature"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "review_boundary": {
+      "type": "object",
+      "required": [
+        "source_text_checked",
+        "independent_legal_review",
+        "quantitative_current_law_claims_allowed",
+        "notice"
+      ],
+      "properties": {
+        "source_text_checked": {"const": true},
+        "independent_legal_review": {"const": "PENDING"},
+        "quantitative_current_law_claims_allowed": {"const": false}
+      }
+    }
+  },
+  "additionalProperties": true
+}
