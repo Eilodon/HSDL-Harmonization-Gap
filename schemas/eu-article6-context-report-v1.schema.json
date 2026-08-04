@@ -1,0 +1,60 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/Eilodon/HSDL-Harmonization-Gap/schemas/eu-article6-context-report-v1.schema.json",
+  "title": "EU Article 6 and Annex III context corpus report v1",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "status",
+    "claim_class",
+    "legal_validation",
+    "profile_id",
+    "corpus_id",
+    "context_count",
+    "contexts_per_native_route",
+    "native_route_count",
+    "fixture_counts",
+    "classification_state_counts",
+    "validation_errors",
+    "corpus_hash",
+    "coverage_contract",
+    "contexts"
+  ],
+  "properties": {
+    "schema_version": {"const": "1.0.0"},
+    "status": {"const": "EU_ARTICLE6_CONTEXT_V2_CORPUS_COMPLETE"},
+    "claim_class": {"const": "MODEL_RELATIVE"},
+    "legal_validation": {"const": "NOT_ASSERTED"},
+    "context_count": {"const": 36},
+    "contexts_per_native_route": {"const": 4},
+    "native_route_count": {"const": 9},
+    "fixture_counts": {
+      "type": "object",
+      "required": [
+        "POSITIVE_WITNESS",
+        "SINGLE_FAULT_NEGATIVE",
+        "UNKNOWN_FACT",
+        "BOUNDARY_EXACT"
+      ],
+      "properties": {
+        "POSITIVE_WITNESS": {"const": 9},
+        "SINGLE_FAULT_NEGATIVE": {"const": 9},
+        "UNKNOWN_FACT": {"const": 9},
+        "BOUNDARY_EXACT": {"const": 9}
+      }
+    },
+    "classification_state_counts": {
+      "type": "object",
+      "required": ["IN_SCOPE", "OUT_OF_SCOPE", "UNKNOWN"],
+      "properties": {
+        "IN_SCOPE": {"const": 18},
+        "OUT_OF_SCOPE": {"const": 9},
+        "UNKNOWN": {"const": 9}
+      }
+    },
+    "validation_errors": {"type": "array", "maxItems": 0},
+    "corpus_hash": {"type": "string", "pattern": "^sha256:[0-9a-f]{64}$"},
+    "contexts": {"type": "array", "minItems": 36, "maxItems": 36}
+  },
+  "additionalProperties": true
+}

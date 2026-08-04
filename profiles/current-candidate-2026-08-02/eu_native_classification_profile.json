@@ -1,0 +1,156 @@
+{
+  "schema_version": "1.0.0",
+  "profile_id": "eu-native-classification-article6-annexiii-v1",
+  "status": "SOURCE_DERIVED_MODEL_RELATIVE_PENDING_INDEPENDENT_REVIEW",
+  "claim_class": "MODEL_RELATIVE",
+  "legal_validation": "NOT_ASSERTED",
+  "source_evidence": {
+    "source_id": "EU_AI_ACT_2024_1689",
+    "article_6": "Article 6(1)-(4)",
+    "annex_iii": "Annex III points 1-8",
+    "official_pdf": "sources/official_pdf_targets.json#EU_AI_ACT_2024_1689"
+  },
+  "article_6_3_exception_conditions": [
+    "NARROW_PROCEDURAL_TASK",
+    "IMPROVE_PREVIOUSLY_COMPLETED_HUMAN_ACTIVITY",
+    "DETECT_PATTERNS_WITHOUT_REPLACING_OR_INFLUENCING_HUMAN_ASSESSMENT",
+    "PREPARATORY_TASK"
+  ],
+  "native_routes": [
+    {
+      "route_id": "ARTICLE_6_1_ANNEX_I_PRODUCT",
+      "label": "Annex I product or safety component requiring third-party conformity assessment",
+      "route_type": "ARTICLE_6_1_PRODUCT",
+      "annex_identifier": "ANNEX_I"
+    },
+    {
+      "route_id": "ANNEX_III_1_BIOMETRICS",
+      "label": "Biometrics",
+      "route_type": "ARTICLE_6_2_ANNEX_III",
+      "annex_identifier": "ANNEX_III_POINT_1"
+    },
+    {
+      "route_id": "ANNEX_III_2_CRITICAL_INFRASTRUCTURE",
+      "label": "Critical infrastructure",
+      "route_type": "ARTICLE_6_2_ANNEX_III",
+      "annex_identifier": "ANNEX_III_POINT_2"
+    },
+    {
+      "route_id": "ANNEX_III_3_EDUCATION",
+      "label": "Education and vocational training",
+      "route_type": "ARTICLE_6_2_ANNEX_III",
+      "annex_identifier": "ANNEX_III_POINT_3"
+    },
+    {
+      "route_id": "ANNEX_III_4_EMPLOYMENT",
+      "label": "Employment and workers management",
+      "route_type": "ARTICLE_6_2_ANNEX_III",
+      "annex_identifier": "ANNEX_III_POINT_4"
+    },
+    {
+      "route_id": "ANNEX_III_5_ESSENTIAL_SERVICES",
+      "label": "Essential private and public services and benefits",
+      "route_type": "ARTICLE_6_2_ANNEX_III",
+      "annex_identifier": "ANNEX_III_POINT_5"
+    },
+    {
+      "route_id": "ANNEX_III_6_LAW_ENFORCEMENT",
+      "label": "Law enforcement",
+      "route_type": "ARTICLE_6_2_ANNEX_III",
+      "annex_identifier": "ANNEX_III_POINT_6"
+    },
+    {
+      "route_id": "ANNEX_III_7_MIGRATION_BORDER",
+      "label": "Migration, asylum and border control",
+      "route_type": "ARTICLE_6_2_ANNEX_III",
+      "annex_identifier": "ANNEX_III_POINT_7"
+    },
+    {
+      "route_id": "ANNEX_III_8_JUSTICE_DEMOCRACY",
+      "label": "Administration of justice and democratic processes",
+      "route_type": "ARTICLE_6_2_ANNEX_III",
+      "annex_identifier": "ANNEX_III_POINT_8"
+    }
+  ],
+  "decision33_feature_crosswalk_rules": [
+    {
+      "rule_id": "D33_TO_EU_BIOMETRICS",
+      "route_id": "ANNEX_III_1_BIOMETRICS",
+      "any_features": [
+        "large_scale_biometric_identification",
+        "sensitive_attribute_inference",
+        "real_time_biometric_or_violation_detection"
+      ],
+      "mapping_strength": "DIRECT_ANNEX_III_FEATURE_MATCH"
+    },
+    {
+      "rule_id": "D33_TO_EU_EDUCATION",
+      "route_id": "ANNEX_III_3_EDUCATION",
+      "sector": "education",
+      "any_features": [
+        "automated_assessment",
+        "official_decision_basis",
+        "biometric_or_behavior_monitoring"
+      ],
+      "mapping_strength": "DIRECT_ANNEX_III_FEATURE_MATCH"
+    },
+    {
+      "rule_id": "D33_TO_EU_PUBLIC_BENEFITS",
+      "route_id": "ANNEX_III_5_ESSENTIAL_SERVICES",
+      "any_features": [
+        "public_benefit_allocation",
+        "final_benefit_eligibility_decision",
+        "automatic_benefit_interruption"
+      ],
+      "mapping_strength": "DIRECT_ANNEX_III_FEATURE_MATCH"
+    },
+    {
+      "rule_id": "D33_TO_EU_CREDIT",
+      "route_id": "ANNEX_III_5_ESSENTIAL_SERVICES",
+      "any_features": ["credit_scoring", "final_credit_decision"],
+      "mapping_strength": "DIRECT_ANNEX_III_FEATURE_MATCH"
+    },
+    {
+      "rule_id": "D33_TO_EU_CRITICAL_INFRASTRUCTURE",
+      "route_id": "ANNEX_III_2_CRITICAL_INFRASTRUCTURE",
+      "any_features": [
+        "traffic_signal_or_dispatch_control",
+        "critical_infrastructure_control",
+        "aviation_scada_control",
+        "airport_critical_infrastructure_control"
+      ],
+      "mapping_strength": "DIRECT_OR_NEAR_DIRECT_ANNEX_III_FEATURE_MATCH"
+    },
+    {
+      "rule_id": "D33_TO_EU_PRODUCT_SAFETY_COMPONENT",
+      "route_id": "ARTICLE_6_1_ANNEX_I_PRODUCT",
+      "any_features": [
+        "robotic_surgery",
+        "safety_critical_physical_control",
+        "air_traffic_control",
+        "air_traffic_separation",
+        "automatic_collision_avoidance",
+        "autonomous_flight_control",
+        "precision_landing_control",
+        "authorized_uav_control",
+        "predictive_maintenance",
+        "automatic_fuel_management"
+      ],
+      "mapping_strength": "ANNEX_I_PRODUCT_ROUTE_HYPOTHESIS_REQUIRES_PRODUCT_LAW_FACTS"
+    }
+  ],
+  "decision33_overlay_scenarios": [
+    {
+      "scenario_id": "EU_SOURCE_ANCHORED_OPEN_WORLD",
+      "unmatched_policy": "UNKNOWN",
+      "matched_product_route_policy": "UNKNOWN_UNLESS_THIRD_PARTY_FACT_DECLARED",
+      "notice": "Only direct Annex III feature matches are assigned an in-scope fact. Product-route hypotheses and unmatched rows remain unknown."
+    },
+    {
+      "scenario_id": "EU_EXPERIMENTAL_CLOSED_WORLD",
+      "unmatched_policy": "OUT_OF_SCOPE",
+      "matched_product_route_policy": "ASSUME_THIRD_PARTY_CONFORMITY_REQUIRED",
+      "notice": "This scenario closes missing facts for engineering differential tests. It is not a legal classification and cannot support current-law claims."
+    }
+  ]
+}
