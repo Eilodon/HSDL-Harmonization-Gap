@@ -1,0 +1,65 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://eilodon.github.io/hsdl-harmonization-gap/schemas/source-signature-custody-report-v1.schema.json",
+  "title": "Official source signature and custody staging report v1",
+  "type": "object",
+  "required": [
+    "schema_version", "status", "claim_class", "legal_validation",
+    "generated_at_utc", "target_count", "verified_source_count",
+    "manifest_sha256", "manifest_path", "sources", "errors",
+    "signature_policy_passed", "external_deposit"
+  ],
+  "properties": {
+    "schema_version": {"const": "1.0.0"},
+    "status": {
+      "enum": [
+        "DEPOSIT_PACKAGE_STAGED_SIGNATURE_POLICY_PASSED",
+        "DEPOSIT_PACKAGE_STAGING_INCOMPLETE"
+      ]
+    },
+    "claim_class": {"const": "SOURCE_IDENTITY_AND_CUSTODY"},
+    "legal_validation": {"const": "NOT_ASSERTED"},
+    "target_count": {"const": 6},
+    "verified_source_count": {"type": "integer", "minimum": 0, "maximum": 6},
+    "manifest_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "sources": {
+      "type": "array",
+      "maxItems": 6,
+      "items": {
+        "type": "object",
+        "required": [
+          "id", "instrument", "jurisdiction", "source_identity_verified",
+          "sha256", "byte_size", "signature_classification", "pdfsig"
+        ],
+        "properties": {
+          "source_identity_verified": {"const": true},
+          "sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+          "byte_size": {"type": "integer", "minimum": 1},
+          "signature_classification": {
+            "type": "object",
+            "required": [
+              "signature_profile", "embedded_signature_expectation", "status",
+              "policy_passed", "signature_count", "all_integrity_valid",
+              "all_certificate_chains_trusted", "trust_chain_resolution_required"
+            ]
+          }
+        }
+      }
+    },
+    "errors": {"type": "array"},
+    "signature_policy_passed": {"type": "boolean"},
+    "external_deposit": {
+      "type": "object",
+      "required": [
+        "status", "receipt_verified", "durable_custody_established",
+        "acceptable_provider_classes", "notice"
+      ],
+      "properties": {
+        "status": {"enum": ["READY_FOR_EXTERNAL_DEPOSIT", "NOT_READY"]},
+        "receipt_verified": {"const": false},
+        "durable_custody_established": {"const": false}
+      }
+    }
+  },
+  "additionalProperties": true
+}

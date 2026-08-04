@@ -1,0 +1,42 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://eilodon.github.io/hsdl-harmonization-gap/schemas/external-source-deposit-receipt-v1.schema.json",
+  "title": "External official-source deposit receipt v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version", "provider", "deposit_id", "persistent_identifier",
+    "persistent_url", "submitted_at_utc", "manifest_sha256", "depositor",
+    "object_receipts"
+  ],
+  "properties": {
+    "schema_version": {"const": "1.0.0"},
+    "provider": {
+      "enum": [
+        "ZENODO", "OSF", "INSTITUTIONAL_REPOSITORY",
+        "OTHER_DOI_OR_ARK_PROVIDER"
+      ]
+    },
+    "deposit_id": {"type": "string", "minLength": 1},
+    "persistent_identifier": {"type": "string", "minLength": 1},
+    "persistent_url": {"type": "string", "format": "uri", "pattern": "^https://"},
+    "submitted_at_utc": {"type": "string", "format": "date-time"},
+    "manifest_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "depositor": {"type": "string", "minLength": 1},
+    "object_receipts": {
+      "type": "array",
+      "minItems": 6,
+      "maxItems": 6,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "sha256", "byte_size"],
+        "properties": {
+          "id": {"type": "string", "minLength": 1},
+          "sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+          "byte_size": {"type": "integer", "minimum": 1}
+        }
+      }
+    }
+  }
+}

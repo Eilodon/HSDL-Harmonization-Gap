@@ -1,0 +1,18 @@
+{
+  "schema_version": "1.0.0",
+  "provider": "ZENODO",
+  "deposit_id": "OWNER_TO_FILL_AFTER_DEPOSIT",
+  "persistent_identifier": "doi:OWNER_TO_FILL_AFTER_DEPOSIT",
+  "persistent_url": "https://doi.org/OWNER_TO_FILL_AFTER_DEPOSIT",
+  "submitted_at_utc": "2026-08-02T00:00:00+00:00",
+  "manifest_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+  "depositor": "OWNER_DECLARED_DEPOSITOR",
+  "object_receipts": [
+    {"id": "ASEAN_GENAI_GUIDE_2025", "sha256": "OWNER_TO_COPY_FROM_MANIFEST", "byte_size": 0},
+    {"id": "ASEAN_GUIDE_2024", "sha256": "OWNER_TO_COPY_FROM_MANIFEST", "byte_size": 0},
+    {"id": "EU_AI_ACT_2024_1689", "sha256": "OWNER_TO_COPY_FROM_MANIFEST", "byte_size": 0},
+    {"id": "VN_DECISION_33_2026", "sha256": "OWNER_TO_COPY_FROM_MANIFEST", "byte_size": 0},
+    {"id": "VN_DECREE_142_2026", "sha256": "OWNER_TO_COPY_FROM_MANIFEST", "byte_size": 0},
+    {"id": "VN_LAW_134_2025", "sha256": "OWNER_TO_COPY_FROM_MANIFEST", "byte_size": 0}
+  ]
+}

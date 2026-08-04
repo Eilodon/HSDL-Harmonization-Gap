@@ -17,7 +17,8 @@
       "alternate_official_pdf_urls": [
         "https://eur-lex.europa.eu/legal-content/EN/TXT/PDF/?uri=OJ%3AL_202401689",
         "https://eur-lex.europa.eu/legal-content/EN/TXT/PDF/?uri=CELEX%3A32024R1689",
-        "https://data.europa.eu/eli/reg/2024/1689/oj/eng/pdf"
+        "https://data.europa.eu/eli/reg/2024/1689/oj/eng/pdf",
+        "https://op.europa.eu/o/opportal-service/download-handler?identifier=dc8116a1-3fe6-11ef-865a-01aa75ed71a1&format=PDF&language=en&productionSystem=cellar&part="
       ],
       "declared_page_count": 144,
       "signature_profile": "official_journal_pdf",

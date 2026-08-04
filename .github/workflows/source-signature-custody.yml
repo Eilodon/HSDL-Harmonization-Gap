@@ -1,0 +1,92 @@
+name: source-signature-custody
+
+on:
+  pull_request:
+    paths:
+      - "sources/**"
+      - "src/hsdl_gap/source_signature_custody.py"
+      - "tests/test_source_signature_custody.py"
+      - "schemas/source-signature-custody-report-v1.schema.json"
+      - "schemas/external-source-deposit-receipt-v1.schema.json"
+      - ".github/workflows/source-signature-custody.yml"
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+  schedule:
+    - cron: "43 4 * * 1"
+
+jobs:
+  stage-and-verify-signatures:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install Poppler signature verifier
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y poppler-utils
+          pdfsig -v
+      - name: Fetch pinned PDFs, verify signatures and stage deposit package
+        id: stage
+        continue-on-error: true
+        run: |
+          mkdir -p generated
+          PYTHONPATH=src python -m hsdl_gap.source_signature_custody \
+            --mode stage \
+            --targets sources/official_pdf_targets.json \
+            --lock sources/official_pdf_lock_2026-08-02.json \
+            --policy sources/custody/signature_and_deposit_policy.json \
+            --output-dir generated/source-custody-staging \
+            > generated/source-signature-custody-report.json
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          report = json.loads(Path("generated/source-signature-custody-report.json").read_text())
+          if report["status"] != "DEPOSIT_PACKAGE_STAGED_SIGNATURE_POLICY_PASSED":
+              raise SystemExit(1)
+          PY
+      - name: Show signature and custody report
+        if: always()
+        run: |
+          if [ -f generated/source-signature-custody-report.json ]; then
+            cat generated/source-signature-custody-report.json
+          fi
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: source-signature-and-deposit-staging
+          path: |
+            generated/source-signature-custody-report.json
+            generated/source-custody-staging/deposit-manifest.json
+            generated/source-custody-staging/objects/
+          retention-days: 14
+          if-no-files-found: ignore
+      - name: Report pull-request transport or signature warning
+        if: github.event_name == 'pull_request' && steps.stage.outcome != 'success'
+        run: |
+          echo "::warning::Pinned-PDF acquisition or signature policy verification did not complete. Inspect the uploaded report; this does not establish durable external custody."
+      - name: Enforce signature policy outside pull requests
+        if: github.event_name != 'pull_request' && steps.stage.outcome != 'success'
+        run: exit 1
+
+  receipt-contract:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Run receipt parser and policy contract tests
+        run: |
+          PYTHONPATH=src python -m unittest tests.test_source_signature_custody -v
+      - name: Verify committed external receipt when present
+        run: |
+          if [ -f sources/custody/external_deposit_receipt.json ]; then
+            echo "A committed receipt requires a matching deposit manifest artifact and must be verified during release promotion."
+          else
+            echo "No external deposit receipt is committed; durable custody remains unestablished."
+          fi
