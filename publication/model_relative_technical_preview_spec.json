@@ -1,0 +1,58 @@
+{
+  "schema_version": "1.0.0",
+  "preview_id": "model-relative-technical-preview-v1",
+  "title": "HSDL Harmonization Gap — Model-Relative Technical Evidence Preview",
+  "status": "NOT_AUTHORISED_FOR_PUBLICATION",
+  "claim_class": "MODEL_RELATIVE",
+  "legal_validation": "NOT_ASSERTED",
+  "sections": [
+    {
+      "section_id": "decision33-catalog",
+      "heading": "Decision 33 catalog composition",
+      "claim_ids": [
+        "CLAIM-D33-POINT-A-CATALOG-SHARE",
+        "CLAIM-D33-POINT-B-CATALOG-SHARE"
+      ]
+    },
+    {
+      "section_id": "historical-partial-ir",
+      "heading": "Historical partial candidate IR",
+      "claim_ids": [
+        "CLAIM-CANDIDATE-DETERMINACY",
+        "CLAIM-CANDIDATE-APPLICABILITY-BOUNDS",
+        "CLAIM-ASSUMPTION-SENSITIVITY"
+      ]
+    },
+    {
+      "section_id": "source-derived-profile",
+      "heading": "Source-derived executable profile",
+      "claim_ids": [
+        "CLAIM-SOURCE-DERIVED-PREDICATES",
+        "CLAIM-EU-NATIVE-CORPUS",
+        "CLAIM-EU-VN-RELATION-SCENARIOS"
+      ]
+    },
+    {
+      "section_id": "formal-and-differential",
+      "heading": "Operational, differential and symbolic evidence",
+      "claim_ids": [
+        "CLAIM-OPERATIONAL-EXACT-PAIRS",
+        "CLAIM-INDEPENDENT-ORACLE-EQUIVALENCE",
+        "CLAIM-SYMBOLIC-COVERAGE",
+        "CLAIM-PRIORITY-GRAPH-DECLARED"
+      ]
+    },
+    {
+      "section_id": "engineering-gates",
+      "heading": "Engineering gate status",
+      "claim_ids": ["CLAIM-P0-ENGINEERING-COMPLETE"]
+    }
+  ],
+  "required_boundaries": [
+    "This preview is generated from a validated claim ledger.",
+    "It does not establish legal validity or empirical prevalence.",
+    "It is not an approved manuscript and is not authorised for publication.",
+    "Owner licence, citation and contributor declarations remain separate.",
+    "Independent legal review remains required."
+  ]
+}

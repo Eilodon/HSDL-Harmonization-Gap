@@ -1,0 +1,52 @@
+name: generated-publication-preview
+
+on:
+  pull_request:
+    paths:
+      - "claims/**"
+      - "publication/**"
+      - "governance/**"
+      - "src/hsdl_gap/generated_publication.py"
+      - "tests/test_generated_publication.py"
+      - "schemas/generated-publication-preview-v1.schema.json"
+      - ".github/workflows/generated-publication-preview.yml"
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  build-preview:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - name: Reproduce evidence artifacts
+        run: make reproduce
+      - name: Validate claim ledger
+        run: |
+          PYTHONPATH=src python -m hsdl_gap.claim_ledger --ledger claims/model_relative_claims.json --artifact-dir generated > generated/claim-ledger-report.json
+      - name: Build deterministic technical preview
+        run: |
+          PYTHONPATH=src python -m hsdl_gap.generated_publication \
+            --spec publication/model_relative_technical_preview_spec.json \
+            --ledger claims/model_relative_claims.json \
+            --artifact-dir generated \
+            --governance-declaration governance/project_identity_declaration.json \
+            --repository-root . \
+            --markdown-output generated/model-relative-technical-preview.md \
+            > generated/generated-publication-preview-report.json
+          cat generated/generated-publication-preview-report.json
+      - uses: actions/upload-artifact@v4
+        with:
+          name: generated-model-relative-technical-preview
+          path: |
+            generated/model-relative-technical-preview.md
+            generated/generated-publication-preview-report.json
+            generated/claim-ledger-report.json
+          retention-days: 30
