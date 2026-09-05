@@ -78,6 +78,19 @@ def _format_value(value: Any) -> str:
     return f"`{value}`"
 
 
+def _promotion_blockers(governance_report: Mapping[str, Any]) -> list[str]:
+    blockers = [
+        "INDEPENDENT_LEGAL_REVIEW_PENDING",
+        "REVIEWED_EU_VN_CROSSWALK_PENDING",
+        "REVIEWED_SAME_SLOT_DUTY_RELATION_PENDING",
+        "EXTERNAL_DURABLE_CUSTODY_RECEIPT_PENDING",
+    ]
+    if not governance_report.get("owner_approved"):
+        blockers.append("OWNER_LICENSE_AND_CITATION_DECLARATION_PENDING")
+    blockers.append("PUBLICATION_AUTHORISATION_NOT_PROVIDED")
+    return blockers
+
+
 def _render_markdown(
     *,
     spec: Mapping[str, Any],
@@ -130,7 +143,12 @@ def _render_markdown(
             "- Independent legal review is not included in this preview.",
             "- A reviewed EU–Vietnam crosswalk and reviewed same-slot duty relation remain separate gates.",
             "- External durable custody requires a verified persistent deposit receipt.",
-            "- Licence, copyright, author and contributor metadata require owner approval.",
+        ]
+    )
+    if not governance_report.get("owner_approved"):
+        lines.append("- Licence, copyright, author and contributor metadata require owner approval.")
+    lines.extend(
+        [
             "- This preview must not replace or silently update a manuscript.",
             "",
         ]
@@ -208,14 +226,7 @@ def build_generated_publication_preview(
             else None
         ),
         "boundaries": list(spec["required_boundaries"]),
-        "promotion_blockers": [
-            "INDEPENDENT_LEGAL_REVIEW_PENDING",
-            "REVIEWED_EU_VN_CROSSWALK_PENDING",
-            "REVIEWED_SAME_SLOT_DUTY_RELATION_PENDING",
-            "EXTERNAL_DURABLE_CUSTODY_RECEIPT_PENDING",
-            "OWNER_LICENSE_AND_CITATION_DECLARATION_PENDING",
-            "PUBLICATION_AUTHORISATION_NOT_PROVIDED",
-        ],
+        "promotion_blockers": _promotion_blockers(governance_report),
     }
 
 
