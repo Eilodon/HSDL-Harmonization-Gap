@@ -1,21 +1,25 @@
 {
   "schema_version": "1.0.0",
   "declaration_id": "project-identity-and-rights-v1",
-  "status": "PENDING_OWNER_DECLARATION",
+  "status": "OWNER_APPROVED",
   "repository": "Eilodon/HSDL-Harmonization-Gap",
   "repository_owner_account": "Eilodon",
   "owner_approval": {
-    "approved": false,
-    "approved_by": null,
-    "approved_at_utc": null,
-    "approval_reference": null
+    "approved": true,
+    "approved_by": "Bao Thai Ngo",
+    "approved_at_utc": "2026-09-05T09:28:12Z",
+    "approval_reference": "Owner declaration confirmed on 2026-09-05"
   },
   "license": {
-    "spdx_identifier": null,
-    "copyright_holders": [],
-    "copyright_years": [],
-    "third_party_material_reviewed": false,
-    "source_pdf_redistribution_scope": "NOT_GRANTED_BY_THIS_DECLARATION",
+    "spdx_identifier": "Apache-2.0",
+    "copyright_holders": [
+      "Bao Thai Ngo"
+    ],
+    "copyright_years": [
+      2026
+    ],
+    "third_party_material_reviewed": true,
+    "source_pdf_redistribution_scope": "NOT_RELICENSED; third-party legal texts, official documents/PDFs, quotations, and externally sourced materials remain subject to their original rights.",
     "allowed_owner_choices": [
       "Apache-2.0",
       "MIT",
@@ -24,30 +28,47 @@
       "CC-BY-SA-4.0",
       "PROPRIETARY_OR_CUSTOM"
     ],
-    "notice": "Only the repository owner or authorised rights holder may select the project licence and identify copyright holders."
+    "notice": "Apache-2.0 applies to original code, documentation, models, and figures owned by Bao Thai Ngo. Third-party legal texts, official documents/PDFs, quotations, and externally sourced materials remain subject to their original rights and are not relicensed by this repository."
   },
   "citation": {
     "title": "HSDL Harmonization Gap",
-    "version": null,
-    "release_date": null,
+    "version": "1.0.0",
+    "release_date": "2026-09-05",
     "doi": null,
     "repository_url": "https://github.com/Eilodon/HSDL-Harmonization-Gap",
-    "authors": [],
+    "authors": [
+      {
+        "name": "Bao Thai Ngo",
+        "given_names": "Bao Thai",
+        "family_names": "Ngo",
+        "orcid": "https://orcid.org/0009-0003-9693-4077",
+        "affiliation": "Independent Researcher",
+        "email": "bao.nt.1992@gmail.com",
+        "roles": [
+          "author",
+          "maintainer"
+        ]
+      }
+    ],
     "contributors": [],
     "preferred_citation_type": "software",
-    "message": "Author and contributor identities require owner declaration; the repository account name is not automatically treated as a scholarly author."
+    "message": "Please cite this software and research artifact."
   },
   "publication": {
-    "corresponding_author": null,
-    "affiliations": [],
-    "orcid_identifiers": [],
+    "corresponding_author": "Bao Thai Ngo",
+    "affiliations": [
+      "Independent Researcher"
+    ],
+    "orcid_identifiers": [
+      "https://orcid.org/0009-0003-9693-4077"
+    ],
     "funding": [],
     "conflicts_of_interest": null
   },
   "generation_policy": {
-    "license_file_allowed": false,
-    "citation_cff_allowed": false,
-    "release_metadata_allowed": false,
+    "license_file_allowed": true,
+    "citation_cff_allowed": true,
+    "release_metadata_allowed": true,
     "fail_closed_on_missing_owner_approval": true
   }
 }
