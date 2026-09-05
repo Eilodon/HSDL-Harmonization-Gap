@@ -1,3 +1,5 @@
+> **Current research status.** This README preserves the frozen v11 Sprint baseline. For the source-audited current-law rebuild, typed engineering lane, and present claim boundaries, start with [`README_CANONICAL.md`](README_CANONICAL.md). Current-law quantitative gap and actor-mismatch metrics remain blocked pending the required independent legal/policy review and reviewed crosswalks.
+
 # HSDL Harmonization Gap v11 — Final Package
 
 **Date**: 21/6/2026
