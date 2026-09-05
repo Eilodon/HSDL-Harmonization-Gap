@@ -1,0 +1,15 @@
+cff-version: 1.2.0
+message: "If you use this software or research artifact, please cite it as below."
+title: "HSDL Harmonization Gap"
+type: software
+version: "1.0.0"
+date-released: 2026-09-05
+repository-code: "https://github.com/Eilodon/HSDL-Harmonization-Gap"
+license: Apache-2.0
+authors:
+  - family-names: "Ngo"
+    given-names: "Bao Thai"
+    name: "Bao Thai Ngo"
+    email: "bao.nt.1992@gmail.com"
+    affiliation: "Independent Researcher"
+    orcid: "https://orcid.org/0009-0003-9693-4077"
