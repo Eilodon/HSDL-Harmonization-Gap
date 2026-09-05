@@ -81,7 +81,11 @@ class GovernanceDeclarationTests(unittest.TestCase):
     def test_approved_declaration_can_emit_citation(self) -> None:
         citation = render_citation_cff(self.approved)
         self.assertIn("cff-version: 1.2.0", citation)
-        self.assertIn("Bao Thai Ngo", citation)
+        self.assertIn('family-names: "Ngo"', citation)
+        self.assertIn('given-names: "Bao Thai"', citation)
+        self.assertIn('email: "bao.nt.1992@gmail.com"', citation)
+        self.assertIn('orcid: "https://orcid.org/0009-0003-9693-4077"', citation)
+        self.assertIn("license: Apache-2.0", citation)
         self.assertIn('version: "1.0.0"', citation)
         self.assertNotIn("Eilodon\n", citation)
 
