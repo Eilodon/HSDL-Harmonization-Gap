@@ -200,22 +200,32 @@ def render_citation_cff(payload: Mapping[str, Any]) -> str:
             "CITATION.cff generation is blocked pending owner declaration"
         )
     citation = payload["citation"]
+    license_record = payload["license"]
     lines = [
         "cff-version: 1.2.0",
         f"message: {_cff_quote(citation.get('message') or 'Please cite this software.')}",
         f"title: {_cff_quote(citation['title'])}",
         f"type: {citation['preferred_citation_type']}",
         f"version: {_cff_quote(citation['version'])}",
-        f"date-released: {_cff_quote(citation['release_date'])}",
+        f"date-released: {citation['release_date']}",
         f"repository-code: {_cff_quote(citation['repository_url'])}",
+        f"license: {license_record['spdx_identifier']}",
         "authors:",
     ]
     for person in validation["authors"]:
-        lines.append(f"  - name: {_cff_quote(person['name'])}")
-        if person.get("orcid"):
-            lines.append(f"    orcid: {_cff_quote(person['orcid'])}")
+        family = person.get("family_names")
+        given = person.get("given_names")
+        if family and given:
+            lines.append(f"  - family-names: {_cff_quote(family)}")
+            lines.append(f"    given-names: {_cff_quote(given)}")
+        else:
+            lines.append(f"  - name: {_cff_quote(person['name'])}")
+        if person.get("email"):
+            lines.append(f"    email: {_cff_quote(person['email'])}")
         if person.get("affiliation"):
             lines.append(f"    affiliation: {_cff_quote(person['affiliation'])}")
+        if person.get("orcid"):
+            lines.append(f"    orcid: {_cff_quote(person['orcid'])}")
     doi = citation.get("doi")
     if doi:
         lines.append(f"doi: {_cff_quote(doi)}")
