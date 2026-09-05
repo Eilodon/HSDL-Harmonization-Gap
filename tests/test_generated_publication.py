@@ -114,7 +114,7 @@ class GeneratedPublicationTests(unittest.TestCase):
             root = Path(directory)
             self._write_artifacts(root)
             markdown = root / "preview.md"
-            build_generated_publication_preview(
+            report = build_generated_publication_preview(
                 spec_path=SPEC,
                 ledger_path=LEDGER,
                 artifact_dir=root,
@@ -125,7 +125,9 @@ class GeneratedPublicationTests(unittest.TestCase):
             text = markdown.read_text(encoding="utf-8")
         self.assertIn("model-relative-metric-analysis.json/metrics/0/numerator", text)
         self.assertIn("artifact hash `sha256:", text)
-        self.assertIn("Governance status: `OWNER_GOVERNANCE_DECLARATION_PENDING`", text)
+        self.assertIn("Governance status: `OWNER_GOVERNANCE_APPROVED_GENERATION_READY`", text)
+        self.assertNotIn("Licence, copyright, author and contributor metadata require owner approval.", text)
+        self.assertNotIn("OWNER_LICENSE_AND_CITATION_DECLARATION_PENDING", report["promotion_blockers"])
 
     def test_stale_claim_ledger_blocks_preview(self) -> None:
         with tempfile.TemporaryDirectory() as directory:
